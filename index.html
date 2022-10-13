@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="main">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,11 +8,19 @@
     <meta name="description" content="A two-color flat design that emphasizes animation. Built with GSAP, Angular JS, and advanced CSS.">
     <meta name="keywords" content="Michael Merin, Portfolio, GSAP, website">
     <meta name="author" content="Michael Merin">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollToPlugin.min.js"></script>
+    
+    <script src="js/app.js" defer></script>
+    <script src="js/aniamtion.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div ng-show="::true">sample</div>
-    
+<body ng-controller="MainController">
+    <button ng-click="toggleColormode()">Togle Color Mode</button>
+    <p>sample</p>
 </body>
 </html>

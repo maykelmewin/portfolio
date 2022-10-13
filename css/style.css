@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 :root {
-  --light-color: #FAFAFA;
-  --dark-color: #1A1A1A;
+  --primary-color: #FAFAFA;
+  --off-color: #1A1A1A;
 }
 
 * {
@@ -9,12 +9,14 @@
   margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: 'Press Start 2P', cursive;
 }
 
 html, body {
-  font-family: 'Press Start 2P', cursive;
-  background-color: var(--light-color);
-  color: var(--dark-color);
   font-size: 16px;
+  background-color: var(--primary-color);
+  color: var(--off-color);
+  -webkit-transition: color .2s, background-color .2s;
+  transition: color .2s, background-color .2s;
 }
 /*# sourceMappingURL=style.css.map */
