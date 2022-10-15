@@ -10,17 +10,44 @@
     <meta name="author" content="Michael Merin">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollToPlugin.min.js"></script>
     
-    <script src="js/app.js" defer></script>
-    <script src="js/aniamtion.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body ng-controller="MainController">
-    <button ng-click="toggleColormode()">Togle Color Mode</button>
-    <p>sample</p>
+    <section class="fold-first">
+        <div class="hero-content">
+            <button ng-click="toggleColormode()">Togle Color Mode</button>
+        </div>
+        <div class="fold-first-content"></div>
+    </section>
+    <section class="fold-second">
+        <div class="slides">
+            <div class="slides__item">s</div>
+            <div class="slides__item">b</div>
+            <div class="slides__item">k</div>
+        </div>
+    </section>
+    <section class="fold-third"></section>
+    <section class="fold-last">
+    </section>
+    <div class="infocard"></div>
+    <div class="pagination">
+        <div class="pagination__item"></div>
+        <div class="pagination__item"></div>
+        <div class="pagination__item"></div>
+        <div class="pagination__item"></div>
+        <div class="pagination__item"></div>
+    </div>
+    <section class="loading-screen">
+        <div class="loading-icon"></div>
+    </section>
+
+    
+    <script src="js/pre.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animation.js"></script>
 </body>
 </html>
