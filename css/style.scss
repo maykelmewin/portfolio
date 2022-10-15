@@ -2,21 +2,128 @@
 
 // general variable
 :root {
-    --light-color: #FAFAFA;
-    --dark-color: #1A1A1A;
+    --primary-color: #e5e5e5;
+    --off-color: #1A1A1A;
 }
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-}
-
-html, body{
     font-family: 'Press Start 2P', cursive;
-    background-color: var(--light-color);
-    color: var(--dark-color);
-    font-size: 16px;
 }
-
+html, body{
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: var(--off-color);
+    transition: color .2s, background-color .2s;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+::-webkit-scrollbar ,
+::-webkit-scrollbar-thumb {
+    height: 0;
+    width: 0;
+    background: transparent;
+}
 // components
+
+
+// main css
+.fold-first,
+.fold-second,
+.fold-third,
+.loading-screen{
+    width: 100%;
+    min-height: calc(var(--vh) * 100);
+}
+.fold-second{
+    overflow: hidden;
+    .slides{
+        display: flex;
+        width: 100%;
+        &__item{
+            flex-shrink: 0;
+            width: 100%;
+            height: 500px;
+        }
+    }
+}
+.fold-last{
+    min-height: calc(var(--vh) * 10);
+}
+.infocard{
+    position: fixed;
+    background-color: #000;
+    mix-blend-mode: difference;
+    filter: invert(1);
+    transition-property: bottom, right, height, width;
+    transition-duration: .5s;
+    width: 76px;
+    height: 52px;
+    bottom: 40px;
+    right: 48px;
+    &.--expand{
+        width: 100%;
+        height: calc(var(--vh) * 100);
+        bottom: 0;
+        right: 0;
+    }
+}
+.loading-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--off-color);
+    transition: top .2s ease-in-out;
+    &.--closed{
+        top: -100%;
+    }
+}
+.loading-icon{
+    width: 20px;
+    height: 52px;
+    background-color: transparent;
+    border: 3px solid var(--primary-color);
+    position: relative;
+    &::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 0;
+        background-color: var(--primary-color);
+        animation: growHeight 1s linear infinite alternate;
+    }
+}
+@keyframes growHeight {
+   to {height: 100%;}
+}
+.pagination{
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 48px;
+    display: grid;
+    flex-flow: column;
+    grid-gap: 12px;
+    width: 12px;
+    background-color: inherit;
+    background: transparent;
+    mix-blend-mode: difference;
+    &__item{
+        height: 20px;
+        width: 12px;
+        background-color: #000;
+        mix-blend-mode: difference;
+        filter: invert(1);
+        transition: height .2s;
+        &.active{
+            height: 120px;
+        }
+    }
+}
