@@ -12,13 +12,33 @@
   font-family: 'Press Start 2P', cursive;
 }
 
+a, a:visited, a:link {
+  color: inherit;
+}
+
+button {
+  border-radius: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: none;
+  opacity: .5;
+}
+
 html, body {
-  scroll-behavior: smooth;
   font-size: 16px;
   background-color: var(--primary-color);
   color: var(--off-color);
-  -webkit-transition: color .2s, background-color .2s;
-  transition: color .2s, background-color .2s;
+  -webkit-transition-property: color, background-color;
+  transition-property: color, background-color;
+  -webkit-transition-duration: 200ms;
+          transition-duration: 200ms;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-delay: 0ms;
+          transition-delay: 0ms;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -30,7 +50,8 @@ html, body {
   background: transparent;
 }
 
-.fold-first,
+.hero-content,
+.fold-first-content,
 .fold-second,
 .fold-third,
 .loading-screen {
@@ -56,6 +77,93 @@ html, body {
   height: 500px;
 }
 
+.fold-third {
+  overflow: hidden;
+  position: relative;
+  padding: 0 48px;
+}
+
+.fold-third .content {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fold-third .content__title {
+  text-align: center;
+  font-size: 2rem;
+  color: #000;
+  mix-blend-mode: difference;
+  -webkit-filter: invert(1);
+          filter: invert(1);
+}
+
+.fold-third .content .xp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  width: 342px;
+  margin-top: calc(var(--vh) * 50);
+  margin-bottom: calc(var(--vh) * 50);
+}
+
+.fold-third .content .xp__year {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  grid-gap: .5rem;
+  margin-bottom: .75rem;
+}
+
+.fold-third .content .xp__year strong {
+  font-size: 5rem;
+  text-shadow: -2px -2px 0 var(--primary-color), 2px -2px 0 var(--primary-color), -2px 2px 0 var(--primary-color), 2px 2px 0 var(--primary-color);
+}
+
+.fold-third .content .xp__year .--active {
+  margin-bottom: .5rem;
+}
+
+.fold-third .content .xp__year .--active p {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  text-shadow: -2px -2px 0 var(--primary-color), 2px -2px 0 var(--primary-color), -2px 2px 0 var(--primary-color), 2px 2px 0 var(--primary-color);
+}
+
+.fold-third .content .xp__year .--active span {
+  font-size: 14px;
+  text-shadow: -2px -2px 0 var(--primary-color), 2px -2px 0 var(--primary-color), -2px 2px 0 var(--primary-color), 2px 2px 0 var(--primary-color);
+}
+
+.fold-third .content .xp__jobtitle {
+  font-size: 14px;
+  text-transform: capitalize;
+  color: var(--primary-color);
+  background-color: var(--off-color);
+  text-align: center;
+  padding: .75rem;
+}
+
+.fold-third .content .xp__company {
+  font-size: 14px;
+  line-height: 1.5;
+  text-transform: capitalize;
+  padding: 1.25rem 2rem;
+  border: 4px solid var(--off-color);
+  background-color: var(--primary-color);
+}
+
+.fold-third .content .xp:nth-child(odd) {
+  margin-left: auto;
+}
+
 .fold-last {
   min-height: calc(var(--vh) * 10);
 }
@@ -66,10 +174,14 @@ html, body {
   mix-blend-mode: difference;
   -webkit-filter: invert(1);
           filter: invert(1);
-  -webkit-transition-property: bottom, right, height, width;
-  transition-property: bottom, right, height, width;
-  -webkit-transition-duration: .5s;
-          transition-duration: .5s;
+  -webkit-transition-property: bottom, right, height, width, 3;
+  transition-property: bottom, right, height, width, 3;
+  -webkit-transition-duration: 200ms;
+          transition-duration: 200ms;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-delay: 0ms;
+          transition-delay: 0ms;
   width: 76px;
   height: 52px;
   bottom: 40px;
@@ -81,6 +193,10 @@ html, body {
   height: calc(var(--vh) * 100);
   bottom: 0;
   right: 0;
+  background-color: var(--off-color);
+  mix-blend-mode: normal;
+  -webkit-filter: none;
+          filter: none;
 }
 
 .loading-screen {
@@ -97,12 +213,18 @@ html, body {
       -ms-flex-pack: center;
           justify-content: center;
   background-color: var(--off-color);
-  -webkit-transition: top .2s ease-in-out;
-  transition: top .2s ease-in-out;
+  -webkit-transition-property: top;
+  transition-property: top;
+  -webkit-transition-duration: 200ms;
+          transition-duration: 200ms;
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
+  -webkit-transition-delay: 0ms;
+          transition-delay: 0ms;
 }
 
 .loading-screen.--closed {
-  top: -100%;
+  top: calc(var(--vh) * -100);
 }
 
 .loading-icon {
@@ -124,6 +246,67 @@ html, body {
           animation: growHeight 1s linear infinite alternate;
 }
 
+.pagination {
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translate(-200%, -50%);
+          transform: translate(-200%, -50%);
+  left: 48px;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  grid-gap: 12px;
+  width: 12px;
+  background: transparent;
+  mix-blend-mode: difference;
+  -webkit-transition-property: top;
+  transition-property: top;
+  -webkit-transition-duration: 200ms;
+          transition-duration: 200ms;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-delay: 0ms;
+          transition-delay: 0ms;
+}
+
+.pagination__item {
+  height: 20px;
+  width: 12px;
+  -webkit-transition-property: height;
+  transition-property: height;
+  -webkit-transition-duration: 200ms;
+          transition-duration: 200ms;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-delay: 0ms;
+          transition-delay: 0ms;
+}
+
+.pagination__item.--active {
+  height: 120px;
+  cursor: auto;
+}
+
+.pagination__item:not(.--active):hover, .pagination__item:not(.--active):focus {
+  height: 28px;
+}
+
+.cloud {
+  position: absolute;
+}
+
+.cloud rect {
+  fill: var(--off-color);
+}
+
+.cloud.--a0 {
+  right: 5%;
+  width: 300px !important;
+}
+
 @-webkit-keyframes growHeight {
   to {
     height: 100%;
@@ -134,39 +317,5 @@ html, body {
   to {
     height: 100%;
   }
-}
-
-.pagination {
-  position: fixed;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  left: 48px;
-  display: -ms-grid;
-  display: grid;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column;
-          flex-flow: column;
-  grid-gap: 12px;
-  width: 12px;
-  background-color: inherit;
-  background: transparent;
-  mix-blend-mode: difference;
-}
-
-.pagination__item {
-  height: 20px;
-  width: 12px;
-  background-color: #000;
-  mix-blend-mode: difference;
-  -webkit-filter: invert(1);
-          filter: invert(1);
-  -webkit-transition: height .2s;
-  transition: height .2s;
-}
-
-.pagination__item.active {
-  height: 120px;
 }
 /*# sourceMappingURL=style.css.map */
