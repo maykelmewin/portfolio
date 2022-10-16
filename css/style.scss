@@ -1,23 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+// scss variables and mixins
+$anmtn-ms: 200;
+$main-sidespace: 48;
+$max-width: 1080;
+
+@mixin transition($prop: all, $dur: 1, $tim: linear, $del: 0) {
+    transition-property: $prop;
+    transition-duration: ($dur * $anmtn-ms) + ms;
+    transition-timing-function: $tim;
+    transition-delay: ($del * $anmtn-ms) + ms;
+}
+
+@mixin invert-bg-container {
+    background-color: #000;
+    mix-blend-mode: difference;
+    filter: invert(1);
+}
+
+
 // general variable
 :root {
     --primary-color: #e5e5e5;
     --off-color: #1A1A1A;
 }
-
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: 'Press Start 2P', cursive;
 }
+a, a:visited, a:link { 
+    color: inherit;
+} 
+button {
+    border-radius: 0;
+    border: 0;
+    cursor: pointer;
+}
+:focus-visible{
+    outline: none;
+    opacity: .5
+}
 html, body{
-    scroll-behavior: smooth;
     font-size: 16px;
     background-color: var(--primary-color);
     color: var(--off-color);
-    transition: color .2s, background-color .2s;
+    @include transition((color, background-color));
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -27,11 +56,12 @@ html, body{
     width: 0;
     background: transparent;
 }
+
 // components
 
-
 // main css
-.fold-first,
+.hero-content,
+.fold-first-content,
 .fold-second,
 .fold-third,
 .loading-screen{
@@ -50,6 +80,71 @@ html, body{
         }
     }
 }
+.fold-third{
+    overflow: hidden;
+    position: relative;
+    padding: 0 ($main-sidespace + px);
+    .content{
+        max-width: ($max-width + px);
+        margin-left: auto;
+        margin-right: auto;
+        &__title{
+            text-align: center;
+            font-size: 2rem;
+            color: #000;
+            mix-blend-mode: difference;
+            filter: invert(1);
+        }
+        .xp{
+            display: flex;
+            flex-flow: column;
+            width: 342px;
+            margin-top: calc(var(--vh) * 50);
+            margin-bottom: calc(var(--vh) * 50);
+            &__year{
+                display: flex;
+                align-items: flex-end;
+                grid-gap: .5rem;
+                margin-bottom: .75rem;
+                strong{
+                    font-size: 5rem;
+                    text-shadow: -2px -2px 0 var(--primary-color), 2px -2px 0 var(--primary-color), -2px 2px 0 var(--primary-color), 2px 2px 0 var(--primary-color);
+                }
+                .--active{
+                    margin-bottom: .5rem;
+                    p{
+                        font-size: 1.5rem;
+                        text-transform: uppercase;
+                        text-shadow: -2px -2px 0 var(--primary-color), 2px -2px 0 var(--primary-color), -2px 2px 0 var(--primary-color), 2px 2px 0 var(--primary-color);
+                    }
+                    span{
+                        font-size: 14px;
+                        text-shadow: -2px -2px 0 var(--primary-color), 2px -2px 0 var(--primary-color), -2px 2px 0 var(--primary-color), 2px 2px 0 var(--primary-color);
+                    }
+                }
+            }
+            &__jobtitle{
+                font-size: 14px;
+                text-transform: capitalize;
+                color: var(--primary-color);
+                background-color: var(--off-color);
+                text-align: center;
+                padding: .75rem;
+            }
+            &__company{
+                font-size: 14px;
+                line-height: 1.5;
+                text-transform: capitalize;
+                padding: 1.25rem 2rem;
+                border: 4px solid var(--off-color);
+                background-color: var(--primary-color);
+            }
+        }
+        & .xp:nth-child(odd){
+            margin-left: auto;
+        }
+    }
+}
 .fold-last{
     min-height: calc(var(--vh) * 10);
 }
@@ -58,17 +153,19 @@ html, body{
     background-color: #000;
     mix-blend-mode: difference;
     filter: invert(1);
-    transition-property: bottom, right, height, width;
-    transition-duration: .5s;
+    @include transition((bottom, right, height, width, 3));
     width: 76px;
     height: 52px;
     bottom: 40px;
-    right: 48px;
+    right: ($main-sidespace + px);
     &.--expand{
         width: 100%;
         height: calc(var(--vh) * 100);
         bottom: 0;
         right: 0;
+        background-color: var(--off-color);
+        mix-blend-mode: normal;
+        filter: none;
     }
 }
 .loading-screen{
@@ -79,9 +176,9 @@ html, body{
     align-items: center;
     justify-content: center;
     background-color: var(--off-color);
-    transition: top .2s ease-in-out;
+    @include transition(top, 1, ease-in-out);
     &.--closed{
-        top: -100%;
+        top: calc(var(--vh) * -100);
     }
 }
 .loading-icon{
@@ -100,30 +197,43 @@ html, body{
         animation: growHeight 1s linear infinite alternate;
     }
 }
-@keyframes growHeight {
-   to {height: 100%;}
-}
 .pagination{
     position: fixed;
     top: 50%;
-    transform: translateY(-50%);
-    left: 48px;
+    transform: translate(-200%, -50%);
+    left: ($main-sidespace + px);
     display: grid;
     flex-flow: column;
     grid-gap: 12px;
     width: 12px;
-    background-color: inherit;
     background: transparent;
     mix-blend-mode: difference;
+    @include transition((top));
     &__item{
         height: 20px;
         width: 12px;
-        background-color: #000;
-        mix-blend-mode: difference;
-        filter: invert(1);
-        transition: height .2s;
-        &.active{
+        @include transition((height));
+        &.--active{
             height: 120px;
+            cursor: auto;
+        }
+        &:not(.--active):hover, &:not(.--active):focus{
+            height: 28px;
         }
     }
 }
+.cloud {
+    position: absolute;
+    rect{
+        fill: var(--off-color);
+    }
+    &.--a0{
+        // top:0;
+        right: 5%;
+        width: 300px !important;
+    }
+}
+//keyframes
+@keyframes growHeight {
+    to {height: 100%;}
+ }

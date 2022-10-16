@@ -17,29 +17,57 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body ng-controller="MainController">
-    <section class="fold-first">
-        <div class="hero-content">
-            <button ng-click="toggleColormode()">Togle Color Mode</button>
-        </div>
-        <div class="fold-first-content"></div>
-    </section>
-    <section class="fold-second">
-        <div class="slides">
-            <div class="slides__item">s</div>
-            <div class="slides__item">b</div>
-            <div class="slides__item">k</div>
-        </div>
-    </section>
-    <section class="fold-third"></section>
-    <section class="fold-last">
-    </section>
+    <div id="phase1">
+        <section class="fold-first" >
+            <div class="hero-content">
+                <button ng-click="toggleColormode()">Togle Color Mode</button>
+            </div>
+            <div class="fold-first-content"></div>
+        </section>
+    </div>
+    <div id="phase2">
+        <section class="fold-second">
+            <div class="slides">
+                <div class="slides__item">s</div>
+                <div class="slides__item">b</div>
+                <div class="slides__item">k</div>
+            </div>
+        </section>
+    </div>
+    <div id="phase3">
+        <section class="fold-third">
+            <svg ng-repeat="item in [1,2,3] track by ::$index" class="cloud --a{{::$index}}" width="302" height="116" viewBox="0 0 302 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect y="64.9346" width="107.804" height="18.2826" fill="black"/><rect x="24.5869" y="34.0437" width="107.804" height="68.7172" fill="black"/><rect x="68.0868" y="47.2827" width="107.804" height="68.7172" fill="black"/><rect x="54.2174" width="107.804" height="68.7172" fill="black"/><rect x="54.2174" y="27.739" width="150.674" height="68.7172" fill="black"/><rect x="116.63" y="57.3694" width="150.674" height="34.0434" fill="black"/><rect x="141.848" y="76.2825" width="159.5" height="15.1304" fill="black"/><rect x="78.8042" y="47.9128" width="150.674" height="34.0434" fill="black"/>
+            </svg>
+            <svg ng-repeat="item in [1,2,3,4,5] track by ::$index" class="cloud --b" width="100" height="48" viewBox="0 0 100 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="43.75" y="8" width="44.3182" height="30" fill="#1A1A1A"/><rect x="63.6364" width="24.4318" height="48" fill="#1A1A1A"/><rect y="21" width="100" height="17" fill="#1A1A1A"/>
+            </svg>  
+            <div class="content">
+                <p class="content__title">Professional Experience</h6>
+                <div class="xp" ng-repeat="item in ::xp">
+                    <div class="xp__year">
+                        <strong>&#60;{{::item.year.no}}</strong>
+                        <div class="--active">   
+                            <p>{{::item.year.unit}}</p>
+                            <span ng-show="::item.isActive"> to present</span>
+                        </div>
+                    </div>
+                    <p class="xp__jobtitle">{{::item.title}}</p>
+                    <p class="xp__company">{{::item.company}}</p>
+                </div>
+            </div>     
+        </section>
+    </div>
+    <div id="phase4">
+        <section class="fold-last" >
+        </section>
+    </div>
     <div class="infocard"></div>
     <div class="pagination">
-        <div class="pagination__item"></div>
-        <div class="pagination__item"></div>
-        <div class="pagination__item"></div>
-        <div class="pagination__item"></div>
-        <div class="pagination__item"></div>
+        <button class="pagination__item" id="btnPhase1"></button>
+        <button class="pagination__item" id="btnPhase2"></button>
+        <button class="pagination__item" id="btnPhase3"></button>
+        <button class="pagination__item" id="btnPhase4"></button>
     </div>
     <section class="loading-screen">
         <div class="loading-icon"></div>
