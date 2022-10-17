@@ -39,7 +39,8 @@
             <svg ng-repeat="item in [1,2,3] track by ::$index" class="cloud --a{{::$index}}" width="302" height="116" viewBox="0 0 302 116" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect y="64.9346" width="107.804" height="18.2826" fill="black"/><rect x="24.5869" y="34.0437" width="107.804" height="68.7172" fill="black"/><rect x="68.0868" y="47.2827" width="107.804" height="68.7172" fill="black"/><rect x="54.2174" width="107.804" height="68.7172" fill="black"/><rect x="54.2174" y="27.739" width="150.674" height="68.7172" fill="black"/><rect x="116.63" y="57.3694" width="150.674" height="34.0434" fill="black"/><rect x="141.848" y="76.2825" width="159.5" height="15.1304" fill="black"/><rect x="78.8042" y="47.9128" width="150.674" height="34.0434" fill="black"/>
             </svg>
-            <svg ng-repeat="item in [1,2,3,4,5] track by ::$index" class="cloud --b" width="100" height="48" viewBox="0 0 100 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                
+            <svg ng-repeat="item in [1,2,3,4,5] track by ::$index" class="cloud --b{{::$index}}" width="100" height="48" viewBox="0 0 100 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="43.75" y="8" width="44.3182" height="30" fill="#1A1A1A"/><rect x="63.6364" width="24.4318" height="48" fill="#1A1A1A"/><rect y="21" width="100" height="17" fill="#1A1A1A"/>
             </svg>  
             <div class="content">
@@ -53,7 +54,7 @@
                         </div>
                     </div>
                     <p class="xp__jobtitle">{{::item.title}}</p>
-                    <p class="xp__company">{{::item.company}}</p>
+                    <p class="xp__company"><a ng-show="::item.isActive" href="https://www.investagrams.com/" target="_blank">{{::item.company}}</a><span ng-show="::!item.isActive">{{::item.company}}</span></p>
                 </div>
             </div>     
         </section>
@@ -72,6 +73,20 @@
     <section class="loading-screen">
         <div class="loading-icon"></div>
     </section>
+    <div class="me --falling">
+        <svg width="169" height="515" viewBox="0 0 169 515" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="head" d="M133.171 242.327H33.6586V341.839H133.171V242.327Z" fill="#1A1A1A"/>
+            <path class="body" d="M93.6585 368.18H70.2439V514.522H93.6585V368.18Z" fill="#1A1A1A"/>
+            <path class="rhand" d="M40.9756 214.522H0V243.79H40.9756V214.522Z" fill="#1A1A1A"/>
+            <path class="lhand" d="M168.293 214.522H127.317V243.79H168.293V214.522Z" fill="#1A1A1A"/>
+            <path d="M0 14H4V164H0V14Z" fill="#1A1A1A"/>
+            <path d="M12 0H16V150H12V0Z" fill="#1A1A1A"/>
+            <path d="M143 36H147V136H143V36Z" fill="#1A1A1A"/>
+            <path d="M159 79H163V159H159V79Z" fill="#1A1A1A"/>
+            <path d="M12 38H16V68H12V38Z" fill="#1A1A1A"/>
+        </svg>
+            
+    </div>
 
     
     <script src="js/pre.js"></script>
