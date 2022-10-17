@@ -14,6 +14,7 @@
 
 a, a:visited, a:link {
   color: inherit;
+  text-decoration: none;
 }
 
 button {
@@ -80,10 +81,11 @@ html, body {
 .fold-third {
   overflow: hidden;
   position: relative;
-  padding: 0 48px;
+  padding: calc(var(--vh) * 25) 48px;
 }
 
 .fold-third .content {
+  position: relative;
   max-width: 1080px;
   margin-left: auto;
   margin-right: auto;
@@ -107,8 +109,8 @@ html, body {
       -ms-flex-flow: column;
           flex-flow: column;
   width: 342px;
-  margin-top: calc(var(--vh) * 50);
-  margin-bottom: calc(var(--vh) * 50);
+  margin-top: calc(var(--vh) * 10);
+  margin-bottom: calc(var(--vh) * 10);
 }
 
 .fold-third .content .xp__year {
@@ -160,7 +162,7 @@ html, body {
   background-color: var(--primary-color);
 }
 
-.fold-third .content .xp:nth-child(odd) {
+.fold-third .content .xp:nth-child(even) {
   margin-left: auto;
 }
 
@@ -242,8 +244,8 @@ html, body {
   width: 100%;
   height: 0;
   background-color: var(--primary-color);
-  -webkit-animation: growHeight 1s linear infinite alternate;
-          animation: growHeight 1s linear infinite alternate;
+  -webkit-animation: growHeight 2s linear infinite alternate;
+          animation: growHeight 2s linear infinite alternate;
 }
 
 .pagination {
@@ -303,8 +305,79 @@ html, body {
 }
 
 .cloud.--a0 {
+  top: 0;
   right: 5%;
-  width: 300px !important;
+  width: 300px;
+}
+
+.cloud.--a1 {
+  left: 20%;
+  top: 20%;
+  width: 200px;
+}
+
+.cloud.--a2 {
+  left: 10%;
+  bottom: 10%;
+  width: 500px;
+}
+
+.cloud.--b0 {
+  left: 15%;
+  top: 10%;
+  width: 80px;
+}
+
+.cloud.--b1 {
+  left: 30%;
+  top: 18%;
+  width: 100px;
+}
+
+.cloud.--b2 {
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateX(-60%);
+          transform: translateX(-60%);
+  width: 100px;
+}
+
+.cloud.--b3 {
+  left: 25%;
+  bottom: 5%;
+  width: 100px;
+}
+
+.cloud.--b4 {
+  right: 10%;
+  top: 59%;
+  width: 100px;
+}
+
+.me path {
+  fill: var(--off-color);
+}
+
+.me.--falling {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translate(0, -100%);
+          transform: translate(0, -100%);
+}
+
+.me.--falling svg {
+  width: Max(7vw, 80px);
+}
+
+.me.--falling .head {
+  -webkit-animation: shakinghead .4s alternate infinite;
+          animation: shakinghead .4s alternate infinite;
+}
+
+.me.--falling .rhand, .me.--falling .lhand {
+  -webkit-animation: shakingright .4s alternate infinite;
+          animation: shakingright .4s alternate infinite;
 }
 
 @-webkit-keyframes growHeight {
@@ -316,6 +389,50 @@ html, body {
 @keyframes growHeight {
   to {
     height: 100%;
+  }
+}
+
+@-webkit-keyframes shakinghead {
+  from {
+    -webkit-transform: translateX(-2%) rotate(1deg);
+            transform: translateX(-2%) rotate(1deg);
+  }
+  to {
+    -webkit-transform: translateX(2%) rotate(-2deg);
+            transform: translateX(2%) rotate(-2deg);
+  }
+}
+
+@keyframes shakinghead {
+  from {
+    -webkit-transform: translateX(-2%) rotate(1deg);
+            transform: translateX(-2%) rotate(1deg);
+  }
+  to {
+    -webkit-transform: translateX(2%) rotate(-2deg);
+            transform: translateX(2%) rotate(-2deg);
+  }
+}
+
+@-webkit-keyframes shakingright {
+  from {
+    -webkit-transform: translateX(5%);
+            transform: translateX(5%);
+  }
+  to {
+    -webkit-transform: translateX(-5%);
+            transform: translateX(-5%);
+  }
+}
+
+@keyframes shakingright {
+  from {
+    -webkit-transform: translateX(5%);
+            transform: translateX(5%);
+  }
+  to {
+    -webkit-transform: translateX(-5%);
+            transform: translateX(-5%);
   }
 }
 /*# sourceMappingURL=style.css.map */

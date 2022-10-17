@@ -32,6 +32,7 @@ $max-width: 1080;
 }
 a, a:visited, a:link { 
     color: inherit;
+    text-decoration: none;
 } 
 button {
     border-radius: 0;
@@ -83,8 +84,9 @@ html, body{
 .fold-third{
     overflow: hidden;
     position: relative;
-    padding: 0 ($main-sidespace + px);
+    padding: calc(var(--vh) * 25) ($main-sidespace + px);
     .content{
+        position: relative;
         max-width: ($max-width + px);
         margin-left: auto;
         margin-right: auto;
@@ -99,8 +101,8 @@ html, body{
             display: flex;
             flex-flow: column;
             width: 342px;
-            margin-top: calc(var(--vh) * 50);
-            margin-bottom: calc(var(--vh) * 50);
+            margin-top: calc(var(--vh) * 10);
+            margin-bottom: calc(var(--vh) * 10);
             &__year{
                 display: flex;
                 align-items: flex-end;
@@ -140,7 +142,7 @@ html, body{
                 background-color: var(--primary-color);
             }
         }
-        & .xp:nth-child(odd){
+        & .xp:nth-child(even){
             margin-left: auto;
         }
     }
@@ -194,7 +196,7 @@ html, body{
         width: 100%;
         height: 0;
         background-color: var(--primary-color);
-        animation: growHeight 1s linear infinite alternate;
+        animation: growHeight 2s linear infinite alternate;
     }
 }
 .pagination{
@@ -228,12 +230,79 @@ html, body{
         fill: var(--off-color);
     }
     &.--a0{
-        // top:0;
+        top: 0;
         right: 5%;
-        width: 300px !important;
+        width: 300px;
     }
+    &.--a1{
+        left: 20%;
+        top: 20%;
+        width: 200px;
+    }
+    &.--a2{
+        left: 10%;
+        bottom: 10%;
+        width: 500px;
+    }
+    &.--b0{
+        left: 15%;
+        
+        top: 10%;
+        width: 80px;
+    }
+    &.--b1{
+        left: 30%;
+        top: 18%;
+        width: 100px;
+    }
+    &.--b2{
+        left: 0;
+        top: 50%;
+        transform: translateX(-60%);
+        width: 100px;
+    }
+    &.--b3{
+        left: 25%;
+        bottom: 5%;
+        width: 100px;
+    }
+    &.--b4{
+        right: 10%;
+        
+        top: 59%;
+        width: 100px;
+    }
+}
+
+.me{ 
+    path{
+        fill: var(--off-color);
+    }
+   &.--falling{
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(0,-100%);
+    svg{
+        width: Max( 7vw,80px);
+    }
+    .head{
+        animation: shakinghead .4s alternate infinite;
+    }
+    .rhand, .lhand{
+        animation: shakingright .4s alternate infinite;
+    }
+   }
 }
 //keyframes
 @keyframes growHeight {
     to {height: 100%;}
+ }
+@keyframes shakinghead {
+    from {transform: translateX(-2%) rotate(1deg);}
+    to {transform: translateX(2%) rotate(-2deg);}
+ }
+@keyframes shakingright {
+    from {transform: translateX(5%);}
+    to {transform: translateX(-5%);}
  }

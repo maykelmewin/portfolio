@@ -36,15 +36,30 @@ document.querySelectorAll(".pagination__item").forEach((btn, index, array) => {
     });
 });
 
-// const falling = gsap.from(".content__title", {
-//     scale: 5,
-//     ease: "none",
-//     duration: .2
-// });
+function pageReadyAnimation(){
+   const falling = gsap.timeline();
+    falling.fromTo('.--a0', {yPercent: -1000}, {yPercent: 1000, duration: '2'})
+    .fromTo('.--a1', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
+    .fromTo('.--a2', {yPercent: -3000}, {yPercent: 0, duration: '2'}, "<")
+    .fromTo('.--b0', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
+    .fromTo('.--b1', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
+    .fromTo('.--b2', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
+    .fromTo('.--b3', {yPercent: 0}, { yPercent: 0, duration: '2'}, "<")
+    .fromTo('.--b4', {yPercent: 0}, { yPercent: -1000, duration: '2'}, "<")
 
+    ScrollTrigger.create({
+        animation: falling,
+        trigger: ".fold-third",
+        end: () => "+=" + document.querySelector(".fold-third").offsetWidth,
+        scrub: true,
+    });
 
-// ScrollTrigger.create({
-//     animation: falling,
-//     trigger: ".fold-third",
-//     scrub: true,
-// });
+}
+gsap.to(".me.--falling", {
+    scrollTrigger: {
+        trigger: ".fold-third",
+        start: "top top",
+        scrub: true
+    },
+    top: "300%"
+});
