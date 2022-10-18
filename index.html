@@ -20,9 +20,27 @@
     <div id="phase1">
         <section class="fold-first" >
             <div class="hero-content">
-                <button ng-click="toggleColormode()">Togle Color Mode</button>
+                <!-- <button class="focusmouse" ng-click="toggleColormode()">Togle Color Mode</button> -->
+                <div class="me-space"></div>
+                <div class="hero-content__name">Michael Merin</div>
+                <div class="hero-content__jobtitle">Front-end Web Developer</div>
+                <button class="btn focusmouse">
+                    <span>Know me</span>
+                </button>
             </div>
-            <div class="fold-first-content"></div>
+            <div class="fold-first-content">
+                <div class="me-space"></div>
+                <div class="description focusmouse">
+                    <div class="description__container ">
+                        <div class="description__item focusmouse"
+                        ng-repeat="item in ::desc track by ::$index"
+                        ng-class="{'--active' : animate == $index}"
+                        ng-click="animateMe($index)">
+                            <div>{{::item.desc}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
     <div id="phase2">
@@ -65,14 +83,16 @@
     </div>
     <div class="infocard"></div>
     <div class="pagination">
-        <button class="pagination__item" id="btnPhase1"></button>
-        <button class="pagination__item" id="btnPhase2"></button>
-        <button class="pagination__item" id="btnPhase3"></button>
-        <button class="pagination__item" id="btnPhase4"></button>
+        <button class="pagination__item focusmouse" id="btnPhase1"></button>
+        <button class="pagination__item focusmouse" id="btnPhase2"></button>
+        <button class="pagination__item focusmouse" id="btnPhase3"></button>
+        <button class="pagination__item focusmouse" id="btnPhase4"></button>
     </div>
     <section class="loading-screen">
         <div class="loading-icon"></div>
     </section>
+
+
     <div class="me --falling">
         <svg width="169" height="515" viewBox="0 0 169 515" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="head" d="M133.171 242.327H33.6586V341.839H133.171V242.327Z" fill="#1A1A1A"/>
@@ -85,9 +105,11 @@
             <path d="M159 79H163V159H159V79Z" fill="#1A1A1A"/>
             <path d="M12 38H16V68H12V38Z" fill="#1A1A1A"/>
         </svg>
-            
     </div>
 
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
     
     <script src="js/pre.js"></script>
     <script src="js/app.js"></script>

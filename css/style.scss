@@ -50,6 +50,7 @@ html, body{
     @include transition((color, background-color));
     -ms-overflow-style: none;
     scrollbar-width: none;
+    cursor: none;
 }
 ::-webkit-scrollbar ,
 ::-webkit-scrollbar-thumb {
@@ -59,15 +60,123 @@ html, body{
 }
 
 // components
+.btn{
+    position: relative;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .75rem 1.25rem;
+    border: 3px solid var(--off-color);
+    & > span{
+        position: relative;
+        color: #000;
+        mix-blend-mode: difference;
+        filter: invert(1);
+        // @include transition(color);
+    }
+    &::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 0;
+        background-color: var(--off-color);
+        @include transition(height);
+    }
+    &:hover{
+        &::before{
+            height: 100%;
+        }
+        // & > span{
+        //     color: var(--primary-color);
+        // }
+    }
+}
 
+.me-space{
+    // background-color: red;
+    width: 100px;
+    height: 170px;
+}
 // main css
 .hero-content,
 .fold-first-content,
 .fold-second,
-.fold-third,
-.loading-screen{
+.fold-third{
     width: 100%;
     min-height: calc(var(--vh) * 100);
+}
+.hero-content{
+    margin: 0 auto;
+    max-width: ($max-width + px);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    &__name{
+        color: var(--off-color);
+        font-size: 3rem;
+        margin-top: 2.25rem;
+        margin-bottom: 1.5rem;
+    }
+    &__jobtitle{
+        font-size: 1rem;
+        margin-bottom: 2.25rem;
+    }
+    .btn{
+        font-size: 14px;
+    }
+}
+.fold-first-content{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    .description{
+        margin-top: calc(var(--vh) * 10);
+        background-color: var(--off-color);
+        width: 100%;
+        box-shadow:
+        0 0 0 4px var(--primary-color) ,
+        0 0 0 8px var(--off-color);
+        padding: 1.25rem;
+        &__container{
+            max-width: 640px ;
+            margin: 0 auto;
+            // padding-left: 1.5rem;
+        }
+        &__item{
+            color: var(--primary-color);
+            line-height: 1.5;
+            padding: .75rem 0 .75rem 1.75rem;
+            cursor: pointer;
+            position: relative;
+            &::before{
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 0;
+                width: .75rem;
+                background-color: var(--primary-color);
+                @include transition(height);
+            }
+
+            & > div{
+                @include transition(transform)
+            }
+            &:hover > div, &.--active > div {
+                transform: translateX(8px);
+            }
+            
+            &.--active{
+                &::before{
+                    height: 100%;
+                }
+            }
+        }
+    }
 }
 .fold-second{
     overflow: hidden;
@@ -171,6 +280,8 @@ html, body{
     }
 }
 .loading-screen{
+    min-height: 100vh;
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -180,6 +291,7 @@ html, body{
     background-color: var(--off-color);
     @include transition(top, 1, ease-in-out);
     &.--closed{
+        min-height: calc(var(--vh) * 100);
         top: calc(var(--vh) * -100);
     }
 }
@@ -202,7 +314,7 @@ html, body{
 .pagination{
     position: fixed;
     top: 50%;
-    transform: translate(-200%, -50%);
+    transform: translate(0, -50%);
     left: ($main-sidespace + px);
     display: grid;
     flex-flow: column;
@@ -213,11 +325,10 @@ html, body{
     @include transition((top));
     &__item{
         height: 20px;
-        width: 12px;
+        width: 16px;
         @include transition((height));
         &.--active{
             height: 120px;
-            cursor: auto;
         }
         &:not(.--active):hover, &:not(.--active):focus{
             height: 28px;
@@ -275,14 +386,16 @@ html, body{
 }
 
 .me{ 
+    mix-blend-mode: difference;
+    filter: invert(1);
     path{
-        fill: var(--off-color);
+        fill: #000;
     }
    &.--falling{
     position: fixed;
     top: 0;
     left: 50%;
-    transform: translate(0,-100%);
+    transform: translate(-50%,-100%);
     svg{
         width: Max( 7vw,80px);
     }
@@ -294,6 +407,48 @@ html, body{
     }
    }
 }
+
+.cursor {
+    position: fixed;
+    background-color: transparent;
+    border: 4px solid #000;
+    mix-blend-mode: difference;
+    filter: invert(1);
+    width: .5rem;
+    height: .5rem;
+    z-index: 1;
+    transition: 0.3s cubic-bezier(0.75, -1.27, 0.3, 2.33) transform,
+        0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33) opacity;
+    user-select: none;
+    pointer-events: none;
+    transform: scale(1);
+    &.active {
+        opacity: 0.5;
+        transform: scale(0);
+    }
+}
+
+.cursor-follower {
+    position: fixed;
+    background-color: transparent;
+    border: 4px solid #000;
+    mix-blend-mode: difference;
+    filter: invert(1);
+    width: 40px;
+    height: 40px;
+    z-index: 1;
+    transition: height 0.6s, width 0.6s, transform 0.6s ;
+    user-select: none;
+    pointer-events: none;
+    transform: translate(5px, 5px);
+
+    &.active {
+        height: 0;
+        width: 0;
+        transform: translate(200%,200%);
+    }
+}
+
 //keyframes
 @keyframes growHeight {
     to {height: 100%;}
