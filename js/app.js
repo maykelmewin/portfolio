@@ -22,6 +22,34 @@ app.controller('MainController', function MainController($scope) {
             isActive: true
         },
     ]
+    
+    $scope.desc = [
+        {
+            desc: 'He',
+        },
+        {
+            desc: 'Filipino',
+        },
+        {
+            desc: 'Proficient in English',
+        },
+        {
+            desc: 'Two decades of existence',
+        },
+        {
+            desc: 'Obsessed with art and codes',
+        },
+        {
+            desc: 'Greatest interest in turning outstanding design into a website',
+        },
+       
+    ]
+
+    $scope.animate = 0;
+    $scope.animateMe = function(id) {
+        // alert(id);
+        $scope.animate = id;
+    }
     function darkmode(){
         let darkMode  = localStorage.getItem("dark-mode");
         if (darkMode === "enabled") {
