@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+// general variable
+:root {
+    --primary-color: #e5e5e5;
+    --off-color: #1A1A1A;
+}
+
+::selection {
+    color: var(--off-color);
+    background: #898989;
+  }
 // scss variables and mixins
 $anmtn-ms: 200;
 $main-sidespace: 48;
@@ -13,18 +23,13 @@ $max-width: 1080;
 }
 
 @mixin invert-bg-container {
-    background-color: #000;
+    background-color: #000; 
     mix-blend-mode: difference;
     filter: invert(1);
 }
 
 
-// general variable
-:root {
-    --primary-color: #e5e5e5;
-    --off-color: #1A1A1A;
-}
-*{
+*, *::before, *::after{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -38,10 +43,9 @@ button {
     border-radius: 0;
     border: 0;
     cursor: pointer;
-}
+}   
 :focus-visible{
-    outline: none;
-    opacity: .5
+    outline-color: var(--off-color);
 }
 html, body{
     font-size: 16px;
@@ -68,17 +72,18 @@ html, body{
     justify-content: center;
     padding: .75rem 1.25rem;
     border: 3px solid var(--off-color);
+    & > svg,
     & > span{
         position: relative;
         color: #000;
         mix-blend-mode: difference;
         filter: invert(1);
-        // @include transition(color);
     }
     &::before{
         content: "";
         position: absolute;
         top: 0;
+        left: 0;
         width: 100%;
         height: 0;
         background-color: var(--off-color);
@@ -88,16 +93,30 @@ html, body{
         &::before{
             height: 100%;
         }
-        // & > span{
-        //     color: var(--primary-color);
-        // }
+    }
+    &.--revertcolor{
+        border-color: var(--primary-color);
+        &::before{
+            background-color: var(--primary-color);
+        }
     }
 }
 
 .me-space{
-    // background-color: red;
-    width: 100px;
-    height: 170px;
+    width: 104px;
+    height: 176px;
+    &.--container{
+        position: relative;
+        &::before{
+            content: '';
+            position: absolute;
+            top: -24px;
+            left: -60px;
+            width: 222px;
+            height: 224px;
+            border: 4px solid var(--off-color);
+        }
+    }
 }
 // main css
 .hero-content,
@@ -112,12 +131,14 @@ html, body{
     max-width: ($max-width + px);
     display: flex;
     flex-flow: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    padding-top: calc(var(--vh) * 20);
+    padding-bottom: calc(var(--vh) * 10);
     &__name{
         color: var(--off-color);
         font-size: 3rem;
-        margin-top: 2.25rem;
+        margin-top: calc(var(--vh) * 5);
         margin-bottom: 1.5rem;
     }
     &__jobtitle{
@@ -131,8 +152,10 @@ html, body{
 .fold-first-content{
     display: flex;
     flex-flow: column;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
+    padding-top: calc(var(--vh) * 10);
+    padding-bottom: calc(var(--vh) * 10);
     .description{
         margin-top: calc(var(--vh) * 10);
         background-color: var(--off-color);
@@ -178,15 +201,121 @@ html, body{
         }
     }
 }
+.fold-first{
+    overflow: hidden;
+}
 .fold-second{
     overflow: hidden;
+    &__title{
+        position: absolute;
+        z-index: 1;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        float: left;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
     .slides{
         display: flex;
         width: 100%;
         &__item{
             flex-shrink: 0;
             width: 100%;
-            height: 500px;
+            height: calc(var(--vh) * 100);
+            padding-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .content{
+                flex-grow: 1;
+                max-width: ($max-width + px) ;
+                height: calc(var(--vh) * 70);
+                display: flex;
+                flex-flow: column;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                &__title{ 
+                    font-size: 18px;
+                    margin-bottom: 2rem
+                }
+                &__description {
+                    font-size: 12px;                    
+                    margin-left: 1rem;
+                    margin-right: 1rem;
+                    max-width: 820px;
+                    line-height: 1.5;
+                }
+            }
+            .box{
+                margin-top: 2rem;
+                display: flex;
+                flex-grow: 1;
+                border: 4px solid var(--off-color);
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &.window{
+                    .window__btn{
+                        position: absolute;
+                        z-index: 2;
+                        background-color: transparent;
+                        color: var(--primary-color);
+                        text-decoration: underline;
+                        opacity: 1;
+                        transition: opacity ($anmtn-ms + ms) ease-in-out ;
+                    }
+                    &::before{
+                        content: "";
+                        background-color: var(--off-color);                    
+                        position: absolute;
+                        height: 100%;
+                        width: 100%;
+                        top: 0;
+                        left: 0;
+                        transition: height ($anmtn-ms + ms) ease-in-out ;
+                    }
+                }
+                &.window--close{
+                    
+                    .window__btn{
+                        opacity: 0;
+                        pointer-events: none;
+                        
+                    }
+                    &::before{
+                        height: 0;
+                    }
+                }
+                &.dailyquote{
+                    padding: 60px;
+                    flex-flow: column;
+                    justify-content: flex-end;
+                    .dailyquote_quote{
+                        margin-top: auto ;
+                        font-size: 24px;
+                    }
+                    .dailyquote_author{
+                        font-size: 14px;
+                        margin-top: auto ;
+                        margin-left: auto ;
+                        background-color: var(--off-color);
+                        color: var(--primary-color);
+                        padding: .75rem 1.5rem;
+                    }
+                }
+                &__description{
+                    font-size: 12px;
+                    margin-left: auto;
+                    margin-top: 1.5rem;
+                }
+            }
+            .model{
+                width: 100%;
+                height: 100%;
+            }
         }
     }
 }
@@ -264,11 +393,100 @@ html, body{
     background-color: #000;
     mix-blend-mode: difference;
     filter: invert(1);
-    @include transition((bottom, right, height, width, 3));
+    @include transition((bottom, right, height, width, 5));
     width: 76px;
     height: 52px;
     bottom: 40px;
     right: ($main-sidespace + px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    &__name{
+        font-size: 20px;
+        color: var(--primary-color);
+        display: flex;
+        flex-wrap: wrap;
+        > span{
+            display: flex;
+        }
+    }
+    &__tag{
+        margin-bottom: 60px;
+    }
+    &__title,
+    &__tag{
+        font-size: 16px;
+        color: var(--primary-color);
+    }
+    &__detail,
+    &__toggle .label{
+        font-size: 14px;
+        color: var(--primary-color);
+    }
+    &__info{
+        cursor: pointer;
+        font-size: 8px;
+        padding: 12px 0;
+        color: var(--primary-color);
+        position: absolute;
+        left: 32px;
+        bottom: -20px;
+        white-space: nowrap;
+
+    }
+    &__detail{ 
+        margin-top: 48px;
+        & > div{
+        margin-bottom: 1rem;
+        }
+    }
+    &__icons{
+        margin-top: 48px;
+        gap: 20px;
+        svg path{
+            fill: #000;
+        }
+        .btn{
+            padding: 4px;
+            border: none;
+        }
+    }
+    &__toggle{
+        display: flex;
+        align-items: center;
+        .label{
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+        .toggle{
+            cursor: pointer;
+            width: 32px;
+            height: 52px;
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: center;
+            padding: 4px;
+            &__button{
+                background-color: var(--primary-color);
+                width: 20px;
+                height: 20px;
+            }
+            &:hover .toggle__button{
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+    &__pageup-button{
+        position: absolute;
+        bottom: 40px;
+        right: ($main-sidespace + px);
+    }
+    &__name--others, &__title, &__tag, &__toggle, &__toggle .label, &__detail, &__icons, &__pageup-button{
+        display: none;
+    }
     &.--expand{
         width: 100%;
         height: calc(var(--vh) * 100);
@@ -277,6 +495,79 @@ html, body{
         background-color: var(--off-color);
         mix-blend-mode: normal;
         filter: none;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 Max(20vw, ($main-sidespace + px ));
+        .infocard__name{
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+        .infocard__title{
+            font-size: 1rem;
+        }
+        .infocard__tag,
+        .infocard__detail,
+        .infocard__title,
+        .infocard__toggle .label,
+        .infocard__pageup-button,
+        .infocard__name--others{
+            display: block;
+        }
+        .infocard__toggle{
+            display: flex;
+            position: absolute;
+            gap: 2rem;
+            top: 40px;
+            right: ($main-sidespace + px);
+        }
+        .infocard__icons{
+            display: flex;
+        }
+    }
+    &.--inverted{
+        background-color: #fff;
+        filter: none;
+    }
+    .block{
+        display: none;
+    }
+}
+@media screen and (max-width: 600px) {
+    .infocard:not(.--expand) .block{
+        display: block;
+        position: absolute;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+}
+@media screen and (min-width: 600px) {
+    .infocard:not(.--expand){
+        &:hover{
+            width: 300px;
+            height: 172px;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 32px;   
+            background-color: var(--off-color);
+            mix-blend-mode: normal;
+            filter: none;        
+            .infocard__info{
+                bottom: 8px;
+            }
+            .infocard__title{
+                display: block;
+                font-size: 10px;
+                margin-top: .75rem;
+            }
+            .infocard__name--others,
+            .infocard__toggle{
+                display: flex;
+            }
+        }
     }
 }
 .loading-screen{
@@ -388,24 +679,53 @@ html, body{
 .me{ 
     mix-blend-mode: difference;
     filter: invert(1);
-    path{
+    background: transparent;
+    path, rect{
         fill: #000;
     }
    &.--falling{
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%,-100%);
-    svg{
-        width: Max( 7vw,80px);
-    }
-    .head{
-        animation: shakinghead .4s alternate infinite;
-    }
-    .rhand, .lhand{
-        animation: shakingright .4s alternate infinite;
-    }
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%,-100%);
+        svg{
+            width: Max( 7vw,80px);
+        }
+        .head{
+            animation: shakinghead .4s alternate infinite;
+        }
+        .rhand, .lhand{
+            animation: shakingright .4s alternate infinite;
+        }
    }
+   &.--main{
+    position: absolute;
+    top: calc(var(--vh) * 20);
+    left: 50%;
+    transform: translateX(-50%);
+   }
+
+   &__part{
+        position: absolute;
+        &.--head{
+            top:0;
+            left: 50%;
+            transform: translate(-50% , 0);
+        }
+        &.--body{
+            bottom:0;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+        &.--lhand{
+            bottom:30px;
+            left: 0%;
+        }
+        &.--rhand{
+            bottom:30px;
+            right: 0%;
+        }
+    }
 }
 
 .cursor {
