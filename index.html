@@ -9,27 +9,38 @@
     <meta name="keywords" content="Michael Merin, Portfolio, GSAP, website">
     <meta name="author" content="Michael Merin">
 
+
+    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollToPlugin.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
     
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body ng-controller="MainController">
+    
     <div id="phase1">
+        <div class="me-space me --main me--default">
+            <svg class="me__part --head" width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="68" height="68" fill="#1A1A1A"/></svg>     
+            <svg class="me__part --body" width="16" height="100" viewBox="0 0 16 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="16" height="100" fill="#1A1A1A"/></svg>
+            <svg class="me__part --lhand" width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="28" height="20" fill="#1A1A1A"/></svg>  
+            <svg class="me__part --rhand" width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="28" height="20" fill="#1A1A1A"/></svg>  
+        </div>
         <section class="fold-first" >
             <div class="hero-content">
                 <!-- <button class="focusmouse" ng-click="toggleColormode()">Togle Color Mode</button> -->
                 <div class="me-space"></div>
                 <div class="hero-content__name">Michael Merin</div>
                 <div class="hero-content__jobtitle">Front-end Web Developer</div>
-                <button class="btn focusmouse">
+                <button class="btn focusmouse" id="mainBtn">
                     <span>Know me</span>
                 </button>
             </div>
             <div class="fold-first-content">
-                <div class="me-space"></div>
+                <div class="me-space --container"></div>
                 <div class="description focusmouse">
                     <div class="description__container ">
                         <div class="description__item focusmouse"
@@ -45,10 +56,44 @@
     </div>
     <div id="phase2">
         <section class="fold-second">
+            <div class="fold-second__title">Technical Expertise</div>
             <div class="slides">
-                <div class="slides__item">s</div>
-                <div class="slides__item">b</div>
-                <div class="slides__item">k</div>
+                <div class="slides__item">
+                    <div class="content">
+                        <div class="content__title">{{::expertise[0].skills}}</div>
+                        <div class="content__description">{{::expertise[0].info}}</div>
+                        <div class="box">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="slides__item">
+                    <div class="content">
+                        <div class="content__title">{{::expertise[1].skills}}</div>
+                        <div class="content__description">{{::expertise[1].info}}</div>
+                        <div class="box window" id="modelBox">
+                            <button class="window__btn focusmouse" ng-click="loadModel()">
+                                Load 3d model
+                            </button>
+                            <model-viewer class="model" id="lazy-load"
+                                src="http://raw.githubusercontent.com/german-alvarez-dev/workshop-webvr-aframe/master/ship/scene_ship.gltf" 
+                                camera-controls touch-action="pan-y" reveal="manual"
+                                alt="boat">
+                            </model-viewer> 
+                        </div>
+                    </div>
+                </div>
+                <div class="slides__item">                    
+                    <div class="content">
+                        <div class="content__title">{{::expertise[2].skills}}</div>
+                        <div class="content__description">{{::expertise[2].info}}</div>
+                        <div class="box dailyquote">
+                            <div class="dailyquote_quote">"Happiness is only real, when shared."</div>
+                            <div class="dailyquote_author">Christopher McCandless</div>
+                        </div>
+                        <div class="box__description">Daily Quotes API by <a class="focusmouse" href="https://zenquotes.io/" target="_blank">ZenQuotes API</a></div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -80,19 +125,55 @@
     <div id="phase4">
         <section class="fold-last" >
         </section>
+    </div>                   
+    <!-- fixed -->
+    <div class="infocard">
+        <div class="block focusmouse --pagedown"></div>
+        <div class="infocard__tag">Let's get to work</div>
+        <div class="infocard__content">
+            <div class="infocard__name">
+                <span>M<span class="infocard__name--others">ichael</span></span>
+                <span>M<span class="infocard__name--others">erin</span></span>
+            </div>
+            <div class="infocard__title">Front-end Web Dev</div>
+        </div>
+        <div class="infocard__toggle focusmouse">
+            <div class="label">Color mode</div>
+            <div class="toggle" ng-click="toggleColormode()">
+                <div class="toggle__button"></div>
+            </div>
+        </div>
+        <div class="infocard__detail">
+            <div>Philippines</div>
+            <div>michael.merin14@gmail.com</div>
+            <div>0949-342-3468</div>
+        </div>
+        <div class="infocard__icons">
+            <button class="btn --revertcolor svgBtn linkedin-icon">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.2254 0.00016881H1.77465C1.54476 -0.00302389 1.3165 0.0390994 1.1029 0.124133C0.889292 0.209167 0.694531 0.335445 0.529735 0.495757C0.36494 0.656068 0.233338 0.847273 0.142445 1.05845C0.0515522 1.26963 0.00314897 1.49664 0 1.72653V22.4187C0.00314897 22.6486 0.0515522 22.8756 0.142445 23.0868C0.233338 23.2979 0.36494 23.4891 0.529735 23.6494C0.694531 23.8098 0.889292 23.936 1.1029 24.0211C1.3165 24.1061 1.54476 24.1482 1.77465 24.145H22.2254C22.4552 24.1482 22.6835 24.1061 22.8971 24.0211C23.1107 23.936 23.3055 23.8098 23.4703 23.6494C23.6351 23.4891 23.7667 23.2979 23.8576 23.0868C23.9484 22.8756 23.9969 22.6486 24 22.4187V1.72653C23.9969 1.49664 23.9484 1.26963 23.8576 1.05845C23.7667 0.847273 23.6351 0.656068 23.4703 0.495757C23.3055 0.335445 23.1107 0.209167 22.8971 0.124133C22.6835 0.0390994 22.4552 -0.00302389 22.2254 0.00016881ZM7.27968 20.2094H3.65795V9.34423H7.27968V20.2094ZM5.46881 7.82311C4.96933 7.82311 4.49031 7.62469 4.13712 7.2715C3.78393 6.91831 3.58551 6.43929 3.58551 5.93981C3.58551 5.44032 3.78393 4.9613 4.13712 4.60811C4.49031 4.25493 4.96933 4.05651 5.46881 4.05651C5.73404 4.02643 6.00263 4.05271 6.25699 4.13363C6.51136 4.21455 6.74576 4.34829 6.94486 4.52608C7.14395 4.70387 7.30325 4.92171 7.41232 5.16534C7.52139 5.40896 7.57777 5.67288 7.57777 5.93981C7.57777 6.20673 7.52139 6.47065 7.41232 6.71427C7.30325 6.9579 7.14395 7.17574 6.94486 7.35354C6.74576 7.53133 6.51136 7.66506 6.25699 7.74598C6.00263 7.8269 5.73404 7.85318 5.46881 7.82311ZM20.3421 20.2094H16.7203V14.3784C16.7203 12.9177 16.2012 11.964 14.8853 11.964C14.4781 11.9669 14.0815 12.0947 13.7491 12.33C13.4167 12.5652 13.1644 12.8968 13.0262 13.2798C12.9317 13.5636 12.8907 13.8624 12.9054 14.1611V20.1973H9.2837C9.2837 20.1973 9.2837 10.3221 9.2837 9.33216H12.9054V10.8654C13.2344 10.2945 13.713 9.82414 14.2895 9.50504C14.866 9.18594 15.5186 9.03017 16.1771 9.05449C18.5915 9.05449 20.3421 10.6118 20.3421 13.9559V20.2094Z" fill="#FAFAFA"/>
+                </svg>
+            </button>
+            <button class="btn --revertcolor svgBtn instagram-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.408 4.152C18.1232 4.152 17.8448 4.23645 17.608 4.39468C17.3712 4.55291 17.1866 4.77781 17.0776 5.04094C16.9686 5.30406 16.9401 5.5936 16.9957 5.87293C17.0512 6.15226 17.1884 6.40885 17.3898 6.61023C17.5912 6.81162 17.8477 6.94877 18.1271 7.00433C18.4064 7.05989 18.6959 7.03138 18.9591 6.92239C19.2222 6.8134 19.4471 6.62883 19.6053 6.39202C19.7635 6.15521 19.848 5.8768 19.848 5.592C19.848 5.21009 19.6963 4.84382 19.4262 4.57377C19.1562 4.30371 18.7899 4.152 18.408 4.152ZM23.928 7.056C23.9047 6.06036 23.7182 5.07528 23.376 4.14C23.0709 3.33976 22.596 2.61513 21.984 2.016C21.3898 1.40091 20.6635 0.929012 19.86 0.636C18.9272 0.283393 17.941 0.092652 16.944 0.0719999C15.672 -6.38621e-08 15.264 0 12 0C8.736 0 8.328 -6.38621e-08 7.056 0.0719999C6.05898 0.092652 5.07281 0.283393 4.14 0.636C3.33801 0.931978 2.61232 1.40347 2.016 2.016C1.40091 2.61021 0.929012 3.33653 0.636 4.14C0.283393 5.07281 0.092652 6.05898 0.0719999 7.056C-6.38621e-08 8.328 0 8.736 0 12C0 15.264 -6.38621e-08 15.672 0.0719999 16.944C0.092652 17.941 0.283393 18.9272 0.636 19.86C0.929012 20.6635 1.40091 21.3898 2.016 21.984C2.61232 22.5965 3.33801 23.068 4.14 23.364C5.07281 23.7166 6.05898 23.9073 7.056 23.928C8.328 24 8.736 24 12 24C15.264 24 15.672 24 16.944 23.928C17.941 23.9073 18.9272 23.7166 19.86 23.364C20.6635 23.071 21.3898 22.5991 21.984 21.984C22.5987 21.3871 23.074 20.6618 23.376 19.86C23.7182 18.9247 23.9047 17.9396 23.928 16.944C23.928 15.672 24 15.264 24 12C24 8.736 24 8.328 23.928 7.056ZM21.768 16.8C21.7593 17.5617 21.6213 18.3164 21.36 19.032C21.1684 19.5542 20.8607 20.0261 20.46 20.412C20.0708 20.8086 19.5999 21.1157 19.08 21.312C18.3644 21.5733 17.6097 21.7113 16.848 21.72C15.648 21.78 15.204 21.792 12.048 21.792C8.892 21.792 8.448 21.792 7.248 21.72C6.45707 21.7348 5.66951 21.613 4.92 21.36C4.42294 21.1537 3.97363 20.8473 3.6 20.46C3.20171 20.0745 2.89781 19.6022 2.712 19.08C2.41903 18.3542 2.25653 17.5823 2.232 16.8C2.232 15.6 2.16 15.156 2.16 12C2.16 8.844 2.16 8.4 2.232 7.2C2.23738 6.42127 2.37954 5.64953 2.652 4.92C2.86326 4.41349 3.18752 3.96199 3.6 3.6C3.96458 3.1874 4.41515 2.85971 4.92 2.64C5.65146 2.37605 6.4224 2.2381 7.2 2.232C8.4 2.232 8.844 2.16 12 2.16C15.156 2.16 15.6 2.16 16.8 2.232C17.5617 2.24074 18.3164 2.3787 19.032 2.64C19.5773 2.84238 20.0668 3.17142 20.46 3.6C20.8532 3.96861 21.1605 4.41928 21.36 4.92C21.6267 5.65072 21.7647 6.42214 21.768 7.2C21.828 8.4 21.84 8.844 21.84 12C21.84 15.156 21.828 15.6 21.768 16.8ZM12 5.844C10.783 5.84637 9.59396 6.20943 8.58319 6.8873C7.57242 7.56517 6.78525 8.52744 6.32116 9.6525C5.85707 10.7776 5.73687 12.015 5.97575 13.2083C6.21464 14.4017 6.80188 15.4974 7.66329 16.3572C8.5247 17.2169 9.62161 17.802 10.8154 18.0386C12.0092 18.2751 13.2464 18.1525 14.3706 17.6862C15.4947 17.22 16.4555 16.4309 17.1314 15.4188C17.8073 14.4068 18.168 13.217 18.168 12C18.1696 11.1901 18.011 10.3879 17.7015 9.63955C17.3919 8.89117 16.9375 8.21137 16.3642 7.63926C15.791 7.06715 15.1103 6.61401 14.3614 6.30591C13.6124 5.99782 12.8099 5.84083 12 5.844ZM12 15.996C11.2097 15.996 10.4371 15.7616 9.77994 15.3226C9.1228 14.8835 8.61063 14.2594 8.30818 13.5292C8.00573 12.799 7.9266 11.9956 8.08078 11.2204C8.23497 10.4453 8.61555 9.73325 9.1744 9.1744C9.73325 8.61555 10.4453 8.23497 11.2204 8.08078C11.9956 7.9266 12.799 8.00573 13.5292 8.30818C14.2594 8.61063 14.8835 9.1228 15.3226 9.77994C15.7616 10.4371 15.996 11.2097 15.996 12C15.996 12.5248 15.8926 13.0444 15.6918 13.5292C15.491 14.014 15.1967 14.4545 14.8256 14.8256C14.4545 15.1967 14.014 15.491 13.5292 15.6918C13.0444 15.8926 12.5248 15.996 12 15.996Z" fill="#FAFAFA"/>
+                </svg>
+            </button>
+            <button class="btn --revertcolor svgBtn messenger-icon">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.1801 0.00774058C10.596 -0.0497769 9.01672 0.213724 7.53714 0.78239C6.05757 1.35106 4.70831 2.21314 3.57055 3.31677C2.43278 4.42041 1.53001 5.74278 0.916558 7.20436C0.303102 8.66593 -0.00836581 10.2365 0.00089101 11.8216C-0.0195211 13.4672 0.310996 15.0982 0.970422 16.6061C1.62985 18.114 2.60304 19.464 3.82516 20.5662C3.92218 20.6526 4.00118 20.7574 4.05761 20.8744C4.11405 20.9915 4.1468 21.1185 4.15399 21.2482V23.4161C4.16067 23.576 4.2061 23.7317 4.28638 23.8701C4.36666 24.0084 4.47937 24.1252 4.61481 24.2103C4.75024 24.2954 4.90434 24.3463 5.06381 24.3586C5.22329 24.3709 5.38336 24.3442 5.53024 24.2809L7.96608 23.2213C8.17408 23.1427 8.40358 23.1427 8.61158 23.2213C9.76305 23.5321 10.9509 23.6877 12.1435 23.6841C15.2832 23.6889 18.2962 22.4463 20.5197 20.2297C22.7433 18.013 23.9951 15.0039 24 11.8642C24.0048 8.7245 22.7622 5.71149 20.5456 3.48798C18.3289 1.26447 15.3198 0.0125858 12.1801 0.00774058ZM19.4876 9.09342L15.9191 14.7689C15.7845 14.9826 15.6071 15.1661 15.398 15.3077C15.189 15.4494 14.9528 15.5461 14.7045 15.5919C14.4561 15.6377 14.201 15.6315 13.9551 15.5737C13.7093 15.5159 13.4781 15.4077 13.2762 15.2561L10.4263 13.1247C10.2998 13.0299 10.1459 12.9786 9.98783 12.9786C9.82971 12.9786 9.67587 13.0299 9.54938 13.1247L5.70075 16.0477C5.59357 16.1304 5.46056 16.1724 5.32534 16.1663C5.19012 16.1602 5.06144 16.1064 4.96214 16.0144C4.86285 15.9224 4.79937 15.7982 4.78297 15.6638C4.76657 15.5294 4.79831 15.3936 4.87257 15.2804L8.44107 9.60494C8.57566 9.39126 8.75308 9.20781 8.96214 9.06616C9.1712 8.92451 9.40736 8.82774 9.65571 8.78196C9.90406 8.73618 10.1592 8.74239 10.405 8.80019C10.6509 8.85799 10.882 8.96613 11.084 9.11777L13.9339 11.2491C14.0604 11.344 14.2142 11.3953 14.3723 11.3953C14.5304 11.3953 14.6843 11.344 14.8108 11.2491L18.6594 8.32613C18.7666 8.24346 18.8996 8.20146 19.0348 8.20757C19.17 8.21368 19.2987 8.26751 19.398 8.3595C19.4973 8.45149 19.5608 8.5757 19.5772 8.71006C19.5936 8.84442 19.5618 8.98024 19.4876 9.09342Z" fill="#FAFAFA"/>
+                </svg>
+            </button>
+        </div>
+        <div class="infocard__info focusmouse --pagedown">Interested? click here</span></div>
+        <button class="btn --revertcolor infocard__pageup-button focusmouse --pageup"><span>Missed something?</span></button>
     </div>
-    <div class="infocard"></div>
     <div class="pagination">
         <button class="pagination__item focusmouse" id="btnPhase1"></button>
         <button class="pagination__item focusmouse" id="btnPhase2"></button>
         <button class="pagination__item focusmouse" id="btnPhase3"></button>
         <button class="pagination__item focusmouse" id="btnPhase4"></button>
     </div>
-    <section class="loading-screen">
-        <div class="loading-icon"></div>
-    </section>
-
-
     <div class="me --falling">
         <svg width="169" height="515" viewBox="0 0 169 515" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="head" d="M133.171 242.327H33.6586V341.839H133.171V242.327Z" fill="#1A1A1A"/>
@@ -106,13 +187,16 @@
             <path d="M12 38H16V68H12V38Z" fill="#1A1A1A"/>
         </svg>
     </div>
-
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     
+    <!-- loading -->
+    <section class="loading-screen">
+        <div class="loading-icon"></div>
+    </section>
     
     <script src="js/pre.js"></script>
-    <script src="js/app.js"></script>
     <script src="js/animation.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
