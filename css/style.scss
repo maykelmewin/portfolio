@@ -43,6 +43,7 @@ button {
     border-radius: 0;
     border: 0;
     cursor: pointer;
+    background: none;
 }   
 :focus-visible{
     outline-color: var(--off-color);
@@ -114,7 +115,7 @@ html, body{
             left: -60px;
             width: 222px;
             height: 224px;
-            border: 4px solid var(--off-color);
+            // border: 4px solid var(--off-color);
         }
     }
 }
@@ -311,6 +312,15 @@ html, body{
                     margin-left: auto;
                     margin-top: 1.5rem;
                 }
+                &.responsive{
+                    .buttons{
+                        &__device{                            
+                            .svg path{
+                                fill: var(--off-color);
+                            }
+                        }
+                    }
+                } 
             }
             .model{
                 width: 100%;

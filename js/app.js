@@ -16,7 +16,7 @@ app.controller('MainController', function MainController($scope) {
             isActive: false
         },
         {
-            year: {no: 2, unit : 'years'},
+            year: {no: 3, unit : 'years'},
             title: 'front-end web dev',
             company: 'investa financial incorporation',
             isActive: true

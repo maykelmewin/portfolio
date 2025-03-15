@@ -31,6 +31,7 @@ button {
   border-radius: 0;
   border: 0;
   cursor: pointer;
+  background: none;
 }
 
 :focus-visible {
@@ -132,7 +133,6 @@ html, body {
   left: -60px;
   width: 222px;
   height: 224px;
-  border: 4px solid var(--off-color);
 }
 
 .hero-content,
@@ -413,6 +413,10 @@ html, body {
   font-size: 12px;
   margin-left: auto;
   margin-top: 1.5rem;
+}
+
+.fold-second .slides__item .box.responsive .buttons__device .svg path {
+  fill: var(--off-color);
 }
 
 .fold-second .slides__item .model {
