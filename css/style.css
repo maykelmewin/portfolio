@@ -224,11 +224,11 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  height: 0;
-  width: .75rem;
+  height: 100%;
+  width: 0;
   background-color: var(--primary-color);
-  -webkit-transition-property: height;
-  transition-property: height;
+  -webkit-transition-property: width;
+  transition-property: width;
   -webkit-transition-duration: 200ms;
           transition-duration: 200ms;
   -webkit-transition-timing-function: linear;
@@ -255,8 +255,8 @@ html, body {
           transform: translateX(8px);
 }
 
-.fold-first-content .description__item.--active::before {
-  height: 100%;
+.fold-first-content .description__item:hover::before {
+  width: .75rem;
 }
 
 .fold-first {

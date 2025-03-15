@@ -138,8 +138,13 @@ gsap.to(".me.--main", {
         toggleActions: "restart none none reverse",
         pin: true,
         start: "top 20%",
-        end: () => (window.innerHeight - (window.innerHeight * .1)) + " 20%"
-    },
+        end: () => (window.innerHeight - (window.innerHeight * .1)) + " 20%",        
+        onLeave: () => {
+            var scope = angular.element(document.querySelector('[ng-controller="MainController"]')).scope();
+            scope.animateMe(2, true);
+            scope.animateMe(0);
+        }
+    }
 });
 //pinning me homepage
 gsap.to(".hero-content__name", {

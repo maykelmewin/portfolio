@@ -60,9 +60,10 @@ app.controller('MainController', function MainController($scope) {
         }
     ]
 
-    $scope.animate = 0;
-    $scope.animateMe = function(id) {
+    // $scope.animate = 0;
+    $scope.animateMe = function(id , isReverse = false) {
         
+
         var meAnim = { 
             'play': [ 
                 function(){
@@ -94,10 +95,16 @@ app.controller('MainController', function MainController($scope) {
                 },
             ]
         };
-        meAnim.reverse[$scope.animate]();
-        clearTimeout(setTimeout(meAnim.play[$scope.animate], 1000));
-        setTimeout(meAnim.play[id], 1000);
-        $scope.animate = id;
+        // meAnim.reverse[$scope.animate]();
+        // clearTimeout(setTimeout(meAnim.play[$scope.animate], 1000));
+
+        if (isReverse) {            
+            setTimeout(meAnim.reverse[id], 0);
+        }else{
+            setTimeout(meAnim.play[id], 0);
+        }
+
+        // $scope.animate = id;
     }
     $scope.loadModel = function() {
         document.querySelector('#modelBox').classList.add('window--close')
@@ -136,6 +143,7 @@ app.controller('MainController', function MainController($scope) {
     
     function init(){
         darkmode();
+        $scope.animateMe(2);
     }
     init();
 });

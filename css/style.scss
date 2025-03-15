@@ -181,10 +181,10 @@ html, body{
                 position: absolute;
                 top: 0;
                 left: 0;
-                height: 0;
-                width: .75rem;
+                height: 100%;
+                width: 0;
                 background-color: var(--primary-color);
-                @include transition(height);
+                @include transition(width);
             }
 
             & > div{
@@ -194,9 +194,9 @@ html, body{
                 transform: translateX(8px);
             }
             
-            &.--active{
+            &:hover{
                 &::before{
-                    height: 100%;
+                    width: .75rem;
                 }
             }
         }
