@@ -13,7 +13,6 @@ document.addEventListener('readystatechange', function(event) {
     }
     calculateVh();
     pageReadyAnimation();
-    
 });
 
 

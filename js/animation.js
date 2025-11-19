@@ -1,4 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(Draggable);
+
 
 // second page slides
 const  slides = gsap.to(".slides", {
@@ -117,19 +119,21 @@ document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
 });
-document.querySelectorAll(".focusmouse").forEach((item) => {
-    item.addEventListener('mouseenter', (e) => {
-        cursor.classList.add("active");
-        follower.classList.add("active");
-    });
-});
-document.querySelectorAll(".focusmouse").forEach((item) => {
-    item.addEventListener('mouseleave', (e) => {
-        cursor.classList.remove("active");
-        follower.classList.remove("active");
-    });
-});
 
+function animateFocusMouse(){
+    document.querySelectorAll(".focusmouse").forEach((item) => {
+        item.addEventListener('mouseenter', (e) => {
+            cursor.classList.add("active");
+            follower.classList.add("active");
+        });
+    });
+    document.querySelectorAll(".focusmouse").forEach((item) => {
+        item.addEventListener('mouseleave', (e) => {
+            cursor.classList.remove("active");
+            follower.classList.remove("active");
+        });
+    });
+}
 
 //pinning me homepage
 gsap.to(".me.--main", {
@@ -163,31 +167,87 @@ lhandRestX = 0,
 lhandRestY = 0;
 
 // salute
-tlSalute =  gsap.timeline({ paused: true});
-tlSalute.fromTo('.me__part.--head', {x: headRestX, y: headRestY}, {x: headRestX, y: headRestY , duration: '1'})
-.fromTo('.me__part.--body' , {x: bodyRestX, y: bodyRestY}, {x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
-.fromTo('.me__part.--rhand', {x: rhandRestX, y: rhandRestY} ,{x: -12, y: rhandRestY, duration: '1'}, "<")
-.fromTo('.me__part.--lhand', {x: lhandRestX, y: lhandRestY}  ,{x: 46, y: -38 , duration: '1'}, "<");
+// tlSalute =  gsap.timeline({ paused: true});
+// tlSalute.fromTo('.me__part.--head', {x: headRestX, y: headRestY}, {x: headRestX, y: headRestY , duration: '1'})
+// .fromTo('.me__part.--body' , {x: bodyRestX, y: bodyRestY}, {x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
+// .fromTo('.me__part.--rhand', {x: rhandRestX, y: rhandRestY} ,{x: -12, y: rhandRestY, duration: '1'}, "<")
+// .fromTo('.me__part.--lhand', {x: lhandRestX, y: lhandRestY}  ,{x: 46, y: -38 , duration: '1'}, "<");
 
 // handsup
-tlHandsup = gsap.timeline({ paused: true});
-tlHandsup.fromTo('.me__part.--head', {x: headRestX, y: headRestY} ,{x: headRestX, y: -10, duration: '1'})
-.fromTo('.me__part.--body', {x: bodyRestX, y: bodyRestY} ,{x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
-.fromTo('.me__part.--rhand', {x: rhandRestX, y: rhandRestY} ,{x: 10, y: -160 , duration: '1'}, "<")
-.fromTo('.me__part.--lhand', {x: lhandRestX, y: lhandRestY} ,{x: -10, y: -160 , duration: '1'}, "<");
+// tlHandsup = gsap.timeline({ paused: true});
+// tlHandsup.fromTo('.me__part.--head', {x: headRestX, y: headRestY} ,{x: headRestX, y: -10, duration: '1'})
+// .fromTo('.me__part.--body', {x: bodyRestX, y: bodyRestY} ,{x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
+// .fromTo('.me__part.--rhand', {x: rhandRestX, y: rhandRestY} ,{x: 10, y: -160 , duration: '1'}, "<")
+// .fromTo('.me__part.--lhand', {x: lhandRestX, y: lhandRestY} ,{x: -10, y: -160 , duration: '1'}, "<");
 
 // rest
-tlRest = gsap.timeline({ paused: true});
-tlRest.to('.me__part.--head' ,{x: headRestX, y: headRestY, duration: '1'})
-.to('.me__part.--body' ,{x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
-.to('.me__part.--lhand' ,{x: lhandRestX, y: lhandRestY , duration: '1'}, "<")
-.to('.me__part.--rhand' ,{x: rhandRestX, y: rhandRestY , duration: '1'}, "<");
+// tlRest = gsap.timeline({ paused: true});
+// tlRest.to('.me__part.--head' ,{x: headRestX, y: headRestY, duration: '1'})
+// .to('.me__part.--body' ,{x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
+// .to('.me__part.--lhand' ,{x: lhandRestX, y: lhandRestY , duration: '1'}, "<")
+// .to('.me__part.--rhand' ,{x: rhandRestX, y: rhandRestY , duration: '1'}, "<");
 
 // wave
 tlWave = gsap.timeline({ paused: true});
-tlWave.fromTo('.me__part.--head', {x: headRestX, y: headRestY,} ,{x: headRestX, y: headRestY, duration: '1'})
-.fromTo('.me__part.--body', {x: bodyRestX, y: bodyRestY} ,{x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
-.fromTo('.me__part.--rhand', {x: lhandRestX, y: lhandRestY},{x: 60, y: -80}, "<" )
-.to('.me__part.--rhand', {x: -20, y: -160, duration: '1',repeat: -1, yoyo: true}, "<" )
-.fromTo('.me__part.--lhand', {x: lhandRestX, y: lhandRestY} ,{x: lhandRestX, y: lhandRestY , duration: '1'}, "<");
-// tlWave.play();
+tlWave.fromTo('.me.--main .me__part.--head', 
+    {x: headRestX, y: headRestY, rotation: 0} ,
+    {x: headRestX, y: headRestY, rotation: -8, duration: '.3'})
+.fromTo('.me__part.--body', 
+    {x: bodyRestX, y: bodyRestY} ,
+    {x: bodyRestX, y: bodyRestY , duration: '1'}, "<")
+.fromTo('.me.--main .me__part.--rhand', {x: lhandRestX, y: lhandRestY},{x: 60, y: -80, duration: '1'}, "<" )
+.to('.me.--main .me__part.--rhand', {x: -20, y: -160, duration: '1',repeat: -1, yoyo: true} )
+.fromTo('.me.--main .me__part.--lhand', {x: lhandRestX, y: lhandRestY} ,{x: lhandRestX, y: lhandRestY , duration: '1'}, "<");
+
+tlWaveReset = gsap.timeline({ paused: true});
+tlWaveReset.to('.me.--main .me__part.--rhand', {x: lhandRestX, y: lhandRestY})
+.fromTo('.me.--main .me__part.--head', 
+    {x: headRestX, y: headRestY, rotation: -8} ,
+    {x: headRestX, y: headRestY, rotation: 0, duration: '.3'}, "<");
+
+
+// dragable responsive container
+const responsiveDesignBox = document.getElementById('responsiveDesignBox');
+const responsiveDesignHandle = document.getElementById('responsiveDesignHandle');
+const minWidth = 300;
+let maxWidth = Math.min(window.innerWidth, 1048);
+
+let isDragging = false;
+let startWidth, startX;
+
+window.addEventListener('resize', () => {
+    maxWidth = Math.min(window.innerWidth, 1048);
+});
+
+// POINTER DOWN (mouse + touch + pen)
+responsiveDesignHandle.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startWidth = responsiveDesignBox.offsetWidth;
+
+    document.body.style.cursor = 'ew-resize';
+
+    // prevent touch scroll
+    e.preventDefault();
+});
+
+// POINTER MOVE
+window.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+
+    const dx = e.clientX - startX;
+    let newWidth = startWidth + dx;
+
+    if (newWidth < minWidth) newWidth = minWidth;
+    if (newWidth > maxWidth) newWidth = maxWidth;
+
+    responsiveDesignBox.style.width = newWidth + 'px';
+});
+
+// POINTER UP
+window.addEventListener('pointerup', () => {
+    if (isDragging) {
+        isDragging = false;
+        document.body.style.cursor = 'default';
+    }
+});

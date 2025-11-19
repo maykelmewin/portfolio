@@ -15,15 +15,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/Draggable.min.js"></script>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
     
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body ng-controller="MainController">
-    
     <div id="phase1">
-        <div class="me-space me --main me--default">
+        <div class="me-space me --main me--default filter-invert">
             <svg class="me__part --head" width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="68" height="68" fill="#1A1A1A"/></svg>     
             <svg class="me__part --body" width="16" height="100" viewBox="0 0 16 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="16" height="100" fill="#1A1A1A"/></svg>
             <svg class="me__part --lhand" width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="28" height="20" fill="#1A1A1A"/></svg>  
@@ -34,19 +34,20 @@
                 <!-- <button class="focusmouse" ng-click="toggleColormode()">Togle Color Mode</button> -->
                 <div class="me-space"></div>
                 <div class="hero-content__name">Michael Merin</div>
-                <div class="hero-content__jobtitle">Front-end Web Developer</div>
+                <div class="hero-content__jobtitle text-long">Front-end Web Developer</div>
                 <button class="btn focusmouse" id="mainBtn">
-                    <span>Know me</span>
+                    <span>Start</span>
                 </button>
             </div>
             <div class="fold-first-content">
                 <div class="me-space --container"></div>
-                <div class="description focusmouse">
+                <div class="description">
                     <div class="description__container ">
                         <div class="description__item focusmouse"
                         ng-repeat="item in ::desc track by ::$index"
-                        ng-class="{'--active' : animate == $index}"
-                        ng-click="animateMe($index)">
+                        ng-class="{'--active' : isDetailHovered}"
+                        ng-mouseenter="isDetailHovered = true"
+                        ng-mouseleave="isDetailHovered = false">
                             <div>{{::item.desc}}</div>
                         </div>
                     </div>
@@ -54,6 +55,7 @@
             </div>
         </section>
     </div>
+    
     <div id="phase2">
         <section class="fold-second">
             <div class="fold-second__title">Technical Expertise</div>
@@ -61,16 +63,28 @@
                 <div class="slides__item">
                     <div class="content">
                         <div class="content__title">{{::expertise[0].skills}}</div>
-                        <div class="content__description">{{::expertise[0].info}}</div>
-                        <div class="box">
-
+                        <div class="content__description text-long">{{::expertise[0].info}}</div>
+                        <div class="box techskill">
+                            <div class="techskill__container">
+                                <div class="techskill__item focusmouse"
+                                    ng-repeat="item in techSkill"
+                                    ng-mouseenter="AnimateSkillProgressHoverIn($index)"
+                                    ng-mouseleave="AnimateSkillProgressHoverOut($index)"
+                                >
+                                    <div class="techskill__item__text">{{item.text}}</div>
+                                    <div class="techskill__item__progressbar">
+                                        <div class="techskill__item__progressbar__filler" id="techSkillItemFiller{{$index}}"></div>
+                                        <div class="techskill__item__progressbar__percent">{{item.percent}}%</div>                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="slides__item">
+                <!-- <div class="slides__item">
                     <div class="content">
                         <div class="content__title">{{::expertise[1].skills}}</div>
-                        <div class="content__description">{{::expertise[1].info}}</div>
+                        <div class="content__description text-long">{{::expertise[1].info}}</div>
                         <div class="box window" id="modelBox">
                             <button class="window__btn focusmouse" ng-click="loadModel()">
                                 Load 3d model
@@ -82,18 +96,159 @@
                             </model-viewer> 
                         </div>
                     </div>
+                </div> -->
+                <div class="slides__item">
+                    <div class="content">                        
+                        <div class="content__title">{{::expertise[1].skills}}</div>
+                        <div class="content__description text-long">{{::expertise[1].info}}</div>
+
+                        <div class="box --noborder">
+                            <div class="responsive-design-box"
+                            ng-class="{
+                                '--tabView' : boxWidth < 768,
+                                '--mobileView' : boxWidth < 576,
+                            }"
+                            id="responsiveDesignBox">
+                                <div class="responsive-design-handle focusmouse" id="responsiveDesignHandle"></div>
+                                <div class="character-container">
+                                    <div class="me --puzzled filter-invert">
+                                        <svg class="me__part --head" width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="68" height="68" fill="#1A1A1A"/></svg>     
+                                        <svg class="me__part --body" width="16" height="100" viewBox="0 0 16 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="16" height="100" fill="#1A1A1A"/></svg>
+                                        <svg class="me__part --lhand" width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="28" height="20" fill="#1A1A1A"/></svg>  
+                                        <svg class="me__part --rhand" width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="28" height="20" fill="#1A1A1A"/></svg>  
+                                    </div>
+                                    <div class="character-text">{{ boxWidth > 768 ? 'My Body' : (boxWidth > 576 ? 'Armless Me' : 'Whole Me') }}</div>
+                                </div>
+                                <div class="message-container">
+                                    <div class="message-box">{{ breakpoints == 3 ? 'For the best experience with the responsive layout, use a larger screen and drag the right handle.' : 'Drag the right handle bar to resize the container width!'}}</div>
+                                </div>
+                                <div class="buttons-container">
+                                        <button class="button focusmouse" ng-click="setBoxWidth(340)" ng-disabled="breakpoints >= 3">
+                                            <svg class="button__svg-mobile" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M33.8933 43.4399L33.4933 43.1199C33.3447 43.019 33.1833 42.9383 33.0133 42.8799L32.5333 42.6666C32.1009 42.5762 31.6527 42.5946 31.2291 42.7203C30.8056 42.846 30.4198 43.0749 30.1067 43.3866C29.8711 43.6458 29.6817 43.9434 29.5467 44.2666C29.3449 44.7525 29.2913 45.2872 29.3927 45.8034C29.4941 46.3197 29.7459 46.7944 30.1165 47.1678C30.4871 47.5413 30.9599 47.7968 31.4754 47.9021C31.9908 48.0075 32.5259 47.958 33.0133 47.7599C33.332 47.6053 33.628 47.4079 33.8933 47.1733C34.2633 46.7983 34.514 46.3221 34.6137 45.8048C34.7133 45.2874 34.6575 44.7522 34.4533 44.2666C34.3204 43.9582 34.1304 43.6778 33.8933 43.4399ZM42.6667 5.33325H21.3333C19.2116 5.33325 17.1768 6.17611 15.6765 7.6764C14.1762 9.17669 13.3333 11.2115 13.3333 13.3333V50.6666C13.3333 52.7883 14.1762 54.8231 15.6765 56.3234C17.1768 57.8237 19.2116 58.6666 21.3333 58.6666H42.6667C44.7884 58.6666 46.8232 57.8237 48.3235 56.3234C49.8238 54.8231 50.6667 52.7883 50.6667 50.6666V13.3333C50.6667 11.2115 49.8238 9.17669 48.3235 7.6764C46.8232 6.17611 44.7884 5.33325 42.6667 5.33325ZM45.3333 50.6666C45.3333 51.3738 45.0524 52.0521 44.5523 52.5522C44.0522 53.0523 43.3739 53.3332 42.6667 53.3332H21.3333C20.6261 53.3332 19.9478 53.0523 19.4477 52.5522C18.9476 52.0521 18.6667 51.3738 18.6667 50.6666V13.3333C18.6667 12.626 18.9476 11.9477 19.4477 11.4476C19.9478 10.9475 20.6261 10.6666 21.3333 10.6666H42.6667C43.3739 10.6666 44.0522 10.9475 44.5523 11.4476C45.0524 11.9477 45.3333 12.626 45.3333 13.3333V50.6666Z" fill="#FAFAFA"/>
+                                            </svg>
+                                        </button>
+                                        <button class="button focusmouse" ng-click="setBoxWidth(700)" ng-disabled="breakpoints >= 3">
+                                            <svg ng-hide="breakpoints >= 3" class="button__svg-tablet" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.33349 18.6666L5.3335 45.3333C5.3335 47.455 6.17635 49.4898 7.67664 50.9901C9.17693 52.4904 11.2118 53.3333 13.3335 53.3333L50.6668 53.3332C52.7886 53.3332 54.8234 52.4904 56.3237 50.9901C57.824 49.4898 58.6668 47.455 58.6668 45.3333L58.6668 18.6666C58.6668 16.5449 57.824 14.51 56.3237 13.0097C54.8234 11.5094 52.7886 10.6666 50.6668 10.6666L13.3335 10.6666C11.2118 10.6666 9.17693 11.5094 7.67664 13.0097C6.17635 14.51 5.33349 16.5449 5.33349 18.6666ZM50.6668 15.9999C51.3741 15.9999 52.0524 16.2809 52.5525 16.781C53.0525 17.2811 53.3335 17.9593 53.3335 18.6666L53.3335 45.3333C53.3335 46.0405 53.0525 46.7188 52.5525 47.2189C52.0524 47.719 51.3741 47.9999 50.6668 47.9999L13.3335 47.9999C12.6263 47.9999 11.948 47.719 11.4479 47.2189C10.9478 46.7188 10.6668 46.0405 10.6668 45.3333L10.6668 18.6666C10.6668 17.9593 10.9478 17.2811 11.4479 16.781C11.948 16.2809 12.6263 15.9999 13.3335 15.9999L50.6668 15.9999ZM43.4402 30.1066C43.1191 30.4145 42.8801 30.7978 42.7451 31.2216C42.61 31.6455 42.5831 32.0964 42.6668 32.5333L42.8268 33.0133C42.8852 33.1832 42.9659 33.3446 43.0668 33.4933L43.3868 33.8933C43.6404 34.136 43.9395 34.3263 44.2668 34.4533C44.7525 34.6575 45.2877 34.7133 45.805 34.6136C46.3223 34.5139 46.7985 34.2633 47.1735 33.8933C47.4082 33.628 47.6055 33.3319 47.7602 33.0133C47.961 32.5251 48.0125 31.9883 47.9081 31.4709C47.8037 30.9534 47.548 30.4786 47.1735 30.1066C46.6834 29.6203 46.0238 29.3431 45.3335 29.3333C44.9837 29.3242 44.6366 29.3973 44.3202 29.5466C43.997 29.6816 43.6994 29.871 43.4402 30.1066Z" fill="#FAFAFA"/>
+                                            </svg>                                                
+                                            <svg ng-if="breakpoints >= 3" class="button__svg-warning --tablet" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19.7 5.6L14.4 0.3C14.2 0.0999999 14 0 13.7 0H6.3C6 0 5.8 0.0999999 5.6 0.3L0.3 5.6C0.0999999 5.8 0 6 0 6.3V13.8C0 14.1 0.0999999 14.3 0.3 14.5L5.6 19.8C5.8 19.9 6 20 6.3 20H13.8C14.1 20 14.3 19.9 14.5 19.7L19.8 14.4C20 14.2 20.1 14 20.1 13.7V6.3C20 6 19.9 5.8 19.7 5.6ZM10 15C9.4 15 9 14.6 9 14C9 13.4 9.4 13 10 13C10.6 13 11 13.4 11 14C11 14.6 10.6 15 10 15ZM11 10C11 10.6 10.6 11 10 11C9.4 11 9 10.6 9 10V6C9 5.4 9.4 5 10 5C10.6 5 11 5.4 11 6V10Z" fill="#FAFAFA"/>
+                                            </svg>
+                                        </button>
+                                        <button class="button focusmouse" ng-click="setBoxWidth(840)" ng-disabled="breakpoints >= 2" >
+                                            <svg ng-hide="breakpoints >= 2" class="button__svg-pc --pc" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M50.6667 8H13.3333C11.2116 8 9.17678 8.84285 7.67649 10.3431C6.1762 11.8434 5.33334 13.8783 5.33334 16V37.3333C5.33334 39.4551 6.1762 41.4899 7.67649 42.9902C9.17678 44.4905 11.2116 45.3333 13.3333 45.3333H29.3333V50.6667H18.6667C17.9594 50.6667 17.2812 50.9476 16.7811 51.4477C16.281 51.9478 16 52.6261 16 53.3333C16 54.0406 16.281 54.7189 16.7811 55.219C17.2812 55.7191 17.9594 56 18.6667 56H45.3333C46.0406 56 46.7189 55.7191 47.219 55.219C47.7191 54.7189 48 54.0406 48 53.3333C48 52.6261 47.7191 51.9478 47.219 51.4477C46.7189 50.9476 46.0406 50.6667 45.3333 50.6667H34.6667V45.3333H50.6667C52.7884 45.3333 54.8232 44.4905 56.3235 42.9902C57.8238 41.4899 58.6667 39.4551 58.6667 37.3333V16C58.6667 13.8783 57.8238 11.8434 56.3235 10.3431C54.8232 8.84285 52.7884 8 50.6667 8ZM53.3333 37.3333C53.3333 38.0406 53.0524 38.7189 52.5523 39.219C52.0522 39.719 51.3739 40 50.6667 40H13.3333C12.6261 40 11.9478 39.719 11.4477 39.219C10.9476 38.7189 10.6667 38.0406 10.6667 37.3333V16C10.6667 15.2928 10.9476 14.6145 11.4477 14.1144C11.9478 13.6143 12.6261 13.3333 13.3333 13.3333H50.6667C51.3739 13.3333 52.0522 13.6143 52.5523 14.1144C53.0524 14.6145 53.3333 15.2928 53.3333 16V37.3333Z" fill="#FAFAFA"/>
+                                            </svg>                                                
+                                            <svg ng-if="breakpoints >= 2" class="button__svg-warning" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19.7 5.6L14.4 0.3C14.2 0.0999999 14 0 13.7 0H6.3C6 0 5.8 0.0999999 5.6 0.3L0.3 5.6C0.0999999 5.8 0 6 0 6.3V13.8C0 14.1 0.0999999 14.3 0.3 14.5L5.6 19.8C5.8 19.9 6 20 6.3 20H13.8C14.1 20 14.3 19.9 14.5 19.7L19.8 14.4C20 14.2 20.1 14 20.1 13.7V6.3C20 6 19.9 5.8 19.7 5.6ZM10 15C9.4 15 9 14.6 9 14C9 13.4 9.4 13 10 13C10.6 13 11 13.4 11 14C11 14.6 10.6 15 10 15ZM11 10C11 10.6 10.6 11 10 11C9.4 11 9 10.6 9 10V6C9 5.4 9.4 5 10 5C10.6 5 11 5.4 11 6V10Z" fill="#FAFAFA"/>
+                                            </svg>
+                                        </button>
+                                </div>
+                                <div class="resolution-text">
+                                    {{ boxWidth | number:0}}px by {{ boxHeight | number:0}}px
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="slides__item">                    
-                    <div class="content">
+                <div class="slides__item">
+                    <div class="content">                        
                         <div class="content__title">{{::expertise[2].skills}}</div>
-                        <div class="content__description">{{::expertise[2].info}}</div>
+                        <div class="content__description text-long">{{::expertise[2].info}}</div>
+
+                        <div class="box" ng-controller="CryptoController">
+
+                            <div class="cryptocontainer">
+                                <div class="cryptocontainer__header">
+                                    <div>
+                                        <div class="cryptocontainer__headertitle">Crypto Prices</div>
+                                        <div class="cryptocontainer__headersubtitle">By using the CoinGecko API</div>
+                                    </div>
+                                    <div>
+                                        <button ng-click="loadPrices()" ng-disabled="loading" 
+                                        class="cryptocontainer__mainbutton btn focusmouse">
+                                            <span>{{ loading ? 'Updating...' : (started ? 'Update' : 'Show') }}</span>
+                                        </button>
+                                        <div class="cryptocontainer__message">{{ (!loading && error) ? 'Failed to load prices. Try again.' : ( lastUpdated  ? 'Last updated: ' + lastUpdated : '')}}</div>
+                                    </div>
+                                </div>
+                                <div class="cryptocontainer__content">
+                                    <div>
+                                        <div class="cryptocontainer__cryptocard --vertical">                                                                                        
+                                            <div class="cryptocard__border">
+                                                <div class="cryptocard__lid" ng-class="{'--closed' : (!started || error || loading)}">BTC</div>
+                                                <div class="cryptocard__code"></div>
+                                                <div class="cryptocard__valuecontainer">
+                                                    <div class="cryptocard__title">Bitcoin</div>
+                                                    <div class="cryptocard__value">${{ prices.bitcoin.usd }}</div>
+                                                </div>
+                                            </div>                                            
+                                            <div class="cryptocard__timetrend">24h: {{ prices.bitcoin.usd_24h_change | number:2 }}%</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="cryptocontainer__cryptocard">                                                                                        
+                                            <div class="cryptocard__border">
+                                                <div class="cryptocard__lid" ng-class="{'--closed' : (!started || error || loading)}">ETH</div>
+                                                <div class="cryptocard__code"></div>
+                                                <div class="cryptocard__valuecontainer">
+                                                    <div class="cryptocard__title">Ethereum</div>
+                                                    <div class="cryptocard__value">${{ prices.ethereum.usd }}</div>
+                                                </div>
+                                            </div>                                            
+                                            <div class="cryptocard__timetrend">24h: {{ prices.ethereum.usd_24h_change | number:2 }}%</div>
+                                        </div>
+                                        <div class="cryptocontainer__cryptocard">                                                                                        
+                                            <div class="cryptocard__border">                                                
+                                                <div class="cryptocard__lid" ng-class="{'--closed' : (!started || error || loading)}">BNB</div>
+                                                <div class="cryptocard__code"></div>
+                                                <div class="cryptocard__valuecontainer">
+                                                    <div class="cryptocard__title">Binancecoin</div>
+                                                    <div class="cryptocard__value">${{ prices.binancecoin.usd }}</div>
+                                                </div>
+                                            </div>                                            
+                                            <div class="cryptocard__timetrend">24h: {{ prices.binancecoin.usd_24h_change | number:2 }}%</div>
+                                        </div>
+                                        <div class="cryptocontainer__cryptocard">                                                                                        
+                                            <div class="cryptocard__border">                                                
+                                                <div class="cryptocard__lid" ng-class="{'--closed' : (!started || error || loading)}">SOL</div>
+                                                <div class="cryptocard__code">SOL</div>
+                                                <div class="cryptocard__valuecontainer">
+                                                    <div class="cryptocard__title">Solana</div>
+                                                    <div class="cryptocard__value">${{ prices.solana.usd }}</div>
+                                                </div>
+                                            </div>                                            
+                                            <div class="cryptocard__timetrend">24h: {{ prices.solana.usd_24h_change | number:2 }}%</div>
+                                        </div>
+                                        <div class="cryptocontainer__cryptocard">                                                                                        
+                                            <div class="cryptocard__border">
+                                                <div class="cryptocard__lid" ng-class="{'--closed' : (!started || error || loading)}">XRP</div>
+                                                <div class="cryptocard__code"></div>
+                                                <div class="cryptocard__valuecontainer">
+                                                    <div class="cryptocard__title">Ripple</div>
+                                                    <div class="cryptocard__value">${{ prices.ripple.usd }}</div>
+                                                </div>
+                                            </div>                                            
+                                            <div class="cryptocard__timetrend">24h: {{ prices.ripple.usd_24h_change | number:2 }}%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="slides__item">                    
+                    <div class="content" ng-controller="QuoteController as ctrl">
+                        <div class="content__title">{{::expertise[2].skills}}</div>
+                        <div class="content__description text-long">{{::expertise[2].info}}</div>
                         <div class="box dailyquote">
-                            <div class="dailyquote_quote">"Happiness is only real, when shared."</div>
-                            <div class="dailyquote_author">Christopher McCandless</div>
+                            <div class="dailyquote_quote">"{{ctrl.quote}}"</div>
+                            <div class="dailyquote_author">{{ctrl.author}}</div>
                         </div>
                         <div class="box__description">Daily Quotes API by <a class="focusmouse" href="https://zenquotes.io/" target="_blank">ZenQuotes API</a></div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
     </div>
@@ -107,7 +262,7 @@
                 <rect x="43.75" y="8" width="44.3182" height="30" fill="#1A1A1A"/><rect x="63.6364" width="24.4318" height="48" fill="#1A1A1A"/><rect y="21" width="100" height="17" fill="#1A1A1A"/>
             </svg>  
             <div class="content">
-                <p class="content__title">Professional Experience</h6>
+                <p class="content__title" >Professional Experience</h6>
                 <div class="xp" ng-repeat="item in ::xp">
                     <div class="xp__year">
                         <strong>&#60;{{::item.year.no}}</strong>
@@ -116,8 +271,30 @@
                             <span ng-show="::item.isActive"> to present</span>
                         </div>
                     </div>
-                    <p class="xp__jobtitle">{{::item.title}}</p>
-                    <p class="xp__company"><a ng-show="::item.isActive" href="https://www.investagrams.com/" target="_blank">{{::item.company}}</a><span ng-show="::!item.isActive">{{::item.company}}</span></p>
+                    <button class="xp__jobtitle text-long focusmouse" ng-click="toggleExperienceAccordion($index)">{{::item.title}}
+                        <svg class="xp__jobtitle__chevron-svg" ng-class="{'--rotated' : OpenExperienceAccordion == $index}" width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.7961 8.15674L1.17501 8.15674C0.130092 8.15674 -0.39237 6.89209 0.344935 6.15478L6.15548 0.344238C6.61447 -0.114747 7.35665 -0.114747 7.81076 0.344238L13.6262 6.15479C14.3635 6.89209 13.841 8.15674 12.7961 8.15674Z" fill="white"/>
+                        </svg>
+                    </button>
+                    <div class="xp__companycontainer">
+                        <div class="xp__companyname">
+                            {{::item.company}}
+                        </div>
+                        <div class="xp__collapse-content" ng-class="{'--collapsed' : OpenExperienceAccordion == $index}">
+                            <div class="xp__collapse-content__description">{{::item.description}}</div>
+                            
+                            <div class="xp__collapse-content__datespan">{{::item.datespan}}</div>
+                            
+                        </div>
+                        <a class="focusmouse" ng-class="{'--hidden' : OpenExperienceAccordion == $index}" ng-href="{{ item.link }}" ng-show="item.link != null" target="_blank">
+                            <div class="xp__buttonlink">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 0C5.38307 0 0 5.38307 0 12C0 18.6169 5.38307 24 12 24C18.6169 24 24 18.6169 24 12C24 5.38306 18.6169 0 12 0ZM17.1506 14.4207C17.217 13.6222 17.2534 12.8111 17.2534 12C17.2534 11.1889 17.217 10.3778 17.1506 9.57932C20.1062 10.2228 21.6774 11.3265 21.6774 12C21.6774 12.6735 20.1062 13.7772 17.1506 14.4207ZM12 21.6774C11.3265 21.6774 10.2228 20.1062 9.57932 17.1506C10.3778 17.217 11.1889 17.2534 12 17.2534C12.8111 17.2534 13.6222 17.217 14.4207 17.1506C13.7772 20.1062 12.6735 21.6774 12 21.6774ZM12 14.9308C10.9934 14.9308 10.0688 14.8765 9.2116 14.7884C9.12347 13.9312 9.06918 13.0066 9.06918 12C9.06918 10.9934 9.12348 10.0688 9.2116 9.2116C10.0688 9.12348 10.9934 9.06918 12 9.06918C13.0066 9.06918 13.9312 9.12348 14.7884 9.2116C14.8765 10.0688 14.9308 10.9934 14.9308 12C14.9308 13.0066 14.8765 13.9312 14.7884 14.7884C13.9312 14.8765 13.0066 14.9308 12 14.9308ZM2.32258 12C2.32258 11.3265 3.89384 10.2228 6.84942 9.57932C6.78303 10.3778 6.7466 11.1889 6.7466 12C6.7466 12.8111 6.78303 13.6222 6.84942 14.4207C3.89384 13.7772 2.32258 12.6735 2.32258 12ZM12 2.32258C12.6735 2.32258 13.7772 3.89384 14.4207 6.84942C13.6222 6.78303 12.8111 6.7466 12 6.7466C11.1889 6.7466 10.3778 6.78303 9.57932 6.84942C10.2228 3.89384 11.3265 2.32258 12 2.32258ZM20.976 8.40098C19.8135 7.85147 18.3878 7.44004 16.8366 7.16342C16.56 5.61225 16.1485 4.18648 15.599 3.02401C18.0427 4.00748 19.9925 5.95728 20.976 8.40098ZM8.40098 3.02405C7.85147 4.18653 7.44004 5.61229 7.16342 7.16342C5.61229 7.44004 4.18653 7.85138 3.02405 8.40093C4.00753 5.95723 5.95733 4.00753 8.40098 3.02405ZM3.0241 15.5991C4.18658 16.1486 5.61229 16.56 7.16342 16.8366C7.44004 18.3877 7.85138 19.8134 8.40093 20.9759C5.95733 19.9924 4.00757 18.0427 3.0241 15.5991ZM15.5991 20.9759C16.1486 19.8135 16.56 18.3877 16.8366 16.8366C18.3877 16.56 19.8135 16.1485 20.9759 15.599C19.9925 18.0427 18.0428 19.9925 15.5991 20.9759Z" fill="black"/>
+                                </svg>
+                                <div class="xp__buttonlink__tooltip">Goto Website</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>     
         </section>
@@ -135,7 +312,7 @@
                 <span>M<span class="infocard__name--others">ichael</span></span>
                 <span>M<span class="infocard__name--others">erin</span></span>
             </div>
-            <div class="infocard__title">Front-end Web Dev</div>
+            <div class="infocard__title text-long">Front-end web developer</div>
         </div>
         <div class="infocard__toggle focusmouse">
             <div class="label">Color mode</div>
@@ -144,9 +321,8 @@
             </div>
         </div>
         <div class="infocard__detail">
-            <div>Philippines</div>
-            <div>michael.merin14@gmail.com</div>
-            <div>0949-342-3468</div>
+            <div class="text-long">Philippines</div>
+            <div class="text-long">michael.merin14@gmail.com</div>
         </div>
         <div class="infocard__icons">
             <button class="btn --revertcolor svgBtn linkedin-icon">
@@ -165,7 +341,7 @@
                 </svg>
             </button>
         </div>
-        <div class="infocard__info focusmouse --pagedown">Interested? click here</span></div>
+        <div class="infocard__info focusmouse --pagedown text-long">Interested? click here</span></div>
         <button class="btn --revertcolor infocard__pageup-button focusmouse --pageup"><span>Missed something?</span></button>
     </div>
     <div class="pagination">
@@ -174,7 +350,7 @@
         <button class="pagination__item focusmouse" id="btnPhase3"></button>
         <button class="pagination__item focusmouse" id="btnPhase4"></button>
     </div>
-    <div class="me --falling">
+    <div class="me --falling filter-invert">
         <svg width="169" height="515" viewBox="0 0 169 515" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="head" d="M133.171 242.327H33.6586V341.839H133.171V242.327Z" fill="#1A1A1A"/>
             <path class="body" d="M93.6585 368.18H70.2439V514.522H93.6585V368.18Z" fill="#1A1A1A"/>
