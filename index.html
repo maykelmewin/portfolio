@@ -16,7 +16,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/Draggable.min.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    
+    <!-- Three.js - working CDN -->
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 
     
     <link rel="stylesheet" href="css/style.css">
@@ -252,7 +255,19 @@
             </div>
         </section>
     </div>
-    <div id="phase3">
+    <div id="phase3" ng-controller="AutoTypingCtrl as vm">
+        <div class="fold-threeJS-floor" >
+            <div id="typingTitle" class="textarea-title"  
+                contenteditable="true"
+                ng-keyup="vm.onUserType()"
+                title="try to change the title text">3D Animation</div>
+            <section class="fold-threeJs">
+                <div id="three-container"></div>
+            </section>
+        </div>
+    </div>
+    
+    <div id="phase4">
         <section class="fold-third">
             <svg ng-repeat="item in [1,2,3] track by ::$index" class="cloud --a{{::$index}}" width="302" height="116" viewBox="0 0 302 116" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect y="64.9346" width="107.804" height="18.2826" fill="black"/><rect x="24.5869" y="34.0437" width="107.804" height="68.7172" fill="black"/><rect x="68.0868" y="47.2827" width="107.804" height="68.7172" fill="black"/><rect x="54.2174" width="107.804" height="68.7172" fill="black"/><rect x="54.2174" y="27.739" width="150.674" height="68.7172" fill="black"/><rect x="116.63" y="57.3694" width="150.674" height="34.0434" fill="black"/><rect x="141.848" y="76.2825" width="159.5" height="15.1304" fill="black"/><rect x="78.8042" y="47.9128" width="150.674" height="34.0434" fill="black"/>
@@ -298,8 +313,9 @@
                 </div>
             </div>     
         </section>
-    </div>
-    <div id="phase4">
+    </div>    
+    <div class="freebottomspace"></div>
+    <div id="phase5">
         <section class="fold-last" >
         </section>
     </div>                   
@@ -349,6 +365,7 @@
         <button class="pagination__item focusmouse" id="btnPhase2"></button>
         <button class="pagination__item focusmouse" id="btnPhase3"></button>
         <button class="pagination__item focusmouse" id="btnPhase4"></button>
+        <button class="pagination__item focusmouse" id="btnPhase5"></button>
     </div>
     <div class="me --falling filter-invert">
         <svg width="169" height="515" viewBox="0 0 169 515" fill="none" xmlns="http://www.w3.org/2000/svg">

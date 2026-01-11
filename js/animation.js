@@ -26,7 +26,7 @@ ScrollTrigger.create({
 })
 // main button
 document.querySelector("#mainBtn").addEventListener("click", () => {
-    gsap.to(window, {duration: 1, scrollTo: {y:".fold-first-content"} })
+    gsap.to(window, {duration: 1, scrollTo: {y: gsap.getProperty(".fold-first-content", "offsetTop") + 4} })
 });
 
 var pageDown = document.querySelectorAll(".--pagedown")
@@ -52,24 +52,41 @@ document.querySelectorAll(".pagination__item").forEach((btn, index, array) => {
         toggleClass: {targets: '#btnPhase' + (index + 1), className: '--active'}
     });
 });
-function pageReadyAnimation(){
-   const falling = gsap.timeline();
-    falling.fromTo('.--a0', {yPercent: -1000}, {yPercent: 1000, duration: '2'})
-    .fromTo('.--a1', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
-    .fromTo('.--a2', {yPercent: -3000}, {yPercent: 0, duration: '2'}, "<")
-    .fromTo('.--b0', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
-    .fromTo('.--b1', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
-    .fromTo('.--b2', {yPercent: -1000}, { yPercent: 1000, duration: '2'}, "<")
-    .fromTo('.--b3', {yPercent: 0}, { yPercent: 0, duration: '2'}, "<")
-    .fromTo('.--b4', {yPercent: 0}, { yPercent: -1000, duration: '2'}, "<")
+function pageReadyAnimation() {
+    const foldThird = document.querySelector(".fold-third");
+    let isVisible = false;
 
-    ScrollTrigger.create({
-        animation: falling,
-        trigger: ".fold-third",
-        end: () => "+=" + document.querySelector(".fold-third").offsetWidth,
-        scrub: true,
-    });
+    // Observe visibility
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            isVisible = entry.isIntersecting;
+
+            if (isVisible) {
+                
+                const falling = gsap.timeline();
+                falling.fromTo('.--a0', {yPercent: -1000}, {yPercent: 1000, duration: 2})
+                       .fromTo('.--a1', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+                       .fromTo('.--a2', {yPercent: -3000}, {yPercent: 0, duration: 2}, "<")
+                       .fromTo('.--b0', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+                       .fromTo('.--b1', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+                       .fromTo('.--b2', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+                       .fromTo('.--b3', {yPercent: 0}, {yPercent: 0, duration: 2}, "<")
+                       .fromTo('.--b4', {yPercent: 0}, {yPercent: -1000, duration: 2}, "<");
+
+                ScrollTrigger.create({
+                    animation: falling,
+                    trigger: ".fold-third",
+                    end: () => "+=" + foldThird.offsetWidth,
+                    scrub: true
+                });
+
+            } 
+        });
+    }, { threshold: 0 });
+
+    observer.observe(foldThird);
 }
+
 // toggle aninamation
 const switching = gsap.timeline();
 switching.to('.toggle', {rotation:180, duration: '1'})
@@ -84,43 +101,50 @@ gsap.to(".me.--falling", {
     scrollTrigger: {
         trigger: ".fold-third",
         start: "top top",
-        scrub: true
+        scrub: 0.5,
     },
     top: "300%"
 });
 
-// customize mouse pointer
-var cursor = document.querySelector(".cursor"),
-    follower =  document.querySelector(".cursor-follower");
-var posX = 0,
-    posY = 0;
-var mouseX = 0,
-    mouseY = 0;
-TweenMax.to({}, 0.016, {
-  repeat: -1,
-  onRepeat: function() {
-    posX += (mouseX - posX) / 9;
-    posY += (mouseY - posY) / 9;
-    TweenMax.set(follower, {
-        css: {    
-        left: posX - 21,
-        top: posY - 21
-        }
-    });
-    TweenMax.set(cursor, {
-        css: {    
-        left: mouseX,
-        top: mouseY
-        }
-    });
-  }
-});
-document.addEventListener('mousemove', (e) => {
+const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+if (isTouchDevice) {
+    document.documentElement.classList.add('is-touch');
+} else{
+    document.documentElement.classList.remove('is-touch');    
+    initCursor();
+}
+
+function initCursor() {
+  const cursor = document.querySelector(".cursor");
+  const follower = document.querySelector(".cursor-follower");
+  let mouseX = 0, mouseY = 0;
+  let posX = 0, posY = 0;
+
+  document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-});
+  });
+
+  function animate() {
+    posX += (mouseX - posX) / 9;
+    posY += (mouseY - posY) / 9;
+
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+
+    follower.style.left = (posX - 21) + 'px';
+    follower.style.top = (posY - 21) + 'px';
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
 
 function animateFocusMouse(){
+  const cursor = document.querySelector(".cursor");
+  const follower = document.querySelector(".cursor-follower");
     document.querySelectorAll(".focusmouse").forEach((item) => {
         item.addEventListener('mouseenter', (e) => {
             cursor.classList.add("active");
@@ -250,4 +274,127 @@ window.addEventListener('pointerup', () => {
         isDragging = false;
         document.body.style.cursor = 'default';
     }
+});
+
+
+// floating section
+gsap.to(".fold-threeJs", {
+    height: "100%",    
+    ease: "none",   
+    scrollTrigger: {
+      trigger: ".fold-threeJS-floor",
+      start: "bottom bottom",     
+      end: "+=300",          
+      scrub: true,
+      pin: ".fold-threeJS-floor", 
+      pinSpacing: true, 
+      anticipatePin: 1
+    }
+  });
+
+
+//   cube rotation
+
+// -----------------------------------------
+// DARK MODE COLOR UPDATE FROM app.js
+
+
+// --- THREE.js scene setup ---
+const PRIMARY_COLOR = 0x1A1A1A;  // light surface
+const OFF_COLOR     = 0xE5E5E5 ;  // dark surface
+
+// --- THREE.js scene setup ---
+let scene, camera, renderer, material;
+scene = new THREE.Scene();
+scene.background = new THREE.Color(PRIMARY_COLOR);
+
+camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+camera.position.z = 5;
+
+renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NoToneMapping;
+
+const threeContainer = document.getElementById("three-container");
+threeContainer.appendChild(renderer.domElement);
+
+// --- MATERIAL ---
+material = new THREE.MeshBasicMaterial({ color: OFF_COLOR });
+
+// --- CREATE CHARACTER ---
+const character = new THREE.Group();
+const head = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), material);
+head.position.set(0,1.4,0);
+const body = new THREE.Mesh(new THREE.BoxGeometry(0.4,1.6,0.4), material);
+body.position.set(0,-0.2,0);
+const leftHand = new THREE.Mesh(new THREE.BoxGeometry(0.4,0.4,0.4), material);
+leftHand.position.set(-0.8,-0.4,0);
+const rightHand = leftHand.clone();
+rightHand.position.x = 0.8;
+character.add(head, body, leftHand, rightHand);
+scene.add(character);
+
+// --- DARK MODE SWITCH ---
+window.applyThreeColorMode = function(isDark) {
+    scene.background.set(isDark ? OFF_COLOR : PRIMARY_COLOR);
+    material.color.setHex(isDark ? PRIMARY_COLOR : OFF_COLOR);
+    material.needsUpdate = true;
+};
+const isDark = document.documentElement.classList.contains('dark');
+window.applyThreeColorMode(isDark);
+
+// --- RENDER LOOP ---
+let threeVisible = true; // track visibility
+function animate() {
+    if (threeVisible) {
+        renderer.render(scene, camera);
+    }
+    requestAnimationFrame(animate);
+}
+animate();
+
+// --- IntersectionObserver to stop Three.js when offscreen ---
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        threeVisible = entry.isIntersecting; // true if visible
+    });
+    
+}, { threshold: 0 }); // threshold 0 = even 1px visible counts
+
+observer.observe(document.querySelector(".fold-threeJS-floor"));
+// -----------------------------------------
+// GSAP SCROLL ANIMATION
+// -----------------------------------------
+let tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".fold-threeJS-floor",
+        start: "bottom bottom",
+        end: "+=600",
+        scrub: true,
+        // pin: ".fold-threeJS-floor",
+        // pinSpacing: true,
+        // anticipatePin: 1,
+        // markers: true
+    }
+});
+
+// 1️⃣ grow height
+tl.to(".fold-threeJs", {
+    height: "100%",
+    ease: "none",
+    duration: 1
+});
+
+// 2️⃣ character rotate
+tl.to(character.rotation, {
+    x: Math.PI * 2,
+    y: Math.PI * 2,
+    ease: "none",
+    duration: 1
 });

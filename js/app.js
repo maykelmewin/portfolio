@@ -4,7 +4,7 @@ var app = angular.module('main', []);
 app.controller('MainController', function MainController($scope, $timeout, $window) {
 
     
-    //observe the reponsive-box if change
+    //timeout
     $timeout(function () {
         const box = document.querySelector('.responsive-design-box');
         if (!box) return;
@@ -67,6 +67,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         $scope.$applyAsync(updateBreakpoints);
     });
     //endbrekpoints
+
 
 
     $scope.isDetailHovered = false; 
@@ -160,7 +161,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         },
         {
             text: 'Three JS',
-            percent: 75,
+            percent: 45,
         },
         {
             text: 'Figma',
@@ -243,37 +244,93 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     //     document.querySelector('#lazy-load').dismissPoster()
     // };
     
-    
+    function observeColorMode() {
+        const target = document.documentElement;
 
-    function darkmode(){
-        let darkMode  = localStorage.getItem("dark-mode");
-        if (darkMode === "enabled") {
-            enableDarkMode(); 
-        }
-        function enableDarkMode() {
-            document.documentElement.style.setProperty('--primary-color', '#1A1A1A');
-            document.documentElement.style.setProperty('--off-color', '#e5e5e5');
-            document.getElementsByClassName('infocard')[0].classList.add('--inverted');
-            localStorage.setItem("dark-mode", "enabled");
-        }
-        
-        function disableDarkMode() {
-            document.documentElement.style.setProperty('--primary-color', '#e5e5e5');
-            document.documentElement.style.setProperty('--off-color', '#1A1A1A');
-            document.getElementsByClassName('infocard')[0].classList.remove('--inverted');
-            localStorage.setItem("dark-mode", "disabled");
-        }
-        
-        $scope.toggleColormode = function() {
-            darkMode = localStorage.getItem("dark-mode");
-            toggleAnimation();
-            if (darkMode === "enabled") {
-                disableDarkMode();
+        const observer = new MutationObserver(() => {
+            const isDark = target.classList.contains('dark');
+            window.applyThreeColorMode(isDark);
+        });
+
+        observer.observe(target, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+
+    function enableDarkMode() {
+        document.documentElement.classList.add('dark');
+        document.documentElement.style.setProperty('--primary-color', '#1A1A1A');
+        document.documentElement.style.setProperty('--off-color', '#e5e5e5');
+        document.getElementsByClassName('infocard')[0].classList.add('--inverted');
+        localStorage.setItem("dark-mode", "enabled");
+    }
+
+    function disableDarkMode() {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.setProperty('--primary-color', '#e5e5e5');
+        document.documentElement.style.setProperty('--off-color', '#1A1A1A');
+        document.getElementsByClassName('infocard')[0].classList.remove('--inverted');
+        localStorage.setItem("dark-mode", "disabled");
+    }
+
+    (function initColorMode() {
+         const saved = localStorage.getItem("dark-mode");
+
+            if (saved === "enabled") {
+                enableDarkMode();   // adds .dark to documentElement
             } else {
-                enableDarkMode();
+                disableDarkMode();  // ensures .dark is removed
             }
+
+            // optional: sync Three.js immediately
+            const isDark = document.documentElement.classList.contains('dark');
+            window.applyThreeColorMode(isDark);
+    })();
+
+    $scope.toggleColormode = function() {
+        toggleAnimation();
+
+        const isDark = document.documentElement.classList.contains('dark');
+
+        if (isDark) {
+            disableDarkMode();   // updates DOM + localStorage
+        } else {
+            enableDarkMode();    // updates DOM + localStorage
         }
-    } 
+    };
+
+    // function darkmode(){
+    //     let darkMode  = localStorage.getItem("dark-mode");
+    //     if (darkMode === "enabled") {
+    //         enableDarkMode(); 
+    //     }
+    //     function enableDarkMode() {
+    //         document.documentElement.style.setProperty('--primary-color', '#1A1A1A');
+    //         document.documentElement.style.setProperty('--off-color', '#e5e5e5');
+    //         document.getElementsByClassName('infocard')[0].classList.add('--inverted');
+    //         localStorage.setItem("dark-mode", "enabled");
+    //     }
+        
+    //     function disableDarkMode() {
+    //         document.documentElement.style.setProperty('--primary-color', '#e5e5e5');
+    //         document.documentElement.style.setProperty('--off-color', '#1A1A1A');
+    //         document.getElementsByClassName('infocard')[0].classList.remove('--inverted');
+    //         localStorage.setItem("dark-mode", "disabled");
+    //     }
+        
+    //     $scope.toggleColormode = function() {
+    //         darkMode = localStorage.getItem("dark-mode");
+    //         toggleAnimation();
+    //         if (darkMode === "enabled") {
+    //             disableDarkMode();
+    //             window.applyThreeColorMode(false);
+    //         } else {
+    //             enableDarkMode();
+    //             window.applyThreeColorMode(true);
+    //         }
+    //     }
+    // } 
 
     function techSkillProgressInitValue(){
         for (let i = 0; i < $scope.techSkill.length; i++) {
@@ -283,14 +340,29 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         }
     }
 
+    const meSpace = document.querySelector(".me-space");
+    let meVisible = false;
 
+    // Observe visibility
+    const meObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            meVisible = entry.isIntersecting;
+        });
+    }, { threshold: 0 });
+
+    meObserver.observe(meSpace);
+    
     function mainMeAnimate(){ 
-        tlWave.play(0);
+        if (meVisible){
+            tlWave.play(0);
+        }
     }
     
     function mainMeStopAnimate(){    
-        tlWave.pause();
-        tlWaveReset.play(0);
+        if (meVisible){            
+            tlWave.pause();
+            tlWaveReset.play(0);
+        }
     }
 
     // listener for mouse and scroll   
@@ -340,8 +412,10 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
 
 
     function init(){
-        darkmode();
+        // darkmode();
         mainMeAnimate();
+        tlWave.play(0);
+        observeColorMode();
     }
     init();
 });
@@ -394,3 +468,102 @@ app.controller('CryptoController', function($scope, $http) {
       });
     };
   });
+
+
+// autotyping
+app.controller('AutoTypingCtrl', function($timeout) {
+    var vm = this;
+
+    const DEFAULT = "3D Animation";
+    const MAX_LENGTH = 30; // <-- maximum letters allowed
+    let idleTimer = null;
+    let deleting = false;
+    vm.el = null;
+
+    // Wait until DOM is ready
+    $timeout(function() {
+        vm.el = document.getElementById('typingTitle');
+        vm.el.innerText = DEFAULT.slice(0, MAX_LENGTH); // initialize default text
+    }, 0);
+
+    // ---------------------------
+    // Handle user typing
+    // ---------------------------
+    vm.onUserType = function() {
+        if (!vm.el) return; // safety check
+
+        
+        // limit user typing
+        if (vm.el.innerText.length > MAX_LENGTH) {
+            vm.el.innerText = vm.el.innerText.slice(0, MAX_LENGTH);
+            placeCaretAtEnd(vm.el);
+        }
+
+        // cancel any previous idle timer
+        if (idleTimer) $timeout.cancel(idleTimer);
+        deleting = false;
+
+        // start idle timer
+        idleTimer = $timeout(startDeleteIfIdle, 2000); // 2 seconds
+    };
+
+    // ---------------------------
+    // Delete incorrect letters after idle
+    // ---------------------------
+    function startDeleteIfIdle() {
+        deleting = true;
+        deleteStep();
+    }
+
+    function deleteStep() {
+        if (!deleting) return;
+
+        let txt = vm.el.innerText;
+
+        // compute longest correct prefix
+        let prefix = "";
+        for (let i = 0; i < txt.length && i < DEFAULT.length; i++) {
+            if (txt[i] === DEFAULT[i]) prefix += txt[i];
+            else break;
+        }
+
+        // if only prefix remains, stop deleting & type the rest
+        if (txt === prefix) {
+            deleting = false;
+            typeDefault(prefix);
+            return;
+        }
+
+        // otherwise delete one letter at a time
+        vm.el.innerText = txt.slice(0, -1);
+        placeCaretAtEnd(vm.el);
+        $timeout(deleteStep, 250);  
+    }
+
+    // ---------------------------
+    // Auto-type default text from prefix
+    // ---------------------------
+    function typeDefault(prefix) {
+        let i = prefix.length;
+
+        function addLetter() {
+            if (i > DEFAULT.length - 1) return;
+
+            vm.el.innerText = DEFAULT.slice(0, i + 1);
+            i++;
+
+            $timeout(addLetter, 500);
+        }
+
+        addLetter();
+    }
+
+    function placeCaretAtEnd(el) {
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+});

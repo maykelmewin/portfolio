@@ -23,7 +23,7 @@ $max-width: 1080;
 }
 
 @mixin invert-bg-container {
-    background-color: #000; 
+    background-color: #000;
     mix-blend-mode: difference;
     filter: invert(1);
 }
@@ -43,15 +43,15 @@ $max-width: 1080;
     box-sizing: border-box;
     font-family: 'Press Start 2P', cursive;
 }
-a, a:visited, a:link { 
+a, a:visited, a:link {
     color: inherit;
     text-decoration: none;
-} 
+}
 button {
     border-radius: 0;
     border: 0;
     cursor: pointer;
-}   
+}
 :focus-visible{
     outline-color: var(--off-color);
 }
@@ -125,7 +125,7 @@ html, body{
         }
     }
 }
-.me.--puzzled{    
+.me.--puzzled{
     width: 104px;
     height: 176px;
 }
@@ -136,6 +136,57 @@ html, body{
 .fold-third{
     width: 100%;
     min-height: calc(var(--vh) * 100);
+}
+.fold-threeJS-floor{
+  height: calc(var(--vh) * 100);
+  width: 100%;
+  min-width: 100%;
+  border: solid 8px var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  .textarea-title{
+    cursor: text;
+    font-size: 2.5vw;
+    text-decoration: underline;
+    color: var(--off-color);
+    text-align: center;
+    line-height: 1.5;
+    caret-color: var(--off-color);
+    background: transparent;
+    border: 0;
+    width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    &:focus,
+    &:focus-visible,
+    &:target{
+        border: 0;
+        outline: 0;
+    }
+  }
+}
+.fold-threeJs{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    overflow:   hidden;
+    background: var(--off-color);
+    #three-container{
+        width:1 100%;
+        height: calc(var(--vh) * 100);
+        position: relative;
+        overflow: hidden;
+        background-color: var(--primary-color);
+
+    }
+}
+.freebottomspace{
+    width: 50%;
+    height: calc(var(--vh) * 50);
 }
 .hero-content{
     margin: 0 auto;
@@ -203,7 +254,7 @@ html, body{
             &:hover > div, &.--active > div {
                 transform: translateX(8px);
             }
-            
+
             &.--active{
                 &::before{
                     height: 100%;
@@ -247,12 +298,12 @@ html, body{
                 flex-flow: column;
                 padding-left: 1rem;
                 padding-right: 1rem;
-                &__title{ 
+                &__title{
                     font-size: 18px;
                     margin-bottom: 2rem
                 }
                 &__description {
-                    font-size: 1rem;                    
+                    font-size: 1rem;
                     // margin-left: 1rem;
                     // margin-right: 1rem;
                     // max-width: 820px;
@@ -279,7 +330,7 @@ html, body{
                     }
                     &::before{
                         content: "";
-                        background-color: var(--off-color);                    
+                        background-color: var(--off-color);
                         position: absolute;
                         height: 100%;
                         width: 100%;
@@ -289,11 +340,11 @@ html, body{
                     }
                 }
                 &.window--close{
-                    
+
                     .window__btn{
                         opacity: 0;
                         pointer-events: none;
-                        
+
                     }
                     &::before{
                         height: 0;
@@ -320,7 +371,7 @@ html, body{
                     font-size: 12px;
                     margin-left: auto;
                     margin-top: 1.5rem;
-                }                
+                }
                 &.--noborder{
                     border: unset;
                 }
@@ -371,6 +422,7 @@ html, body{
                     line-height: 1.5;
                     padding: 2rem;
                     border: 4px solid var(--off-color);
+
                 }
                 .buttons-container{
                     display: flex;
@@ -379,8 +431,8 @@ html, body{
                     border: 4px solid var(--off-color);
                     background-color: var(--off-color);
                     .button{
-                       width: 80px; 
-                       height: 80px; 
+                       width: 80px;
+                       height: 80px;
                        display: flex;
                        align-items: center;
                        justify-content: center;
@@ -388,14 +440,14 @@ html, body{
                        background-color: transparent;
                         & > svg{
                             mix-blend-mode: difference;
-                            
+
                             background: transparent;
                        }
                        &__svg-warning{
                         position: absolute;
                        }
                     }
-                    
+
                     &::before{
                         content: '';
                         position: absolute;
@@ -406,7 +458,7 @@ html, body{
                         background-color: #fff;
                         transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
                         mix-blend-mode: difference;
-                        
+
                     }
 
                 }
@@ -433,7 +485,7 @@ html, body{
                         // min-width: 440px;
                     }
                     .buttons-container{
-                        flex-flow: row;                        
+                        flex-flow: row;
                         &::before{
                             top: 0%;
                             left: 33%;
@@ -441,20 +493,20 @@ html, body{
                             height: 100%;
                         }
                     }
-                    
+
                     .me.--puzzled > .me__part.--head{
                         opacity: 1;
                     }
                 }
-                &.--mobileView{ 
+                &.--mobileView{
                     flex-flow: column-reverse;
                     padding: 1rem;
-                    padding: 1rem 2rem;             
+                    padding: 1rem 2rem;
                     .message-container{
                         flex-basis: 0;
                         min-width: unset;
                     }
-                    .buttons-container{                      
+                    .buttons-container{
                         &::before{
                             left: 0%;
                         }
@@ -481,7 +533,7 @@ html, body{
                         margin-top: unset;
                         transform: translateY(-28px);
                     }
-                    
+
                     .resolution-text{
                         font-size: 12px;
                         transform: unset;
@@ -492,7 +544,7 @@ html, body{
                         opacity: 1;
                     }
                 }
-                
+
             }
             .techskill{
                 padding: 2rem 6rem;
@@ -512,7 +564,7 @@ html, body{
                     &__progressbar{
                         width: 100%;
                         height: 24px;
-                        border: solid 4px var(--off-color);                        
+                        border: solid 4px var(--off-color);
                         position: relative;
                         &__percent{
                             @include text-long;
@@ -529,7 +581,7 @@ html, body{
                             background-color: var(--off-color);
                             transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
                         }
-                        
+
                     }
                 }
 
@@ -539,7 +591,7 @@ html, body{
     .cryptocontainer{
         width: 860px;
         background-color: var(--primary-color);
-        &__header{            
+        &__header{
             display: flex;
             justify-content: space-between;
             margin-bottom: 40px;
@@ -552,7 +604,7 @@ html, body{
                 @include text-long;
             }
         }
-        &__mainbutton{            
+        &__mainbutton{
             font-size: 12px;
             min-width: 180px;
             margin-left: auto;
@@ -564,18 +616,18 @@ html, body{
             @include text-long;
         }
         &__content{
-            display: flex;            
+            display: flex;
             justify-content: space-between;
             //change gap value for small
             $apicontainer-gap-value: 80px;
             gap: #{$apicontainer-gap-value} ;
             min-height: 285px;
-            
+
             & > div:first-child{
                 flex: 1 0 183px;
                 max-width: 183px;
             }
-            & > div:last-child{                
+            & > div:last-child{
                 display: flex;
                 column-gap: #{$apicontainer-gap-value} ;
                 row-gap: 1rem;
@@ -592,7 +644,7 @@ html, body{
                 margin-top: 0.5rem;
                 @include text-long;
             }
-            
+
             .cryptocard__border{
                 display: flex;
                 height: 100px;
@@ -600,7 +652,7 @@ html, body{
                 .cryptocard__code{
                     flex: 0 0 100px;
                 }
-                .cryptocard__valuecontainer{                    
+                .cryptocard__valuecontainer{
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -612,7 +664,7 @@ html, body{
                     }
                     .cryptocard__value{
                         margin-top: 0.25px;
-                        font-size: 1.25rem;                        
+                        font-size: 1.25rem;
                         @include text-long;
                     }
                 }
@@ -632,7 +684,7 @@ html, body{
                         width: 100%;
                     }
                 }
-                
+
             }
         }
         &__cryptocard.--vertical{
@@ -666,13 +718,13 @@ html, body{
             color: #000;
             mix-blend-mode: difference;
             filter: invert(1);
+            margin-bottom: calc(var(--vh) * 10);
         }
         .xp{
             display: flex;
             flex-flow: column;
             width: 342px;
-            margin-top: calc(var(--vh) * 10);
-            margin-bottom: calc(var(--vh) * 10);
+            margin: 1rem 0;
             &__year{
                 display: flex;
                 align-items: flex-end;
@@ -721,7 +773,7 @@ html, body{
                 border: 4px solid var(--off-color);
                 background-color: var(--primary-color);
             }
-            &__companyname{                
+            &__companyname{
                 font-size: 14px;
                 line-height: 1.5;
                 text-transform: capitalize;
@@ -743,7 +795,7 @@ html, body{
                     @include text-long;
                     font-size: 1rem;
                 }
-                
+
             }
             &__buttonlink{
                 padding: 1rem;
@@ -827,7 +879,7 @@ html, body{
         font-size: 16px;
         color: var(--primary-color);
     }
-    &__detail{        
+    &__detail{
         font-size: 16px;
         color: var(--primary-color);
     }
@@ -846,7 +898,7 @@ html, body{
         white-space: nowrap;
 
     }
-    &__detail{ 
+    &__detail{
         margin-top: 48px;
         & > div{
         margin-bottom: .5rem;
@@ -962,10 +1014,10 @@ html, body{
             height: 172px;
             align-items: flex-start;
             justify-content: space-between;
-            padding: 32px;   
+            padding: 32px;
             background-color: var(--off-color);
             mix-blend-mode: normal;
-            filter: none;        
+            filter: none;
             .infocard__info{
                 bottom: 8px;
             }
@@ -1008,9 +1060,10 @@ html, body{
         position: absolute;
         top: 0;
         width: 100%;
-        height: 0;
+        height: 100%;
         background-color: var(--primary-color);
-        animation: growHeight 2s linear infinite alternate;
+        animation: growScaleY .5s linear infinite alternate;     
+        transform-origin: top;
     }
 }
 .pagination{
@@ -1059,7 +1112,7 @@ html, body{
     }
     &.--b0{
         left: 15%;
-        
+
         top: 10%;
         width: 80px;
     }
@@ -1081,13 +1134,13 @@ html, body{
     }
     &.--b4{
         right: 10%;
-        
+
         top: 59%;
         width: 100px;
     }
 }
 
-.me{ 
+.me{
     position: relative;
     &.filter-invert{
         mix-blend-mode: difference;
@@ -1145,9 +1198,9 @@ html, body{
 .cursor {
     position: fixed;
     background-color: transparent;
-    border: 4px solid #000;
+    border: 4px solid var(--primary-color);
     mix-blend-mode: difference;
-    filter: invert(1);
+    // filter: invert(1);
     width: .5rem;
     height: .5rem;
     z-index: 1;
@@ -1155,23 +1208,23 @@ html, body{
         0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33) opacity;
     user-select: none;
     pointer-events: none;
-    transform: scale(1);
-    &.active {
-        opacity: 0.5;
-        transform: scale(0);
-    }
+    // transform: scale(1);
+    // &.active {
+    //     opacity: 0.5;
+    //     transform: scale(0);
+    // }
 }
 
 .cursor-follower {
     position: fixed;
     background-color: transparent;
-    border: 4px solid #000;
+    border: 4px solid var(--primary-color);
     mix-blend-mode: difference;
-    filter: invert(1);
+    // filter: invert(1);
     width: 40px;
     height: 40px;
     z-index: 1;
-    transition: height 0.6s, width 0.6s, transform 0.6s ;
+    transition: height 0.6s, width 0.6s, transform 0.6s , opacity 1s ;
     user-select: none;
     pointer-events: none;
     transform: translate(5px, 5px);
@@ -1179,14 +1232,36 @@ html, body{
     &.active {
         height: 0;
         width: 0;
-        transform: translate(200%,200%);
+        transform: translate(300%,300%);
+        opacity: 0;
     }
 }
 
+
+html.is-touch .cursor,
+html.is-touch .cursor-follower{
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+@media (pointer: coarse) {
+  html {
+    cursor: auto !important;
+  }
+  .custom-cursor {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+
 //keyframes
-@keyframes growHeight {
-    to {height: 100%;}
- }
+@keyframes growScaleY {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
 @keyframes shakinghead {
     from {transform: translateX(-2%) rotate(1deg);}
     to {transform: translateX(2%) rotate(-2deg);}
