@@ -39,7 +39,6 @@ pageDown.forEach(function (el){
 document.querySelector(".--pageup").addEventListener("click", () => {
     gsap.to(window, {duration: 1, scrollTo: {y:".fold-first"} })
 });
-// clouds parallax
 document.querySelectorAll(".pagination__item").forEach((btn, index, array) => {
     btn.addEventListener("click", () => {
     gsap.to(window, {duration: 1, scrollTo:{y:"#phase" + (index + 1)}});
@@ -52,40 +51,84 @@ document.querySelectorAll(".pagination__item").forEach((btn, index, array) => {
         toggleClass: {targets: '#btnPhase' + (index + 1), className: '--active'}
     });
 });
-function pageReadyAnimation() {
-    const foldThird = document.querySelector(".fold-third");
-    let isVisible = false;
 
-    // Observe visibility
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            isVisible = entry.isIntersecting;
 
-            if (isVisible) {
+// clouds parallax
+// function pageReadyAnimation() {
+//     const foldThird = document.querySelector(".fold-third");
+//     let isVisible = false;
+
+//     // Observe visibility
+//     const observer = new IntersectionObserver(entries => {
+//         entries.forEach(entry => {
+//             isVisible = entry.isIntersecting;
+
+//             if (isVisible) {
                 
-                const falling = gsap.timeline();
-                falling.fromTo('.--a0', {yPercent: -1000}, {yPercent: 1000, duration: 2})
-                       .fromTo('.--a1', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
-                       .fromTo('.--a2', {yPercent: -3000}, {yPercent: 0, duration: 2}, "<")
-                       .fromTo('.--b0', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
-                       .fromTo('.--b1', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
-                       .fromTo('.--b2', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
-                       .fromTo('.--b3', {yPercent: 0}, {yPercent: 0, duration: 2}, "<")
-                       .fromTo('.--b4', {yPercent: 0}, {yPercent: -1000, duration: 2}, "<");
+//                 const falling = gsap.timeline();
+//                 falling.fromTo('.--a0', {yPercent: -1000}, {yPercent: 1000, duration: 2})
+//                        .fromTo('.--a1', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+//                        .fromTo('.--a2', {yPercent: -3000}, {yPercent: 0, duration: 2}, "<")
+//                        .fromTo('.--b0', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+//                        .fromTo('.--b1', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+//                        .fromTo('.--b2', {yPercent: -1000}, {yPercent: 1000, duration: 2}, "<")
+//                        .fromTo('.--b3', {yPercent: 0}, {yPercent: 0, duration: 2}, "<")
+//                        .fromTo('.--b4', {yPercent: 0}, {yPercent: -1000, duration: 2}, "<");
 
-                ScrollTrigger.create({
-                    animation: falling,
-                    trigger: ".fold-third",
-                    end: () => "+=" + foldThird.offsetWidth,
-                    scrub: true
-                });
+//                 ScrollTrigger.create({
+//                     animation: falling,
+//                     trigger: ".fold-third",
+//                     end: () => "+=" + foldThird.offsetWidth,
+//                     scrub: true
+//                 });
 
-            } 
-        });
-    }, { threshold: 0 });
+//             } 
+//         });
+//     }, { threshold: 0 });
 
-    observer.observe(foldThird);
+//     observer.observe(foldThird);
+// }
+
+function pageReadyAnimation() {
+  const foldThird = document.querySelector(".fold-third");
+  if (!foldThird) return;
+
+  const layers = [
+    { el: '.--a0', from: -600, to: 600 },
+    { el: '.--a1', from: -700, to: 700 },
+    { el: '.--a2', from: -900, to: 0 },
+    { el: '.--b0', from: -500, to: 500 },
+    { el: '.--b1', from: -600, to: 600 },
+    { el: '.--b2', from: -700, to: 700 },
+    { el: '.--b3', from: 0, to: 0 },
+    { el: '.--b4', from: 0, to: -800 }
+  ];
+
+  layers.forEach(layer => {
+    const el = document.querySelector(layer.el);
+    if (!el) return;
+
+    gsap.fromTo(el,
+      { yPercent: layer.from },
+      {
+        yPercent: layer.to,
+        ease: "none",
+        scrollTrigger: {
+          trigger: foldThird,
+          start: getStartParallaxTrigger(),
+          end: () => "+=" + foldThird.offsetWidth,
+          scrub: 0.6, 
+        }
+      }
+    );
+  });
 }
+function getStartParallaxTrigger() {
+  return window.innerWidth < 768
+    ? "center bottom"     // mobile → start earlier
+    : "top bottom"; // desktop → normal
+}
+
 
 // toggle aninamation
 const switching = gsap.timeline();

@@ -77,7 +77,8 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: .75rem 1.25rem;
+    padding: .75rem 1.5rem;
+    letter-spacing: 2px;
     border: 3px solid var(--off-color);
     & > svg,
     & > span{
@@ -153,6 +154,7 @@ html, body{
     color: var(--off-color);
     text-align: center;
     line-height: 1.5;
+    letter-spacing: 2px;
     caret-color: var(--off-color);
     background: transparent;
     border: 0;
@@ -176,7 +178,7 @@ html, body{
     overflow:   hidden;
     background: var(--off-color);
     #three-container{
-        width:1 100%;
+        width: 100%;
         height: calc(var(--vh) * 100);
         position: relative;
         overflow: hidden;
@@ -187,6 +189,38 @@ html, body{
 .freebottomspace{
     width: 50%;
     height: calc(var(--vh) * 50);
+}
+.button-fx{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    .svg-soundtrack{
+        rect{
+            fill: var(--off-color);
+        }
+    }
+    &__text{
+        color: var(--off-color);
+        font-size: 14px;
+    }
+    
+    position: relative;
+    &::after{
+            content: '';
+            width: 0;      
+            height: 4px;      
+            background-color: var(--off-color);
+            transition: width ($anmtn-ms + ms) ease-in-out ;
+            position:  absolute;
+            top: 50%;
+            transform: translate(-4px, -50%);
+    }
+    &.--muted{
+        &::after{
+             width: calc(100% + 8px);    
+        }
+    }
 }
 .hero-content{
     margin: 0 auto;
@@ -202,6 +236,8 @@ html, body{
         font-size: 3rem;
         margin-top: calc(var(--vh) * 5);
         margin-bottom: 1.5rem;
+        text-align: center;
+        line-height: 125%;
     }
     &__jobtitle{
         font-size: 1.25rem;
@@ -209,6 +245,11 @@ html, body{
     }
     .btn{
         font-size: 14px;
+    }
+    .button-fx{
+        position: absolute;
+        top: 40px;
+        right: 48px;
     }
 }
 .fold-first-content{
@@ -219,13 +260,13 @@ html, body{
     padding-top: calc(var(--vh) * 10);
     padding-bottom: calc(var(--vh) * 10);
     .description{
-        margin-top: calc(var(--vh) * 10);
+        margin-top: calc(var(--vh) * 5);
         background-color: var(--off-color);
         width: 100%;
-        box-shadow:
-        0 0 0 4px var(--primary-color) ,
-        0 0 0 8px var(--off-color);
-        padding: 1.25rem;
+        // box-shadow:
+        // 0 0 0 4px var(--primary-color) ,
+        // 0 0 0 8px var(--off-color);
+        padding: 1.25rem 60px;
         &__container{
             max-width: 640px ;
             margin: 0 auto;
@@ -249,10 +290,21 @@ html, body{
             }
 
             & > div{
-                @include transition(transform)
+                @include transition(transform);
+                font-size: 1.25rem;
+                .svg-soundicon{
+                    vertical-align: middle;
+                    display: none;
+                    path{
+                        fill: var(--primary-color);
+                    }
+                }
             }
             &:hover > div, &.--active > div {
                 transform: translateX(8px);
+                .svg-soundicon{
+                    display: inline-block;
+                }
             }
 
             &.--active{
@@ -262,6 +314,27 @@ html, body{
             }
         }
     }
+    .text-hi{
+        font-size: 1.25rem;
+        letter-spacing: 2px;
+        margin-top: 1.5rem;
+        background-color: var(--off-color);
+        color: var(--primary-color);
+        padding: 1.5rem 2rem;
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            top: -12px;           
+            right: 24px;           
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 12px solid #111;
+        }
+    }
+    margin-bottom: 1.5rem;
 }
 .fold-first{
     overflow: hidden;
@@ -272,11 +345,13 @@ html, body{
         position: absolute;
         z-index: 1;
         font-size: 1.5rem;
+        letter-spacing: 2px;
         margin-top: 2rem;
         float: left;
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
+        white-space: nowrap;
     }
     .slides{
         display: flex;
@@ -300,7 +375,8 @@ html, body{
                 padding-right: 1rem;
                 &__title{
                     font-size: 18px;
-                    margin-bottom: 2rem
+                    letter-spacing: 2px;
+                    margin-bottom: 2rem;
                 }
                 &__description {
                     font-size: 1rem;
@@ -566,6 +642,7 @@ html, body{
                         height: 24px;
                         border: solid 4px var(--off-color);
                         position: relative;
+                        overflow: hidden;
                         &__percent{
                             @include text-long;
                             font-size: 12px;
@@ -718,7 +795,9 @@ html, body{
             color: #000;
             mix-blend-mode: difference;
             filter: invert(1);
-            margin-bottom: calc(var(--vh) * 10);
+            margin-bottom: calc(var(--vh) * 10);            
+            line-height: 150%;
+            letter-spacing: 2px;
         }
         .xp{
             display: flex;
@@ -732,6 +811,7 @@ html, body{
                 margin-bottom: .75rem;
                 strong{
                     font-size: 5rem;
+                    letter-spacing: 2px;
                     text-shadow: -2px -2px 0 var(--primary-color), 2px -2px 0 var(--primary-color), -2px 2px 0 var(--primary-color), 2px 2px 0 var(--primary-color);
                 }
                 .--active{
@@ -776,6 +856,7 @@ html, body{
             &__companyname{
                 font-size: 14px;
                 line-height: 1.5;
+                letter-spacing: 2px;
                 text-transform: capitalize;
             }
             &__collapse-content{
@@ -854,6 +935,7 @@ html, body{
     overflow: hidden;
     &__name{
         font-size: 20px;
+        letter-spacing: 2px;
         color: var(--primary-color);
         display: flex;
         flex-wrap: wrap;
@@ -877,6 +959,7 @@ html, body{
     &__title,
     &__tag{
         font-size: 16px;
+        letter-spacing: 2px;
         color: var(--primary-color);
     }
     &__detail{
@@ -893,7 +976,7 @@ html, body{
         padding: 12px 0;
         color: var(--primary-color);
         position: absolute;
-        left: 32px;
+        left: 24px;
         bottom: -28px;
         white-space: nowrap;
 
@@ -946,9 +1029,44 @@ html, body{
         position: absolute;
         bottom: 40px;
         right: #{$main-sidespace}px;
+        .long-text{
+            display: block;
+        }
+        .simplified-text{
+            display: none;
+        }
     }
-    &__name--others, &__title, &__tag, &__toggle, &__toggle .label, &__detail, &__icons, &__pageup-button{
+    &__name--others, &__title, &__tag, &__toggle, &__toggle .label, &__detail, &__fx, &__icons, &__pageup-button, &__figmalink{
         display: none;
+    }
+    &__options{
+        display: flex;
+        flex-flow: column-reverse;
+        align-items: end;
+        justify-content: space-between;
+        height: 100%;
+        .button-fx{
+            &__text{
+                color: var(--primary-color);
+            }
+            .svg-soundtrack rect{
+                fill: var(--primary-color);
+            }
+            &::after{
+                background-color: var(--primary-color);
+
+            }
+        }
+    }
+    &__fx{
+        .button-fx__text{
+            font-size:10px;
+        }
+        .svg-soundtrack{
+            .last-track{
+                // display: none;
+            }
+        }
     }
     &.--expand{
         width: 100%;
@@ -977,12 +1095,48 @@ html, body{
         .infocard__name--others{
             display: block;
         }
-        .infocard__toggle{
+        
+        .infocard__figmalink{
+            cursor: pointer;
             display: flex;
+            align-items: center;
             position: absolute;
-            gap: 2rem;
+            bottom: 52px;
+            left: max(20vw, 48px);
+            gap: 1rem;
+            .svg-figma path{
+                fill: var(--primary-color);
+            }
+            &__text{
+                color: var(--primary-color);
+                font-size: 14;
+
+            }
+            &:hover .infocard__figmalink__text{
+                text-decoration: underline;
+            }
+        }
+        
+        .infocard__fx{
+            display: flex;
+            .button-fx__text{
+                font-size:14px;
+            }
+        }
+        .infocard__toggle{            
+            display: flex;            
+            gap: 12px;
+        }
+        .infocard__options{
+            gap: 24px;
+            position: absolute;
             top: 40px;
-            right: #{$main-sidespace}px;
+            right: #{$main-sidespace}px;            
+            flex-flow: row;
+            align-items: center;            
+            justify-content: end;
+            height: unset;
+            
         }
         .infocard__icons{
             display: flex;
@@ -1014,7 +1168,7 @@ html, body{
             height: 172px;
             align-items: flex-start;
             justify-content: space-between;
-            padding: 32px;
+            padding: 24px;
             background-color: var(--off-color);
             mix-blend-mode: normal;
             filter: none;
@@ -1027,13 +1181,14 @@ html, body{
                 margin-top: .75rem;
             }
             .infocard__name--others,
-            .infocard__toggle{
+            .infocard__toggle,
+            .infocard__fx{
                 display: flex;
             }
         }
     }
 }
-.loading-screen{
+.screen-blocker{
     min-height: 100vh;
     width: 100%;
     position: fixed;
@@ -1048,6 +1203,7 @@ html, body{
         min-height: calc(var(--vh) * 100);
         top: calc(var(--vh) * -100);
     }
+
 }
 .loading-icon{
     width: 20px;
@@ -1066,6 +1222,37 @@ html, body{
         transform-origin: top;
     }
 }
+.--screen-limit .loading-icon{
+    display: none;
+}
+
+.screen-limit{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    gap: 24px;
+    .svg-sadface{
+        path{
+            fill: var(--primary-color);
+        }
+    }
+    &__text{
+        color: var(--primary-color);
+        text-align: center;
+        line-height: 150%;
+    }
+}
+.--screen-limit .screen-limit{
+    display: flex;
+}
+@media screen and (max-width: 320px) {
+    .screen-limit__text{
+        font-size: 10px;
+    }
+}
+
+
 .pagination{
     position: fixed;
     top: 50%;
@@ -1138,6 +1325,11 @@ html, body{
         top: 59%;
         width: 100px;
     }
+}
+.--a0, .--a1, .--a2,
+.--b0, .--b1, .--b2, .--b3, .--b4 {
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .me{
@@ -1270,3 +1462,236 @@ html.is-touch .cursor-follower{
     from {transform: translateX(5%);}
     to {transform: translateX(-5%);}
  }
+
+
+
+
+//  responsive adjustmet
+@media screen and (max-width: 980px) {
+    .pagination{
+        left: 1rem;
+    }
+    .infocard{
+        bottom: 1rem;
+        right: 1rem;
+    }
+    .fold-second .slides__item .content,    
+    .infocard.--expand{
+        padding-left: 60px;
+        padding-right: 60px;
+    }   
+    .infocard.--expand .infocard__options,    
+    .hero-content  .button-fx{
+        top: 24px;
+        right: 24px;
+    }
+    .infocard__pageup-button{
+        bottom: 24px;
+        right: 24px;
+    }
+    .infocard.--expand .infocard__figmalink{
+        bottom: 24px;
+        left: 24px;
+    }
+    .fold-threeJS-floor .textarea-title{
+        font-size: 5vw;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .hero-content__name,
+    .infocard.--expand .infocard__name{
+        font-size: 6.5vw;
+    }
+
+}
+
+// mobile screen view
+@media screen and (max-width: 599px) {
+    .pagination{
+        left: 0;
+        top: 0;
+        transform: none;
+        display: flex;
+        flex-flow: row;
+        height: 8px;
+        width: 100%;
+        gap: 4px;
+    }
+    .pagination__item{
+        width: 40px;
+        height: inherit;        
+        @include transition((width));
+        flex-grow: 1;
+    }
+    .pagination__item.--active{
+        width: 100%;
+        height: unset;
+    }
+    .pagination__item:not(.--active):hover, .pagination__item:not(.--active):focus{
+        height: unset;
+    }
+    .infocard{
+        bottom: 0;
+        right: 1.5rem;
+        height: 32px;
+        width: 100px;
+    }
+    .infocard__name{
+        font-size: 12px;
+    }
+    .infocard.--expand .infocard__options{
+        top: 24px;
+        right: 1rem;
+    }
+    .hero-content  .button-fx{
+        top: 32px;
+        &__text{
+                font-size:12px;
+        }
+    }
+    .hero-content .btn,
+    .infocard.--expand .infocard__fx .button-fx__text{
+        font-size: 12px;
+    }
+
+    .hero-content__name{
+        margin-bottom: 1rem;
+    }
+    .hero-content__name,
+    .infocard.--expand .infocard__name{
+        font-size: 11vw;
+    }
+    .infocard.--expand .infocard__toggle .label{
+        display: none;
+    }
+    .infocard.--expand{
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    .infocard__tag{
+        font-size: 14px;
+    }
+    .infocard.--expand .infocard__title{
+        font-size: 18px;
+    }
+    .infocard.--expand .infocard__figmalink{
+        left: 1rem;
+        bottom: 1.5rem;
+    }
+    .infocard__pageup-button{
+        bottom: 1rem;
+        right: 1rem;
+    }
+    .infocard__pageup-button > span{
+        font-size: 12px;
+    }
+    .btn{
+        padding: 0.5rem 1.75rem;
+    }
+    .infocard__pageup-button{
+        .long-text{
+            display: none;
+        }
+        .simplified-text{
+            display: block;
+        }
+    }
+
+    .fold-first-content .text-hi{
+        font-size: 14px;
+        padding: 1.25rem 2rem;
+    }
+    .fold-first-content .description{
+        padding: 1.75rem 2.25rem 1.75rem 1.2rem;
+        margin-top: calc(var(--vh) * 10);
+       
+    }
+    .fold-first-content .description__item {
+        padding-top: .5rem ;
+        padding-bottom: .5rem ;
+        > div{
+            font-size: 1rem;
+        }
+    }
+    .fold-second__title{
+        font-size: 16px;
+        margin-top: 1.5rem;
+    }
+    .fold-second .slides__item .content__title{
+        line-height: 150%;
+        margin-top: 1rem;
+        margin-bottom: .5rem;
+    }
+    .fold-second .slides__item .content__title,
+    .fold-second .slides__item .content__description{
+        font-size: 14px;
+    }
+    .fold-second .slides__item{
+        padding: 0;
+        align-items: flex-end;
+    }
+    .fold-second .slides__item .content{
+        padding-left: 1rem;
+        padding-right: 1rem;
+        height: calc(var(--vh) * 100 - 40px);
+        background-color: red;
+    }
+    .fold-threeJS-floor .textarea-title{
+        font-size: 8vw;
+        padding: 1rem;
+    }
+    .fold-threeJS-floor{
+        border-top-width: 16px;
+    }
+    .fold-third{
+        padding: calc(var(--vh) * 5) 1.5rem;
+    }
+    .fold-third .content__title{
+        font-size: 20px;
+        // text-align: left;
+    }
+    .fold-third .content .xp__year strong{
+        font-size: 40px;
+    }
+    .fold-third .content .xp__year .--active p,
+    .fold-third .content .xp__jobtitle,
+    .fold-third .content .xp__collapse-content__description,
+    .fold-third .content .xp__collapse-content__datespan{
+        font-size: 14px;
+    }
+    .fold-third .content .xp__companyname{
+        font-size: 12px;
+    }
+    .fold-third .content .xp__jobtitle{
+        padding: .5rem;
+    }
+    .fold-third .content .xp__year{
+        margin-bottom: .5rem;
+    }
+    .fold-third .content .xp__companycontainer{
+        padding: 1rem;
+    }
+    .fold-third .content .xp__collapse-content__description{
+        padding:  1rem 0;
+    }
+    .fold-third .content .xp{
+        max-width: 292px;
+        margin: calc(var(--vh) * 8) 0;
+    }
+    .fold-third .content .xp__buttonlink{
+        padding: .5rem;
+    }
+    .cloud.--a2{
+        left: 55%;
+    }
+    .cloud.--a0{
+        right: 71%;
+    }
+    .freebottomspace {
+        height: calc(var(--vh) * 60);
+    }
+    .me.--falling{
+        left: 14%;
+    }
+}

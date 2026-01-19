@@ -69,7 +69,13 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     //endbrekpoints
 
 
-
+    $scope.fxOn = false;
+    $scope.link = {
+        li : 'https://www.linkedin.com/in/michael-merin/',
+        ig : 'https://www.instagram.com/mklmerin/',
+        messenger : 'https://m.me/maykelmewin',
+        figma : 'https://www.figma.com/design/Rki4DLFlw70sHLa1lexVdV/Porfolio---Merin?m=auto&t=qSUdqfA6sbQezQ6F-6',
+    }
     $scope.isDetailHovered = false; 
     $scope.xp = [
         {
@@ -103,22 +109,22 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     
     $scope.desc = [
         {
-            desc: 'He',
+            desc: 'he.',
         },
         {
-            desc: 'Filipino',
+            desc: 'Filipino.',
         },
         {
-            desc: 'Proficient in English',
+            desc: 'proficient in English.',
         },
         {
-            desc: 'Two decades of existence',
+            desc: 'two decade into existence.',
         },
         {
-            desc: 'Obsessed with art and codes',
+            desc: 'obsessed with art and codes.',
         },
         {
-            desc: 'Greatest interest in turning outstanding design into a website',
+            desc: 'highly interested in turning outstanding design into website.',
         },
        
     ]
