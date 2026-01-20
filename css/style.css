@@ -390,9 +390,7 @@ html, body {
   flex-grow: 1;
   border: 4px solid var(--off-color);
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: auto;
 }
 .fold-second .slides__item .box.window .window__btn {
   position: absolute;
@@ -444,6 +442,9 @@ html, body {
 }
 .fold-second .slides__item .box.--noborder {
   border: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .fold-second .slides__item .model {
   width: 100%;
@@ -608,6 +609,7 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  height: 100%;
 }
 .fold-second .slides__item .techskill__item {
   width: 50%;
@@ -616,6 +618,8 @@ html, body {
 .fold-second .slides__item .techskill__item__text {
   font-size: 12px;
   margin-bottom: 8px;
+  letter-spacing: 2px;
+  line-height: 150%;
 }
 .fold-second .slides__item .techskill__item__progressbar {
   width: 100%;
@@ -643,8 +647,14 @@ html, body {
   transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 .fold-second .cryptocontainer {
+  margin: auto;
+  height: 100%;
+  display: flex;
   width: 860px;
   background-color: var(--primary-color);
+  flex-flow: column;
+  justify-content: center;
+  padding: 2rem;
 }
 .fold-second .cryptocontainer__header {
   display: flex;
@@ -653,6 +663,8 @@ html, body {
 }
 .fold-second .cryptocontainer__headertitle {
   font-size: 1.5rem;
+  letter-spacing: 2px;
+  line-height: 125%;
 }
 .fold-second .cryptocontainer__headersubtitle {
   font-size: 1rem;
@@ -671,6 +683,7 @@ html, body {
   font-size: 12px;
   margin-top: 0.8rem;
   margin-left: auto;
+  text-align: right;
   font-family: "Sintony", sans-serif;
   font-weight: 700;
   font-style: normal;
@@ -751,18 +764,6 @@ html, body {
 }
 .fold-second .cryptocontainer__cryptocard .cryptocard__border .cryptocard__lid.--closed {
   width: 100%;
-}
-.fold-second .cryptocontainer__cryptocard.--vertical .cryptocard__border {
-  flex-flow: column;
-  height: 252px;
-}
-.fold-second .cryptocontainer__cryptocard.--vertical .cryptocard__border .cryptocard__lid {
-  transition: height 200ms ease-in-out;
-  width: 100%;
-  height: 100px;
-}
-.fold-second .cryptocontainer__cryptocard.--vertical .cryptocard__border .cryptocard__lid.--closed {
-  height: 100%;
 }
 
 .fold-third {
@@ -1380,7 +1381,7 @@ html, body {
 .cursor {
   position: fixed;
   background-color: transparent;
-  border: 4px solid var(--primary-color);
+  border: 4px solid #fff;
   mix-blend-mode: difference;
   width: 0.5rem;
   height: 0.5rem;
@@ -1390,12 +1391,15 @@ html, body {
      -moz-user-select: none;
           user-select: none;
   pointer-events: none;
+  -webkit-mix-blend-mode: difference;
+  transform: translateZ(0); /* force compositing */
+  will-change: opacity;
 }
 
 .cursor-follower {
   position: fixed;
   background-color: transparent;
-  border: 4px solid var(--primary-color);
+  border: 4px solid #fff;
   mix-blend-mode: difference;
   width: 40px;
   height: 40px;
@@ -1406,6 +1410,8 @@ html, body {
           user-select: none;
   pointer-events: none;
   transform: translate(5px, 5px);
+  -webkit-mix-blend-mode: difference;
+  will-change: opacity;
 }
 .cursor-follower.active {
   height: 0;
@@ -1455,6 +1461,29 @@ html.is-touch .cursor-follower {
     transform: translateX(-5%);
   }
 }
+@media screen and (max-height: 840px) {
+  .fold-second .cryptocontainer {
+    display: block;
+  }
+  .fold-second .slides__item .techskill__container,
+  .fold-second .cryptocontainer__content > div:last-child {
+    margin-bottom: 1rem;
+  }
+}
+@media screen and (min-width: 980px) {
+  .cryptocontainer__cryptocard.--vertical .cryptocard__border {
+    flex-flow: column;
+    height: 252px;
+  }
+  .cryptocontainer__cryptocard.--vertical .cryptocard__border .cryptocard__lid {
+    transition: height 200ms ease-in-out;
+    width: 100%;
+    height: 100px;
+  }
+  .cryptocontainer__cryptocard.--vertical .cryptocard__border .cryptocard__lid.--closed {
+    height: 100%;
+  }
+}
 @media screen and (max-width: 980px) {
   .pagination {
     left: 1rem;
@@ -1484,11 +1513,58 @@ html.is-touch .cursor-follower {
   .fold-threeJS-floor .textarea-title {
     font-size: 5vw;
   }
+  .fold-second .slides__item .techskill {
+    padding: 2rem;
+  }
+  .fold-second .slides__item .techskill__item {
+    padding: 0.75rem 1rem;
+  }
+  .fold-second .cryptocontainer {
+    width: calc(100vw - 120px);
+  }
+  .fold-second .cryptocontainer__content {
+    gap: 0.5rem;
+    flex-flow: column;
+  }
+  .fold-second .cryptocontainer__content > div:first-child {
+    max-width: 100%;
+    flex-basis: unset;
+  }
+  .fold-second .cryptocontainer__content > div:last-child {
+    gap: 0.5rem;
+  }
+  .fold-second .cryptocontainer__content > div:last-child > div {
+    width: calc(50% - 0.25rem);
+  }
+  .fold-second .cryptocontainer__cryptocard .cryptocard__border .cryptocard__lid {
+    width: 68px;
+  }
+  .fold-second .cryptocontainer__cryptocard .cryptocard__border {
+    height: 68px;
+  }
+  .fold-second .cryptocontainer__header {
+    margin-bottom: 1rem;
+  }
+  .fold-second .cryptocontainer__headersubtitle {
+    margin-top: 0.5rem;
+  }
+  .fold-second .cryptocontainer__headertitle {
+    font-size: 1.25rem;
+  }
 }
 @media screen and (max-width: 767px) {
   .hero-content__name,
   .infocard.--expand .infocard__name {
     font-size: 6.5vw;
+  }
+  .fold-second .slides__item .techskill {
+    padding: 2rem 1rem;
+  }
+  .fold-second .slides__item .techskill__item {
+    width: 100%;
+  }
+  .fold-second .cryptocontainer {
+    padding: 1rem;
   }
 }
 @media screen and (max-width: 599px) {
@@ -1659,10 +1735,12 @@ html.is-touch .cursor-follower {
     padding-right: 1rem;
     height: calc(var(--vh) * 100 - 40px);
   }
+  .fold-second .cryptocontainer {
+    width: calc(100vw - 32px);
+  }
   .fold-second .slides__item .box {
     margin-bottom: 1rem;
     margin-top: 1rem;
-    overflow: scroll;
     max-width: calc(100vw - 32px);
     width: calc(100vw - 32px);
   }

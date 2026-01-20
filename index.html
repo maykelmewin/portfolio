@@ -186,7 +186,7 @@
                                         class="cryptocontainer__mainbutton btn focusmouse">
                                             <span>{{ loading ? 'Updating...' : (started ? 'Update' : 'Show') }}</span>
                                         </button>
-                                        <div class="cryptocontainer__message">{{ (!loading && error) ? 'Failed to load prices. Try again.' : ( lastUpdated  ? 'Last updated: ' + lastUpdated : '')}}</div>
+                                        <div class="cryptocontainer__message">{{ (!loading && error) ? 'Failed to load prices. Try again.' : ( lastUpdated  ? lastUpdated : '')}}</div>
                                     </div>
                                 </div>
                                 <div class="cryptocontainer__content">
