@@ -80,12 +80,18 @@ html, body{
     padding: .75rem 1.5rem;
     letter-spacing: 2px;
     border: 3px solid var(--off-color);
-    & > svg,
-    & > span{
+    & > svg{
         position: relative;
         color: #000;
         mix-blend-mode: difference;
+        isolation: isolate;
         filter: invert(1);
+    }
+    & > span{
+        position: relative;
+        color: #ffffff;
+        mix-blend-mode: difference;
+        isolation: isolate;
     }
     &::before{
         content: "";
@@ -331,7 +337,7 @@ html, body{
             height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-bottom: 12px solid #111;
+            border-bottom: 12px solid var(--off-color);
         }
     }
     margin-bottom: 1.5rem;
@@ -352,6 +358,7 @@ html, body{
         transform: translateX(-50%);
         text-align: center;
         white-space: nowrap;
+        color: var(--off-color);
     }
     .slides{
         display: flex;
@@ -792,9 +799,9 @@ html, body{
         &__title{
             text-align: center;
             font-size: 2rem;
-            color: #000;
+            color: #fff;
             mix-blend-mode: difference;
-            filter: invert(1);
+            isolation: isolate;
             margin-bottom: calc(var(--vh) * 10);            
             line-height: 150%;
             letter-spacing: 2px;
@@ -1109,7 +1116,7 @@ html, body{
             }
             &__text{
                 color: var(--primary-color);
-                font-size: 14;
+                font-size: 14px;
 
             }
             &:hover .infocard__figmalink__text{
@@ -1531,9 +1538,13 @@ html.is-touch .cursor-follower{
     .pagination__item:not(.--active):hover, .pagination__item:not(.--active):focus{
         height: unset;
     }
+    .hero-content__jobtitle{
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
     .infocard{
         bottom: 0;
-        right: 1.5rem;
+        right: .25rem;
         height: 32px;
         width: 100px;
     }
@@ -1545,7 +1556,8 @@ html.is-touch .cursor-follower{
         right: 1rem;
     }
     .hero-content  .button-fx{
-        top: 32px;
+        top: 24px;
+        right: 1rem;
         &__text{
                 font-size:12px;
         }
@@ -1556,11 +1568,14 @@ html.is-touch .cursor-follower{
     }
 
     .hero-content__name{
-        margin-bottom: 1rem;
+        margin-bottom: .5rem;
     }
     .hero-content__name,
     .infocard.--expand .infocard__name{
         font-size: 11vw;
+    }
+    .infocard.--expand .infocard__name{
+        margin-bottom: .5rem;
     }
     .infocard.--expand .infocard__toggle .label{
         display: none;
@@ -1569,15 +1584,32 @@ html.is-touch .cursor-follower{
         padding-left: 24px;
         padding-right: 24px;
     }
+    .infocard__icons{
+        gap: .5rem;
+        margin-top: 1rem;
+    }
     .infocard__tag{
-        font-size: 14px;
+        font-size: 12px;
     }
     .infocard.--expand .infocard__title{
-        font-size: 18px;
+        font-size: 16px;
+    }
+    .infocard__detail{
+        font-size: 12px;
     }
     .infocard.--expand .infocard__figmalink{
         left: 1rem;
         bottom: 1.5rem;
+        gap: .5rem;
+        > div{
+            font-size: 10px;
+        }
+        > svg {
+            transform: scale(.8);
+        }
+    }
+    .infocard.--expand .infocard__toggle{
+        transform: scale(.8);
     }
     .infocard__pageup-button{
         bottom: 1rem;
@@ -1587,7 +1619,7 @@ html.is-touch .cursor-follower{
         font-size: 12px;
     }
     .btn{
-        padding: 0.5rem 1.75rem;
+        padding: 0.5rem 1.5rem;
     }
     .infocard__pageup-button{
         .long-text{
@@ -1599,8 +1631,9 @@ html.is-touch .cursor-follower{
     }
 
     .fold-first-content .text-hi{
-        font-size: 14px;
-        padding: 1.25rem 2rem;
+        font-size: 12px;
+        padding: 1rem 1.5rem;
+        margin-top: calc(var(--vh) * 5);
     }
     .fold-first-content .description{
         padding: 1.75rem 2.25rem 1.75rem 1.2rem;
@@ -1608,10 +1641,13 @@ html.is-touch .cursor-follower{
        
     }
     .fold-first-content .description__item {
-        padding-top: .5rem ;
-        padding-bottom: .5rem ;
+        padding-top: .25rem ;
+        padding-bottom: .25rem ;
         > div{
-            font-size: 1rem;
+            font-size: 14px;
+        }
+        .svg-soundicon{
+            transform: scale(.8);
         }
     }
     .fold-second__title{
@@ -1622,10 +1658,12 @@ html.is-touch .cursor-follower{
         line-height: 150%;
         margin-top: 1rem;
         margin-bottom: .5rem;
+        font-size: 12px;
+        padding: 0 .5rem;
     }
-    .fold-second .slides__item .content__title,
     .fold-second .slides__item .content__description{
-        font-size: 14px;
+        font-size: 14px;        
+        padding: 0 .5rem;
     }
     .fold-second .slides__item{
         padding: 0;
@@ -1635,7 +1673,13 @@ html.is-touch .cursor-follower{
         padding-left: 1rem;
         padding-right: 1rem;
         height: calc(var(--vh) * 100 - 40px);
-        background-color: red;
+    }
+    .fold-second .slides__item .box{
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        overflow: scroll;
+        max-width: calc(100vw - 32px);
+        width: calc(100vw - 32px);
     }
     .fold-threeJS-floor .textarea-title{
         font-size: 8vw;
@@ -1661,7 +1705,7 @@ html.is-touch .cursor-follower{
         font-size: 14px;
     }
     .fold-third .content .xp__companyname{
-        font-size: 12px;
+        font-size: 10px;
     }
     .fold-third .content .xp__jobtitle{
         padding: .5rem;
@@ -1676,10 +1720,11 @@ html.is-touch .cursor-follower{
         padding:  1rem 0;
     }
     .fold-third .content .xp{
-        max-width: 292px;
+        max-width: 257px;
         margin: calc(var(--vh) * 8) 0;
     }
     .fold-third .content .xp__buttonlink{
+        transform: scale(.8);
         padding: .5rem;
     }
     .cloud.--a2{
