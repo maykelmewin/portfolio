@@ -807,6 +807,9 @@ html, body{
             margin-bottom: calc(var(--vh) * 10);            
             line-height: 150%;
             letter-spacing: 2px;
+            -webkit-mix-blend-mode: difference;
+            transform: translateZ(0); /* force compositing */
+            will-change: opacity;
         }
         .xp{
             display: flex;
@@ -1561,12 +1564,16 @@ html.is-touch .cursor-follower{
         top: 24px;
         right: 1rem;
         &__text{
-                font-size:12px;
+                font-size:10px;
         }
     }
+    .button-fx .svg-soundtrack{
+        transform: scale(.8);
+    }
     .hero-content .btn,
+    .infocard.--expand .btn,
     .infocard.--expand .infocard__fx .button-fx__text{
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .hero-content__name{
@@ -1614,14 +1621,17 @@ html.is-touch .cursor-follower{
         }
     }
     .infocard.--expand .infocard__toggle{
-        transform: scale(.8);
+        transform: scale(.7);
+    }
+    .infocard.--expand .infocard__options{
+        gap: .75rem;
     }
     .infocard__pageup-button{
         bottom: 1rem;
         right: 1rem;
     }
     .infocard__pageup-button > span{
-        font-size: 12px;
+        font-size: 10px;
     }
     .btn{
         padding: 0.5rem 1.5rem;
