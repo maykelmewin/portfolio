@@ -89,9 +89,11 @@ html, body{
     }
     & > span{
         position: relative;
-        color: #ffffff;
+        color: #fff;
         mix-blend-mode: difference;
-        isolation: isolate;
+        -webkit-mix-blend-mode: difference;
+        transform: translateZ(0); /* force compositing */
+        will-change: opacity;
     }
     &::before{
         content: "";
@@ -1589,7 +1591,10 @@ html.is-touch .cursor-follower{
         margin-top: 1rem;
     }
     .infocard__tag{
-        font-size: 12px;
+        font-size: 11px;
+    }
+    .infocard__tag::before{
+        width: 40%;
     }
     .infocard.--expand .infocard__title{
         font-size: 16px;
@@ -1662,7 +1667,7 @@ html.is-touch .cursor-follower{
         padding: 0 .5rem;
     }
     .fold-second .slides__item .content__description{
-        font-size: 14px;        
+        font-size: 12px;        
         padding: 0 .5rem;
     }
     .fold-second .slides__item{
@@ -1699,10 +1704,12 @@ html.is-touch .cursor-follower{
         font-size: 40px;
     }
     .fold-third .content .xp__year .--active p,
-    .fold-third .content .xp__jobtitle,
+    .fold-third .content .xp__jobtitle{
+        font-size: 14px;
+    }
     .fold-third .content .xp__collapse-content__description,
     .fold-third .content .xp__collapse-content__datespan{
-        font-size: 14px;
+        font-size: 12px;
     }
     .fold-third .content .xp__companyname{
         font-size: 10px;
