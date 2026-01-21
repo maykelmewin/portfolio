@@ -133,15 +133,15 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         {
             skills: 'Technologies & Tools',
             info: 'Proficient in essential technologies and highly adaptable to new skill demands.'
+        },        
+        {
+            skills: 'API & Frameworks',
+            info: 'Effectively manage, integrate, and modify APIs and Implement the desired front-end frameworks and libraries.'
         },
         {
             skills: 'Responsive Design',
             info: 'Build a fully responsive cross-device/cross-browser and pixel-perfect HTML prototype based on the visual mock-up.'
         },
-        {
-            skills: 'API, Frameworks and Libraries',
-            info: 'Effectively manage, integrate, and modify APIs and Implement the desired front-end frameworks and libraries.'
-        }
     ]
 
     $scope.techSkill = [

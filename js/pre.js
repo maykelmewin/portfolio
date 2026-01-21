@@ -1,5 +1,5 @@
-const MIN_WIDTH = 320;
-const MIN_HEIGHT = 400;
+const MIN_WIDTH = 336;
+const MIN_HEIGHT = 568;
 
 // vh issue on mobile
 function calculateVh(){
