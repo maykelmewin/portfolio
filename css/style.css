@@ -493,7 +493,6 @@ html, body {
   max-width: 480px;
   font-size: 1rem;
   line-height: 1.5;
-  letter-spacing: 2px;
   padding: 2rem;
   border: 4px solid var(--off-color);
 }
@@ -1766,13 +1765,15 @@ html.is-touch .cursor-follower {
   .fold-second .cryptocontainer {
     width: calc(100vw - 72px);
   }
+  .fold-second .slides__item .box:not(.--noborder) {
+    padding: 4vh 1rem;
+  }
   .fold-second .slides__item .box {
     margin-bottom: 2.25rem;
     margin-top: auto;
     max-width: calc(100vw - 32px);
     max-height: 78vh;
     width: calc(100vw - 32px);
-    padding: 5vh 1rem;
   }
   .fold-threeJS-floor .textarea-title {
     font-size: 8vw;
@@ -1874,14 +1875,14 @@ html.is-touch .cursor-follower {
     font-size: 10px;
     margin-top: 0.5rem;
     margin-bottom: 4vh;
+    min-height: 13px;
   }
   .fold-second .cryptocontainer__cryptocard .cryptocard__timetrend {
     margin-top: 0.25rem;
-    min-height: 13px;
   }
   .fold-second .cryptocontainer__cryptocard .cryptocard__timetrend,
   .fold-second .cryptocontainer__cryptocard .cryptocard__border .cryptocard__valuecontainer .cryptocard__title {
-    font-size: 12px;
+    font-size: 10px;
   }
   .fold-second .cryptocontainer__cryptocard .cryptocard__border .cryptocard__lid {
     width: 52px;
@@ -1897,7 +1898,8 @@ html.is-touch .cursor-follower {
     height: 52px;
   }
   .fold-second .slides__item .responsive-design-box.--mobileView .message-container {
-    font-size: 10px;
+    font-size: 12px;
+    text-align: center;
   }
   .fold-second .slides__item .responsive-design-box.--mobileView .character-text {
     font-size: 8;
