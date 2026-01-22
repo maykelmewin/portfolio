@@ -385,13 +385,13 @@ html, body{
                     path{
                         fill: var(--primary-color);
                     }
+                    &.--active{
+                        display: inline-block;
+                    }
                 }
             }
             &:hover > div, &.--active > div {
                 transform: translateX(8px);
-                .svg-soundicon{
-                    display: inline-block;
-                }
             }
 
             &.--active{
@@ -2048,7 +2048,15 @@ html.is-touch .cursor-follower{
         height: 12px;
     }
     .popup-container .popup__box__text{
-        font-size: 10px;
+        font-size: 12px;
     }
-    
+    .fold-first-content .description__item.--active::before{
+        height: 85%;
+    }
+    .fold-first-content .description__item::before{
+        width: .25rem;
+    }
+    .fold-first-content .description__item{
+        padding-left: 1rem;
+    }
 }

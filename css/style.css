@@ -377,11 +377,11 @@ html, body {
 .fold-first-content .description__item > div .svg-soundicon path {
   fill: var(--primary-color);
 }
+.fold-first-content .description__item > div .svg-soundicon.--active {
+  display: inline-block;
+}
 .fold-first-content .description__item:hover > div, .fold-first-content .description__item.--active > div {
   transform: translateX(8px);
-}
-.fold-first-content .description__item:hover > div .svg-soundicon, .fold-first-content .description__item.--active > div .svg-soundicon {
-  display: inline-block;
 }
 .fold-first-content .description__item.--active::before {
   height: 100%;
@@ -2022,6 +2022,15 @@ html.is-touch .cursor-follower {
     height: 12px;
   }
   .popup-container .popup__box__text {
-    font-size: 10px;
+    font-size: 12px;
+  }
+  .fold-first-content .description__item.--active::before {
+    height: 85%;
+  }
+  .fold-first-content .description__item::before {
+    width: 0.25rem;
+  }
+  .fold-first-content .description__item {
+    padding-left: 1rem;
   }
 }/*# sourceMappingURL=style.css.map */

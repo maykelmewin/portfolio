@@ -1,7 +1,7 @@
 
 var app = angular.module('main', []);
 
-app.controller('MainController', function MainController($scope, $timeout, $window) {
+app.controller('MainController', function MainController($scope, $timeout, $window, SoundService) {
 
     
     //timeout
@@ -14,6 +14,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     
         // function you can call to change width without triggering observer logic
         $scope.setBoxWidth = function(width) {
+            $scope.playClickSound();
             $scope.ignoreResize = true; // ignore next observer event
             box.style.width = width + 'px';
     
@@ -70,7 +71,11 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     //endbrekpoints
 
 
-    $scope.fxOn = false;
+    $scope.SoundService = SoundService;
+    $scope.fxOnToggle = function(){   
+        $scope.playClickSound();
+        $scope.SoundService.fxOn = !$scope.SoundService.fxOn;
+    }
     $scope.link = {
         li : 'https://www.linkedin.com/in/michael-merin/',
         ig : 'https://www.instagram.com/mklmerin/',
@@ -143,24 +148,28 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     ]
 
     $scope.openPopups = [];
+    $scope.activePopups = null;
 
     // open popup by index
     $scope.openPopup = function(index) {
-        
+        $scope.playClickSound();
         const el = document.querySelector(`.popup-container`);
         if (el) {
             el.classList.add('--open');
         }
 
+        
+        $scope.activePopups = index;
 
         if ($scope.openPopups.includes(index)) return;
-
         $scope.openPopups.push(index);
+
 
     };
 
     // close popup by stack index
-    $scope.closePopup = function(stackIndex) {
+    $scope.closePopup = function(stackIndex, popupIndex) {
+        $scope.playClickSound();
         const el = document.querySelector(`.popup-container .popup:nth-child(${stackIndex + 1})`);
         if (el) {
             gsap.to(el, { width: 0, opacity: .5, duration: .8, onComplete: () => {
@@ -171,6 +180,9 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         } else {
             // fallback
             $scope.openPopups.splice(stackIndex, 1);
+        }
+        if( $scope.activePopups == popupIndex){            
+            $scope.activePopups = null;
         }
     };
 
@@ -192,26 +204,33 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     let scrollCloseTicking = false;
 
     angular.element(window).on('scroll', function () {
-
+        
         // prevent running multiple times per frame
         if (scrollCloseTicking) return;
         scrollCloseTicking = true;
-
-        requestAnimationFrame(() => {
+        requestAnimationFrame(() => {            
             if ($scope.openPopups.length > 0) {
+                if($scope.activePopups !== null) {                    
+                    $scope.activePopups = null;
+                }
+                
                 const el = document.querySelector(`.popup-container`);
                 if (el) {
                     el.classList.remove('--open');
+                              
                 }
-                 // animation transition is .2s
+                // console.log(scrollCloseTicking);
             }
-
             scrollCloseTicking = false;
         });
     });
 
+    // sounds
     
-
+    $scope.playClickSound = function() {
+        SoundService.playClick();
+    }
+    
 
     $scope.expertise = [
         {
@@ -283,7 +302,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     // Experience Accordion 
     $scope.OpenExperienceAccordion = null;
     $scope.toggleExperienceAccordion = function(i){
-       
+        $scope.playClickSound();
         if ($scope.OpenExperienceAccordion === i) {
             $scope.OpenExperienceAccordion = null;
         } else {
@@ -379,6 +398,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     })();
 
     $scope.toggleColormode = function() {
+        $scope.playClickSound();
         toggleAnimation();
 
         const isDark = document.documentElement.classList.contains('dark');
@@ -541,6 +561,7 @@ app.controller('CryptoController', function($scope, $http) {
     $scope.lastUpdated = null;
 
     $scope.loadPrices = function() {
+      $scope.playClickSound();
       $scope.loading = true;
       $scope.error = false;
 
@@ -561,7 +582,7 @@ app.controller('CryptoController', function($scope, $http) {
 
 
 // autotyping
-app.controller('AutoTypingCtrl', function($timeout) {
+app.controller('AutoTypingCtrl', function($timeout, SoundService) {
     var vm = this;
 
     const DEFAULT = "3D Animation";
@@ -580,8 +601,8 @@ app.controller('AutoTypingCtrl', function($timeout) {
     // Handle user typing
     // ---------------------------
     vm.onUserType = function() {
+        SoundService.playType();
         if (!vm.el) return; // safety check
-
         
         // limit user typing
         if (vm.el.innerText.length > MAX_LENGTH) {
@@ -638,7 +659,7 @@ app.controller('AutoTypingCtrl', function($timeout) {
 
         function addLetter() {
             if (i > DEFAULT.length - 1) return;
-
+            SoundService.playType();
             vm.el.innerText = DEFAULT.slice(0, i + 1);
             i++;
 
@@ -656,4 +677,35 @@ app.controller('AutoTypingCtrl', function($timeout) {
         sel.removeAllRanges();
         sel.addRange(range);
     }
+});
+
+app.factory('SoundService', function() {
+    
+    const clickSound = new Audio('/sounds/type.wav');
+    clickSound.volume = 0.4; // 0 to 1
+    clickSound.preload = 'auto';
+    
+    const typeSound = new Audio('/sounds/click.wav');
+    typeSound.volume = 0.1; // 0 to 1
+    typeSound.preload = 'auto';   
+
+    const ServiceSound = {
+        fxOn: true,
+        playClick,
+        playType
+    }
+
+    function playType(){
+        if(!ServiceSound.fxOn) return;
+        clickSound.currentTime = 0; // rewind so it can replay fast
+        clickSound.play().catch(() => {});     
+    }
+
+    function playClick(){
+        if(!ServiceSound.fxOn) return;
+        typeSound.currentTime = 0; // rewind so it can replay fast
+        typeSound.play().catch(() => {});     
+    }
+
+    return ServiceSound;
 });
