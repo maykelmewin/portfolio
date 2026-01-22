@@ -192,6 +192,79 @@ html, body {
   height: calc(var(--vh) * 50);
 }
 
+.popup-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 30%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: clamp(1rem, 5vh, 60px) clamp(1rem, 5vw, 60px) 0 clamp(1rem, 5vw, 60px);
+  gap: 24px;
+  transition: transform 0.4s ease-in-out;
+  transform: translateY(-100%);
+}
+.popup-container .popup {
+  transition: height 0.6s, width 0.6s;
+  max-width: calc(33% - 16px);
+}
+.popup-container .popup .popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+.popup-container .popup__soundicon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  /* Only animate when active */
+}
+.popup-container .popup__soundicon > div {
+  width: 4px;
+  background: currentColor;
+  animation: soundWave 0.9s ease-in-out infinite;
+  transform-origin: bottom;
+}
+.popup-container .popup__soundicon > div:nth-child(1) {
+  height: 10px;
+  animation-delay: 0s;
+}
+.popup-container .popup__soundicon > div:nth-child(2) {
+  height: 20px;
+  animation-delay: 0.15s;
+}
+.popup-container .popup__soundicon > div:nth-child(3) {
+  height: 30px;
+  animation-delay: 0.3s;
+}
+.popup-container .popup__soundicon:not(.--active) > div {
+  animation: unset;
+}
+.popup-container .popup__box {
+  width: 100%;
+  overflow: hidden;
+  border: 4px solid var(--off-color);
+  background-color: var(--primary-color);
+  padding: 1.5rem;
+  color: var(--off-color);
+}
+.popup-container .popup__box__text {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.popup-container .popup__box__close {
+  background-color: transparent;
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: var(--off-color);
+}
+.popup-container.--open {
+  transform: translateY(0);
+}
+
 .button-fx {
   display: flex;
   align-items: center;
@@ -1461,6 +1534,23 @@ html.is-touch .cursor-follower {
     transform: translateX(-5%);
   }
 }
+@keyframes soundWave {
+  0% {
+    transform: scaleY(0.4);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.6);
+  }
+  75% {
+    transform: scaleY(1.2);
+  }
+  100% {
+    transform: scaleY(0.4);
+  }
+}
 @media screen and (max-height: 840px) {
   .fold-second .cryptocontainer {
     display: block;
@@ -1575,6 +1665,9 @@ html.is-touch .cursor-follower {
   }
   .fold-second .cryptocontainer__headertitle {
     font-size: 1.25rem;
+  }
+  .popup-container .popup {
+    max-width: calc(50% - 12px);
   }
 }
 @media screen and (max-width: 767px) {
@@ -1873,8 +1966,8 @@ html.is-touch .cursor-follower {
   .fold-second .cryptocontainer__message {
     text-align: center;
     font-size: 10px;
-    margin-top: 0.5rem;
-    margin-bottom: 4vh;
+    margin-top: 0.25rem;
+    margin-bottom: 5vh;
     min-height: 13px;
   }
   .fold-second .cryptocontainer__cryptocard .cryptocard__timetrend {
@@ -1903,5 +1996,32 @@ html.is-touch .cursor-follower {
   }
   .fold-second .slides__item .responsive-design-box.--mobileView .character-text {
     font-size: 8;
+  }
+  .popup-container {
+    padding: 1rem 0.5rem 0 0.5rem;
+    gap: 0.5rem;
+  }
+  .popup-container .popup {
+    max-width: 100%;
+  }
+  .popup-container .popup__box {
+    padding: 1rem;
+  }
+  .popup-container .popup__box__close {
+    padding: 0;
+    font-size: 12px;
+  }
+  .popup-container .popup__soundicon > div:nth-child(1) {
+    height: 4px;
+  }
+  .popup-container .popup__soundicon > div:nth-child(2) {
+    height: 8px;
+  }
+  .popup-container .popup__soundicon,
+  .popup-container .popup__soundicon > div:nth-child(3) {
+    height: 12px;
+  }
+  .popup-container .popup__box__text {
+    font-size: 10px;
   }
 }/*# sourceMappingURL=style.css.map */

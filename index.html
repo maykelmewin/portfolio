@@ -56,8 +56,9 @@
                 <div class="description">
                     <div class="description__container ">
                         <div class="description__item focusmouse"
-                        ng-repeat="item in ::desc track by ::$index"
-                        ng-class="{'--active' : isDetailHovered}"
+                        ng-click="openPopup( $index )"
+                        ng-repeat="item in desc track by $index"
+                        ng-class="{'--active' : isDetailHovered || openPopups.includes($index)}"
                         ng-mouseenter="isDetailHovered = true"
                         ng-mouseleave="isDetailHovered = false">
                             <div class="text-long">{{::item.desc}}
@@ -420,6 +421,21 @@
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     
+
+    <section class="popup-container" ng-class="{'--open': openPopups.length > 0}">
+        <div class="popup"
+            ng-repeat="popupIndex in openPopups track by popupIndex">
+            <div class="popup__box">
+                <div class="popup-header">
+                    <div class="popup__soundicon --active">
+                        <div></div><div></div><div></div>
+                    </div>
+                    <button class="popup__box__close focusmouse" ng-click="closePopup($index)">X</button>
+                </div>
+                <div class="popup__box__text text-long">{{ desc[popupIndex].popupContent }}</div>
+            </div>
+        </div>
+    </section>
     <!-- loading -->
     <section class="screen-blocker">
         <div class="loading-icon"></div>

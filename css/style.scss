@@ -198,6 +198,85 @@ html, body{
     width: 50%;
     height: calc(var(--vh) * 50);
 }
+
+.popup-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 30%;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    padding: clamp(1rem, 5vh, 60px) clamp(1rem, 5vw, 60px) 0 clamp(1rem, 5vw, 60px);
+    gap: 24px;
+    transition: transform .4s ease-in-out;
+    transform: translateY(-100%);
+    .popup{        
+        transition: height 0.6s, width 0.6s;
+        max-width: calc(33% - (48px / 3));
+        .popup-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+        &__soundicon{
+             display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 32px; 
+            > div{
+                width: 4px;
+                background: currentColor;
+                animation: soundWave 0.9s ease-in-out infinite;
+                transform-origin: bottom;
+            }
+            > div:nth-child(1) {
+                height: 10px;
+                animation-delay: 0s;
+            }
+            
+            > div:nth-child(2) {
+                height: 20px;
+                animation-delay: .15s;
+            }
+
+            > div:nth-child(3) {
+                height: 30px;
+                animation-delay: .3s;
+            }
+
+            /* Only animate when active */
+            &:not(.--active) > div {
+                animation: unset;
+            }
+
+        }
+        &__box{
+            // max-height: 30vh;
+            width: 100%;
+            overflow: hidden;
+            border: 4px solid var(--off-color); 
+            background-color: var(--primary-color); 
+            padding: 1.5rem;
+            color: var(--off-color);
+            &__text{
+                margin-top: .5rem;
+                font-size: 1rem;
+                line-height: 1.5;
+
+            }
+            &__close{
+                background-color: transparent;
+                padding: .5rem;
+                font-size: 1rem;
+                color: var(--off-color);
+            }
+        }      
+    }
+    &.--open{
+        transform: translateY(0);
+    }
+}
 .button-fx{
     display: flex;
     align-items: center;
@@ -1474,8 +1553,14 @@ html.is-touch .cursor-follower{
 @keyframes shakingright {
     from {transform: translateX(5%);}
     to {transform: translateX(-5%);}
- }
-
+ } 
+@keyframes soundWave {
+    0%   { transform: scaleY(0.4); }
+    25%  { transform: scaleY(1); }
+    50%  { transform: scaleY(0.6); }
+    75%  { transform: scaleY(1.2); }
+    100% { transform: scaleY(0.4); }
+}
 
 
 
@@ -1598,6 +1683,10 @@ html.is-touch .cursor-follower{
     }
     .fold-second .cryptocontainer__headertitle{
         font-size: 1.25rem;
+    }
+    .popup-container .popup{
+        max-width: calc(50% - 12px);
+        
     }
 }
 
@@ -1903,8 +1992,8 @@ html.is-touch .cursor-follower{
     .fold-second .cryptocontainer__message{
         text-align: center;
         font-size: 10px;
-        margin-top: .5rem;
-        margin-bottom: 4vh;
+        margin-top: .25rem;
+        margin-bottom: 5vh;
         min-height: 13px;
     }
     .fold-second .cryptocontainer__cryptocard .cryptocard__timetrend{
@@ -1934,4 +2023,32 @@ html.is-touch .cursor-follower{
     .fold-second .slides__item .responsive-design-box.--mobileView .character-text{
         font-size: 8;
     }
+    .popup-container{
+        padding: 1rem .5rem 0 .5rem;
+        gap: .5rem
+    }
+    .popup-container .popup{
+        max-width: 100%;
+    }
+    .popup-container .popup__box{
+        padding: 1rem;
+    }
+    .popup-container .popup__box__close{
+        padding: 0;
+        font-size: 12px;
+    }
+    .popup-container .popup__soundicon > div:nth-child(1){
+        height: 4px;
+    }
+    .popup-container .popup__soundicon > div:nth-child(2){
+        height: 8px;
+    }
+    .popup-container .popup__soundicon,
+    .popup-container .popup__soundicon > div:nth-child(3){
+        height: 12px;
+    }
+    .popup-container .popup__box__text{
+        font-size: 10px;
+    }
+    
 }

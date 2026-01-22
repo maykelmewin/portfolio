@@ -66,6 +66,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     angular.element($window).on('resize', function () {
         $scope.$applyAsync(updateBreakpoints);
     });
+    
     //endbrekpoints
 
 
@@ -110,24 +111,107 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     $scope.desc = [
         {
             desc: 'he.',
+            popupContent: "1 He I worked as a Layout artist as my first job. Being an engineer to someone's work is hard. and I know what to consider. don't worry communication is the key!",
+            isVoiceActive: false
         },
         {
             desc: 'Filipino.',
+            popupContent: "2 Filipino I worked as a Layout artist as my first job. Being an engineer to someone's work is harworry communication is the key!",
+            isVoiceActive: false
         },
         {
             desc: 'proficient in English.',
+            popupContent: "3 Proficient I worked as a Layout artist as my first job. one's work is hard. and I know what to consider. don't worry communication is the key!",
+            isVoiceActive: false
         },
         {
             desc: 'two decade into existence.',
+            popupContent: "4 two I worked as a Layout artist as my first job. Being an engineer to someone's ry communication is the key!",
+            isVoiceActive: false
         },
         {
             desc: 'obsessed with art and codes.',
+            popupContent: "5 obssessd I worked as a Layout artist as my first job. Being an engineer to someonhat to consider. don't worry communication is the key!",
+            isVoiceActive: false
         },
         {
             desc: 'highly interested in turning outstanding design into website.',
+            popupContent: "6 I worked as a Layout artist as my first job. Being an engineer to someone's work is hard. and I know what to consider. don't worry communication is the key!",
+            isVoiceActive: false
         },
        
     ]
+
+    $scope.openPopups = [];
+
+    // open popup by index
+    $scope.openPopup = function(index) {
+        
+        const el = document.querySelector(`.popup-container`);
+        if (el) {
+            el.classList.add('--open');
+        }
+
+
+        if ($scope.openPopups.includes(index)) return;
+
+        $scope.openPopups.push(index);
+
+    };
+
+    // close popup by stack index
+    $scope.closePopup = function(stackIndex) {
+        const el = document.querySelector(`.popup-container .popup:nth-child(${stackIndex + 1})`);
+        if (el) {
+            gsap.to(el, { width: 0, opacity: .5, duration: .8, onComplete: () => {
+                $scope.$apply(() => {
+                    $scope.openPopups.splice(stackIndex, 1);
+                });
+            }});
+        } else {
+            // fallback
+            $scope.openPopups.splice(stackIndex, 1);
+        }
+    };
+
+    
+
+    $scope.$watchCollection('openPopups', function(newVal, oldVal) {
+        if (newVal.length > oldVal.length) {
+            $timeout(() => {
+                const el = document.querySelector(`.popup-container .popup:last-child`);
+                if (el) { gsap.from(el, { width: 0, opacity: 0, duration: 0.4 }); }
+            });
+        }
+        
+    });
+
+    
+
+    // close all on scroll
+    let scrollCloseTicking = false;
+
+    angular.element(window).on('scroll', function () {
+
+        // prevent running multiple times per frame
+        if (scrollCloseTicking) return;
+        scrollCloseTicking = true;
+
+        requestAnimationFrame(() => {
+            if ($scope.openPopups.length > 0) {
+                const el = document.querySelector(`.popup-container`);
+                if (el) {
+                    el.classList.remove('--open');
+                }
+                 // animation transition is .2s
+            }
+
+            scrollCloseTicking = false;
+        });
+    });
+
+    
+
 
     $scope.expertise = [
         {
