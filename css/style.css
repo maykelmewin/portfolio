@@ -866,7 +866,7 @@ html, body {
 .fold-third .content .xp {
   display: flex;
   flex-flow: column;
-  width: 342px;
+  width: 360px;
   margin: 1rem 0;
 }
 .fold-third .content .xp__year {

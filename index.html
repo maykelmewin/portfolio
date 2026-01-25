@@ -23,6 +23,15 @@
 
     
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- favicon -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="img/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" sizes="192x192" href="img/android-chrome-192x192.png" type="image/png">
+    <link rel="icon" sizes="512x512" href="/android-chrome-512x512.png" type="image/png">
+    
 </head>
 <body ng-controller="MainController">
     <div id="phase1">
@@ -62,7 +71,7 @@
                         ng-mouseenter="isDetailHovered = true"
                         ng-mouseleave="isDetailHovered = false">
                             <div class="text-long">{{::item.desc}}
-                                <svg class="svg-soundicon" ng-class="{'--active' : activePopups == $index}" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="svg-soundicon" ng-class="{'--active' : activePopups == $index }" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.5066 2.38952L4.4007 6.2502H0.83783C0.374929 6.2502 0 6.71635 0 7.29187V13.5419C0 14.117 0.374929 14.5835 0.83783 14.5835H4.4007L7.5066 18.4442C8.0313 19.0966 8.93685 18.6382 8.93685 17.7077V3.12607C8.93685 2.19465 8.0306 1.73805 7.5066 2.38952ZM15.6517 0.17251C15.2618 -0.145632 14.7378 -0.0115176 14.4819 0.474159C14.2256 0.958969 14.3346 1.61044 14.7245 1.92859C17.038 3.81617 18.4186 6.98935 18.4186 10.4173C18.4186 13.8453 17.038 17.0184 14.7245 18.906C14.3346 19.2237 14.2256 19.8756 14.4819 20.36C14.7276 20.8249 15.2475 20.992 15.6517 20.6617C18.4417 18.3848 20.1079 14.5545 20.1079 10.4169C20.1079 6.27928 18.4417 2.44942 15.6517 0.17251ZM16.7566 10.4169C16.7566 7.65949 15.6374 5.12433 13.7624 3.63562C13.3718 3.32572 12.8537 3.46982 12.6062 3.9594C12.3587 4.44899 12.4742 5.09699 12.8649 5.40732C14.2525 6.50932 15.0809 8.38171 15.0809 10.4169C15.0809 12.452 14.2525 14.3244 12.8649 15.4264C12.4742 15.7363 12.3587 16.3843 12.6062 16.8743C12.8335 17.324 13.3435 17.5315 13.7624 17.1981C15.6374 15.7094 16.7566 13.1747 16.7566 10.4169ZM11.8075 7.0805C11.4032 6.80576 10.8932 6.98675 10.6691 7.49065C10.446 7.99456 10.5937 8.62781 10.999 8.90602C11.4496 9.21374 11.7296 9.79317 11.7296 10.4169C11.7296 11.041 11.4496 11.62 10.9993 11.9277C10.594 12.2059 10.4463 12.8392 10.6694 13.3431C10.8939 13.8492 11.4043 14.0288 11.8078 13.7532C12.7933 13.0783 13.4056 11.8001 13.4056 10.4164C13.4056 9.03275 12.7933 7.75498 11.8075 7.0805Z" fill="#FAFAFA"/>
                                 </svg>
                             </div>

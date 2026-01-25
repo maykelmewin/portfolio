@@ -3,7 +3,257 @@ var app = angular.module('main', []);
 
 app.controller('MainController', function MainController($scope, $timeout, $window, SoundService) {
 
+    $scope.SoundService = SoundService;
+    $scope.fxOnToggle = function(){   
+        $scope.playClickSound();
+        SoundService.toggleFx();
+    }
+    $scope.link = {
+        li : 'https://www.linkedin.com/in/michael-merin/',
+        ig : 'https://www.instagram.com/mklmerin/',
+        messenger : 'https://m.me/maykelmewin',
+        figma : 'https://www.figma.com/design/Rki4DLFlw70sHLa1lexVdV/Porfolio---Merin?m=auto&t=qSUdqfA6sbQezQ6F-6',
+    }
+    $scope.isDetailHovered = false; 
+    $scope.xp = [
+        {
+            year: {no: 4, unit : 'years'},
+            title: 'front-end web dev',
+            company: 'investa financial incorporation',
+            description: 'Main Front-End Developer responsible for supporting Investa’s web applications, creating landing pages, and defining overall page structure and design.',
+            datespan: 'JUN 2021 - AUG 2025',
+            link: 'https://www.investagrams.com/',
+            isActive: false
+        },
+        {
+            year: {no: 1, unit : 'year'},
+            title: 'web developer',
+            company: 'bitcapp blockchain technology',
+            description: 'Developed, enhanced, and managed responsive web applications for diverse needs.',
+            datespan: 'FEB 2021 - JUN 2021',
+            link: null,
+            isActive: false
+        },
+        {
+            year: {no: 3, unit : 'years'},
+            title: 'layout designer',
+            company: 'amana waterpark corporation',
+            description: 'from a working student to a full-time employee, creating visually appealing designs and layouts.',
+            datespan: 'MAR 2017 - AUG 2020',
+            link: 'https://www.facebook.com/amanawaterparkph/',
+            isActive: false
+        },
+    ]
     
+    $scope.desc = [
+        {
+            desc: 'he.',
+            popupContent: "Being a man has taught me patience, responsibility, and resilience—qualities I bring into front-end development. They help me tackle challenges head-on, adapt to new situations, and ensure every line of code and design element gets the attention it deserves, creating websites that are both functional and user-friendly.",
+            // isVoiceActive: false
+        },
+        {
+            desc: 'Filipino.',
+            popupContent: "The way we approach work and design reflects who we are and what we value. I carry my Filipino culture as an asset and make sure it helps build collaboration, not barriers. I strongly believe in the Filipino saying, “Bawat detalye, mahalaga.",
+            // isVoiceActive: false
+        },
+        {
+            desc: 'proficient in English.',
+            popupContent: "Two are better than one—and even better with a whole team. But a team without communication is like a group chat where no one responds. I make sure I communicate clearly and connect with every team member. Using English at work comes naturally to me.",
+            // isVoiceActive: false
+        },
+        {
+            desc: 'two decade into existence.',
+            popupContent: "I’ve been in the industry for almost a decade, building strong expertise in what I do. Learning and adapting to new technologies is a natural part of my work.",
+            // isVoiceActive: false
+        },
+        {
+            desc: 'obsessed with art and codes.',
+            popupContent: "I’m not perfect, but I am a perfectionist. I pay attention to every detail in design. I know how hard the process of creating a design can be, and I know how to handle every inch of it well.",
+            // isVoiceActive: false
+        },
+        {
+            desc: 'highly interested in turning outstanding design into website.',
+            popupContent: "I worked as a Layout artist as my first job. Being an engineer to someone's work is hard. and I know what to consider. don't worry communication is the key!",
+            // isVoiceActive: false
+        },
+       
+    ]
+
+    $scope.openPopups = [];
+    $scope.activePopups = null;
+
+    // open popup by index
+    $scope.openPopup = function(index) {
+        $scope.playClickSound();
+        const el = document.querySelector(`.popup-container`);
+        if (el) {
+            el.classList.add('--open');
+        }
+
+        
+        $scope.activePopups = index;        
+        SoundService.playPopup(index);
+
+        if ($scope.openPopups.includes(index)) return;
+        $scope.openPopups.push(index);
+
+
+    };
+
+    // close popup by stack index
+    $scope.closePopup = function(stackIndex, popupIndex) {
+        $scope.playClickSound();
+        const el = document.querySelector(`.popup-container .popup:nth-child(${stackIndex + 1})`);
+        if (el) {
+            gsap.to(el, { width: 0, opacity: .5, duration: .8, onComplete: () => {
+                $scope.$apply(() => {
+                    $scope.openPopups.splice(stackIndex, 1);
+                });
+            }});
+        } else {
+            // fallback
+            $scope.openPopups.splice(stackIndex, 1);
+        }
+        if( $scope.activePopups == popupIndex){            
+            $scope.activePopups = null;
+            SoundService.stopPopup();
+        }
+    };
+    $scope.$on('popupSoundEnded', function () {
+        $scope.activePopups = null;
+    });
+
+    // $scope.$watch('activePopups', function(newVal) {
+    //     // Reset all flags first
+    //     $scope.desc.forEach(item => {
+    //         item.isVoiceActive = false;
+    //     });
+    //     // If null → nothing active
+    //     if (newVal === null || newVal === undefined) return;
+
+    //     // Activate only the selected index
+    //     if ($scope.desc[newVal]) {
+    //         $scope.desc[newVal].isVoiceActive = true;
+    //     }
+    // });
+
+    $scope.$watchCollection('openPopups', function(newVal, oldVal) {
+        if (newVal.length > oldVal.length) {
+            $timeout(() => {
+                const el = document.querySelector(`.popup-container .popup:last-child`);
+                if (el) { gsap.from(el, { width: 0, opacity: 0, duration: 0.4 }); }
+            });
+        }
+    });
+
+    // close all on scroll
+    let scrollCloseTicking = false;
+    angular.element(window).on('scroll', function () {
+        
+        // prevent running multiple times per frame
+        if (scrollCloseTicking) return;
+        scrollCloseTicking = true;
+        requestAnimationFrame(() => {            
+            if ($scope.openPopups.length > 0) {
+                if($scope.activePopups !== null) {                    
+                    $scope.activePopups = null;
+                    SoundService.stopPopup();
+                }
+                const el = document.querySelector(`.popup-container`);
+                if (el) {
+                    el.classList.remove('--open');
+                }
+            }
+            scrollCloseTicking = false;
+            
+        });
+    });
+
+    // sounds    
+    $scope.playClickSound = function() {
+        SoundService.playClick();
+    }
+    
+
+    $scope.expertise = [
+        {
+            skills: 'Technologies & Tools',
+            info: 'Proficient in essential technologies and highly adaptable to new skill demands.'
+        },     
+        {
+            skills: 'Responsive Design',
+            info: 'Build a fully responsive cross-device/cross-browser and pixel-perfect HTML prototype based on the visual mock-up.'
+        },   
+        {
+            skills: 'API & Frameworks',
+            info: 'Effectively manage, integrate, and modify APIs and Implement the desired front-end frameworks and libraries.'
+        },
+    ]
+
+    $scope.techSkill = [
+        {
+            text: 'Advance CSS SASS/SCSS',
+            percent: 100,
+        },
+        {
+            text: 'Tailwind',
+            percent: 90,
+        },
+        {
+            text: 'Vanila JS',
+            percent: 100,
+        },
+        {
+            text: 'Vue, React, Angular',
+            percent: 80,
+        },
+        {
+            text: 'GSAP',
+            percent: 75,
+        },
+        {
+            text: 'Three JS',
+            percent: 45,
+        },
+        {
+            text: 'Figma',
+            percent: 90,
+        },
+        {
+            text: 'Adobe XD & Photoshop',
+            percent: 90,
+        },
+        {
+            text: 'Sketchup',
+            percent: 30,
+        },
+    ]
+
+    $scope.AnimateSkillProgressHoverIn = function(i){
+        const el = document.getElementById(`techSkillItemFiller${i}`);        
+        el.style.left = $scope.techSkill[i].percent + '%';
+        let width = 100 - $scope.techSkill[i].percent; // reverse the value;
+        el.style.width = width + '%';
+    };
+
+    $scope.AnimateSkillProgressHoverOut = function(i){
+        const el = document.getElementById(`techSkillItemFiller${i}`);        
+        el.style.left = 0;
+        el.style.width = $scope.techSkill[i].percent + '%';
+    };
+
+    // Experience Accordion 
+    $scope.OpenExperienceAccordion = null;
+    $scope.toggleExperienceAccordion = function(i){
+        $scope.playClickSound();
+        if ($scope.OpenExperienceAccordion === i) {
+            $scope.OpenExperienceAccordion = null;
+        } else {
+            $scope.OpenExperienceAccordion = i;
+        }
+    };
+
+
     //timeout
     $timeout(function () {
         const box = document.querySelector('.responsive-design-box');
@@ -71,244 +321,6 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     //endbrekpoints
 
 
-    $scope.SoundService = SoundService;
-    $scope.fxOnToggle = function(){   
-        $scope.playClickSound();
-        $scope.SoundService.fxOn = !$scope.SoundService.fxOn;
-    }
-    $scope.link = {
-        li : 'https://www.linkedin.com/in/michael-merin/',
-        ig : 'https://www.instagram.com/mklmerin/',
-        messenger : 'https://m.me/maykelmewin',
-        figma : 'https://www.figma.com/design/Rki4DLFlw70sHLa1lexVdV/Porfolio---Merin?m=auto&t=qSUdqfA6sbQezQ6F-6',
-    }
-    $scope.isDetailHovered = false; 
-    $scope.xp = [
-        {
-            year: {no: 4, unit : 'years'},
-            title: 'front-end web dev',
-            company: 'investa financial incorporation',
-            description: 'Main Front-End Developer responsible for supporting Investa’s web applications, creating landing pages, and defining overall page structure and design.',
-            datespan: 'JUN 2021 - AUG 2025',
-            link: 'https://www.investagrams.com/',
-            isActive: false
-        },
-        {
-            year: {no: 1, unit : 'year'},
-            title: 'web developer',
-            company: 'bitcapp blockchain technology',
-            description: 'Developed, enhanced, and managed responsive web applications for diverse needs.',
-            datespan: 'FEB 2021 - JUN 2021',
-            link: null,
-            isActive: false
-        },
-        {
-            year: {no: 3, unit : 'years'},
-            title: 'layout designer',
-            company: 'amana waterpark corporation',
-            description: 'from a working student to a full-time employee, creating visually appealing designs and layouts.',
-            datespan: 'MAR 2017 - AUG 2020',
-            link: 'https://www.facebook.com/amanawaterparkph/',
-            isActive: false
-        },
-    ]
-    
-    $scope.desc = [
-        {
-            desc: 'he.',
-            popupContent: "1 He I worked as a Layout artist as my first job. Being an engineer to someone's work is hard. and I know what to consider. don't worry communication is the key!",
-            isVoiceActive: false
-        },
-        {
-            desc: 'Filipino.',
-            popupContent: "2 Filipino I worked as a Layout artist as my first job. Being an engineer to someone's work is harworry communication is the key!",
-            isVoiceActive: false
-        },
-        {
-            desc: 'proficient in English.',
-            popupContent: "3 Proficient I worked as a Layout artist as my first job. one's work is hard. and I know what to consider. don't worry communication is the key!",
-            isVoiceActive: false
-        },
-        {
-            desc: 'two decade into existence.',
-            popupContent: "4 two I worked as a Layout artist as my first job. Being an engineer to someone's ry communication is the key!",
-            isVoiceActive: false
-        },
-        {
-            desc: 'obsessed with art and codes.',
-            popupContent: "5 obssessd I worked as a Layout artist as my first job. Being an engineer to someonhat to consider. don't worry communication is the key!",
-            isVoiceActive: false
-        },
-        {
-            desc: 'highly interested in turning outstanding design into website.',
-            popupContent: "6 I worked as a Layout artist as my first job. Being an engineer to someone's work is hard. and I know what to consider. don't worry communication is the key!",
-            isVoiceActive: false
-        },
-       
-    ]
-
-    $scope.openPopups = [];
-    $scope.activePopups = null;
-
-    // open popup by index
-    $scope.openPopup = function(index) {
-        $scope.playClickSound();
-        const el = document.querySelector(`.popup-container`);
-        if (el) {
-            el.classList.add('--open');
-        }
-
-        
-        $scope.activePopups = index;
-
-        if ($scope.openPopups.includes(index)) return;
-        $scope.openPopups.push(index);
-
-
-    };
-
-    // close popup by stack index
-    $scope.closePopup = function(stackIndex, popupIndex) {
-        $scope.playClickSound();
-        const el = document.querySelector(`.popup-container .popup:nth-child(${stackIndex + 1})`);
-        if (el) {
-            gsap.to(el, { width: 0, opacity: .5, duration: .8, onComplete: () => {
-                $scope.$apply(() => {
-                    $scope.openPopups.splice(stackIndex, 1);
-                });
-            }});
-        } else {
-            // fallback
-            $scope.openPopups.splice(stackIndex, 1);
-        }
-        if( $scope.activePopups == popupIndex){            
-            $scope.activePopups = null;
-        }
-    };
-
-    
-
-    $scope.$watchCollection('openPopups', function(newVal, oldVal) {
-        if (newVal.length > oldVal.length) {
-            $timeout(() => {
-                const el = document.querySelector(`.popup-container .popup:last-child`);
-                if (el) { gsap.from(el, { width: 0, opacity: 0, duration: 0.4 }); }
-            });
-        }
-        
-    });
-
-    
-
-    // close all on scroll
-    let scrollCloseTicking = false;
-
-    angular.element(window).on('scroll', function () {
-        
-        // prevent running multiple times per frame
-        if (scrollCloseTicking) return;
-        scrollCloseTicking = true;
-        requestAnimationFrame(() => {            
-            if ($scope.openPopups.length > 0) {
-                if($scope.activePopups !== null) {                    
-                    $scope.activePopups = null;
-                }
-                
-                const el = document.querySelector(`.popup-container`);
-                if (el) {
-                    el.classList.remove('--open');
-                              
-                }
-                // console.log(scrollCloseTicking);
-            }
-            scrollCloseTicking = false;
-        });
-    });
-
-    // sounds
-    
-    $scope.playClickSound = function() {
-        SoundService.playClick();
-    }
-    
-
-    $scope.expertise = [
-        {
-            skills: 'Technologies & Tools',
-            info: 'Proficient in essential technologies and highly adaptable to new skill demands.'
-        },        
-        {
-            skills: 'API & Frameworks',
-            info: 'Effectively manage, integrate, and modify APIs and Implement the desired front-end frameworks and libraries.'
-        },
-        {
-            skills: 'Responsive Design',
-            info: 'Build a fully responsive cross-device/cross-browser and pixel-perfect HTML prototype based on the visual mock-up.'
-        },
-    ]
-
-    $scope.techSkill = [
-        {
-            text: 'Advance CSS SASS/SCSS',
-            percent: 100,
-        },
-        {
-            text: 'Tailwind',
-            percent: 90,
-        },
-        {
-            text: 'Vanila JS',
-            percent: 100,
-        },
-        {
-            text: 'Vue, React, Angular',
-            percent: 80,
-        },
-        {
-            text: 'GSAP',
-            percent: 75,
-        },
-        {
-            text: 'Three JS',
-            percent: 45,
-        },
-        {
-            text: 'Figma',
-            percent: 90,
-        },
-        {
-            text: 'Adobe XD & Photoshop',
-            percent: 90,
-        },
-        {
-            text: 'Sketchup',
-            percent: 30,
-        },
-    ]
-
-    $scope.AnimateSkillProgressHoverIn = function(i){
-        const el = document.getElementById(`techSkillItemFiller${i}`);        
-        el.style.left = $scope.techSkill[i].percent + '%';
-        let width = 100 - $scope.techSkill[i].percent; // reverse the value;
-        el.style.width = width + '%';
-    };
-
-    $scope.AnimateSkillProgressHoverOut = function(i){
-        const el = document.getElementById(`techSkillItemFiller${i}`);        
-        el.style.left = 0;
-        el.style.width = $scope.techSkill[i].percent + '%';
-    };
-
-    // Experience Accordion 
-    $scope.OpenExperienceAccordion = null;
-    $scope.toggleExperienceAccordion = function(i){
-        $scope.playClickSound();
-        if ($scope.OpenExperienceAccordion === i) {
-            $scope.OpenExperienceAccordion = null;
-        } else {
-            $scope.OpenExperienceAccordion = i;
-        }
-    };
     // $scope.animate = 0;
     // $scope.animateMe = function(id) {
         
@@ -679,7 +691,7 @@ app.controller('AutoTypingCtrl', function($timeout, SoundService) {
     }
 });
 
-app.factory('SoundService', function() {
+app.factory('SoundService', function($rootScope) {
     
     const clickSound = new Audio('/sounds/type.wav');
     clickSound.volume = 0.4; // 0 to 1
@@ -689,11 +701,30 @@ app.factory('SoundService', function() {
     typeSound.volume = 0.1; // 0 to 1
     typeSound.preload = 'auto';   
 
+    const popupSounds = {
+        0: new Audio('/sounds/1.mp3'),
+        1: new Audio('/sounds/2.mp3'),
+        2: new Audio('/sounds/3.mp3'),
+        3: new Audio('/sounds/4.mp3'),
+        4: new Audio('/sounds/5.mp3'),
+        5: new Audio('/sounds/6.mp3'),
+    };
+    Object.values(popupSounds).forEach(audio => {
+        audio.preload = 'auto';
+        audio.volume = 0.8;
+    });
+
+    let currentPopupAudio = null;
+
     const ServiceSound = {
         fxOn: true,
+        toggleFx,
         playClick,
-        playType
-    }
+        playType,
+        playPopup,
+        stopPopup
+    };
+
 
     function playType(){
         if(!ServiceSound.fxOn) return;
@@ -705,6 +736,43 @@ app.factory('SoundService', function() {
         if(!ServiceSound.fxOn) return;
         typeSound.currentTime = 0; // rewind so it can replay fast
         typeSound.play().catch(() => {});     
+    }
+
+    function playPopup(index) {
+        if (!ServiceSound.fxOn) return;
+        if (!(index in popupSounds)) return;
+
+        // Stop current audio
+        stopPopup();
+
+        currentPopupAudio = popupSounds[index];
+        currentPopupAudio.currentTime = 0;
+        currentPopupAudio.play().catch(() => {});
+
+        // Auto stop when finished
+        currentPopupAudio.onended = function () {
+            $rootScope.$applyAsync(() => {
+                stopPopup();
+                $rootScope.$broadcast('popupSoundEnded');
+            });
+        };
+    }
+
+    function stopPopup() {
+        if (!currentPopupAudio) return;
+
+        currentPopupAudio.pause();
+        currentPopupAudio.currentTime = 0;
+        currentPopupAudio.onended = null;
+        currentPopupAudio = null;
+    }
+
+    function toggleFx() {
+        ServiceSound.fxOn = !ServiceSound.fxOn;
+
+        if (!ServiceSound.fxOn) {
+            stopPopup(); // stop all sounds immediately
+        }
     }
 
     return ServiceSound;
