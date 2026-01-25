@@ -1,7 +1,7 @@
 
 var app = angular.module('main', []);
 
-app.controller('MainController', function MainController($scope, $timeout, $window, SoundService) {
+app.controller('MainController', function MainController($scope, $timeout, $window, SoundService, GuideService) {
 
     $scope.SoundService = SoundService;
     $scope.fxOnToggle = function(){   
@@ -85,6 +85,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     // open popup by index
     $scope.openPopup = function(index) {
         $scope.playClickSound();
+        $scope.guide?.[1] && ($scope.guide[1].visible = false);// permanent hide guide
         const el = document.querySelector(`.popup-container`);
         if (el) {
             el.classList.add('--open');
@@ -153,7 +154,10 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         // prevent running multiple times per frame
         if (scrollCloseTicking) return;
         scrollCloseTicking = true;
-        requestAnimationFrame(() => {            
+        requestAnimationFrame(() => {  
+            
+            $scope.guide?.[0] && ($scope.guide[0].visible = false);
+
             if ($scope.openPopups.length > 0) {
                 if($scope.activePopups !== null) {                    
                     $scope.activePopups = null;
@@ -173,6 +177,8 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     $scope.playClickSound = function() {
         SoundService.playClick();
     }
+
+    $scope.guide = GuideService.guide;
     
 
     $scope.expertise = [
@@ -230,6 +236,9 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     ]
 
     $scope.AnimateSkillProgressHoverIn = function(i){
+
+        $scope.guide?.[2] && ($scope.guide[2].visible = false); // permanent hide  guide
+
         const el = document.getElementById(`techSkillItemFiller${i}`);        
         el.style.left = $scope.techSkill[i].percent + '%';
         let width = 100 - $scope.techSkill[i].percent; // reverse the value;
@@ -246,6 +255,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     $scope.OpenExperienceAccordion = null;
     $scope.toggleExperienceAccordion = function(i){
         $scope.playClickSound();
+        $scope.guide?.[6] && ($scope.guide[6].visible = false); // permanent hide  guide
         if ($scope.OpenExperienceAccordion === i) {
             $scope.OpenExperienceAccordion = null;
         } else {
@@ -574,6 +584,8 @@ app.controller('CryptoController', function($scope, $http) {
 
     $scope.loadPrices = function() {
       $scope.playClickSound();
+      
+      $scope.guide?.[3] && ($scope.guide[3].visible = false);// permanent hide  guide
       $scope.loading = true;
       $scope.error = false;
 
@@ -594,7 +606,7 @@ app.controller('CryptoController', function($scope, $http) {
 
 
 // autotyping
-app.controller('AutoTypingCtrl', function($timeout, SoundService) {
+app.controller('AutoTypingCtrl', function($timeout, SoundService, GuideService) {
     var vm = this;
 
     const DEFAULT = "3D Animation";
@@ -614,6 +626,8 @@ app.controller('AutoTypingCtrl', function($timeout, SoundService) {
     // ---------------------------
     vm.onUserType = function() {
         SoundService.playType();
+        GuideService.guide?.[5] && (GuideService.guide[5].visible = false); // permanent hide guide
+
         if (!vm.el) return; // safety check
         
         // limit user typing
@@ -688,6 +702,58 @@ app.controller('AutoTypingCtrl', function($timeout, SoundService) {
         range.collapse(false);
         sel.removeAllRanges();
         sel.addRange(range);
+    }
+});
+
+
+app.factory('GuideService', function(){
+    
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    let guide = [
+        {
+            classLocation: '.fold-first .hero-content',
+            text: 'Scroll',
+            visible: true
+        },
+        {
+            classLocation: '.fold-first-content',
+            text: 'Select',
+            visible: true
+        },
+        {
+            classLocation: '.second-first .box.techskill',            
+            text: isTouchDevice ? 'Tap' : 'Hover',
+            visible: true
+        },
+        {
+            classLocation: '.second-first .box .cryptocontainer',
+            text: 'Press',
+            visible: true
+        },
+        {
+            classLocation: '.second-first .box .responsive-design-box',            
+            text: isTouchDevice ? 'Hold' : 'Drag',
+            visible: true
+        },
+        {
+            classLocation: '.fold-threeJS-floor',
+            text: 'Edit',
+            visible: true
+        },
+        {
+            classLocation: '.fold-third',
+            text: 'Toggle',
+            visible: true
+        },
+        {
+            classLocation: '.infocard',
+            text: 'Connect',
+            visible: true
+        },
+    ]
+
+    return{
+        guide
     }
 });
 

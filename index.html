@@ -30,8 +30,8 @@
     <link rel="icon" href="img/favicon-16x16.png" sizes="16x16" type="image/png">
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
     <link rel="icon" sizes="192x192" href="img/android-chrome-192x192.png" type="image/png">
-    <link rel="icon" sizes="512x512" href="/android-chrome-512x512.png" type="image/png">
-    
+    <link rel="icon" sizes="512x512" href="img/android-chrome-512x512.png" type="image/png">
+
 </head>
 <body ng-controller="MainController">
     <div id="phase1">
@@ -49,6 +49,14 @@
                 <button class="btn focusmouse" id="mainBtn" ng-click="playClickSound()">
                     <span>Start</span>
                 </button>
+                <div class="guide-container">
+                    <div class="guide --bottom" ng-if="guide[0].visible">
+                        <div class="guide__text">{{guide[0].text}}</div>
+                        <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                        </svg>
+                    </div>
+                </div>
                 <div class="button-fx focusmouse " ng-class="{'--muted' : !SoundService.fxOn}" ng-click="fxOnToggle()">
                     <div class="button-fx__text">FX</div>
                     <svg class="svg-soundtrack" width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,8 +70,15 @@
                 <div class="me-space --container"></div>
                 
                 <div class="text-hi">Hi! I am-</div>
+                
                 <div class="description">
                     <div class="description__container ">
+                        <div class="guide --bottom --description" ng-if="guide[1].visible">
+                            <div class="guide__text">{{guide[1].text}}</div>
+                            <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                            </svg>
+                        </div>
                         <div class="description__item focusmouse"
                         ng-click="openPopup( $index )"
                         ng-repeat="item in desc track by $index"
@@ -92,6 +107,12 @@
                         <div class="content__description text-long">{{::expertise[0].info}}</div>
                         <div class="box techskill">
                             <div class="techskill__container">
+                                <div class="guide --bottom --skill" ng-if="guide[2].visible">
+                                    <div class="guide__text">{{guide[2].text}}</div>
+                                    <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                                    </svg>
+                                </div>
                                 <div class="techskill__item focusmouse"
                                     ng-click="playClickSound()"
                                     ng-repeat="item in techSkill"
@@ -138,6 +159,12 @@
                                         <div class="cryptocontainer__headersubtitle">By using the CoinGecko API</div>
                                     </div>
                                     <div>
+                                        <div class="guide --bottom --crypto" ng-if="guide[3].visible">
+                                            <div class="guide__text">{{guide[3].text}}</div>
+                                            <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                                            </svg>
+                                        </div>
                                         <button ng-click="loadPrices()" ng-disabled="loading" 
                                         class="cryptocontainer__mainbutton btn focusmouse">
                                             <span>{{ loading ? 'Updating...' : (started ? 'Update' : 'Show') }}</span>
@@ -221,8 +248,14 @@
                                 '--tabView' : boxWidth < 768,
                                 '--mobileView' : boxWidth < 576,
                             }"
-                            id="responsiveDesignBox">
-                                <div class="responsive-design-handle focusmouse" id="responsiveDesignHandle"></div>
+                            id="responsiveDesignBox">                            
+                                <div class="guide --right --responsive" ng-if="guide[4].visible">
+                                    <div class="guide__text">{{guide[4].text}}</div>
+                                    <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                                    </svg>
+                                </div>
+                                <div class="responsive-design-handle focusmouse" id="responsiveDesignHandle" ng-click="guide[4] && (guide[4].visible = false)"></div>
                                 <div class="character-container">
                                     <div class="me --puzzled filter-invert">
                                         <svg class="me__part --head" width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.000244141" width="68" height="68" fill="#1A1A1A"/></svg>     
@@ -281,6 +314,12 @@
     </div>
     <div id="phase3" ng-controller="AutoTypingCtrl as vm">
         <div class="fold-threeJS-floor" >
+            <div class="guide --bottom --threejs" ng-if="guide[5].visible">
+                <div class="guide__text">{{guide[5].text}}</div>
+                <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                </svg>
+            </div>
             <div id="typingTitle" class="textarea-title"  
                 contenteditable="true"
                 ng-keyup="vm.onUserType()"
@@ -308,6 +347,14 @@
                         <div class="--active">   
                             <p>{{::item.year.unit}}</p>
                             <span ng-show="::item.isActive"> to present</span>
+                        </div>
+                    </div>
+                    <div ng-if="$index == 0 && guide[6].visible">
+                        <div class="guide --right --foldthree" ng-if="$index == 0 && guide[6].visible">
+                            <div class="guide__text">{{guide[6].text}}</div>
+                            <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                            </svg>
                         </div>
                     </div>
                     <button class="xp__jobtitle text-long focusmouse" ng-click="toggleExperienceAccordion($index)">{{::item.title}}
@@ -396,6 +443,12 @@
                     </svg>
                 </button>
             </a>
+             <div class="guide --left --infocard" ng-if="guide[7].visible">
+                <div class="guide__text">{{guide[7].text}}</div>
+                <svg class="svg-guide-arrowdown" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.5 0H0L6.5 9.5L12.5 0Z" fill="#1A1A1A"/>
+                </svg>
+            </div>
         </div>
         <a ng-href="{{ link.figma }}" target="_blank">
             <div class="infocard__figmalink focusmouse">

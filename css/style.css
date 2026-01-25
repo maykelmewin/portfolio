@@ -342,6 +342,7 @@ html, body {
 .fold-first-content .description__container {
   max-width: 640px;
   margin: 0 auto;
+  position: relative;
 }
 .fold-first-content .description__item {
   color: var(--primary-color);
@@ -384,7 +385,7 @@ html, body {
   transform: translateX(8px);
 }
 .fold-first-content .description__item.--active::before {
-  height: 100%;
+  height: 96%;
 }
 .fold-first-content .text-hi {
   font-size: 1.25rem;
@@ -1493,6 +1494,77 @@ html, body {
   opacity: 0;
 }
 
+.guide-container {
+  position: relative;
+  background-color: red;
+  margin-top: 5vh;
+}
+
+.guide {
+  position: absolute;
+  transform: translateX(-50%);
+  animation: pulse 1.5s infinite steps(1, start);
+  will-change: opacity;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.guide__text {
+  font-size: 12px;
+  color: var(--off-color);
+}
+.guide svg {
+  transform: scale(0.8);
+}
+.guide svg path {
+  fill: var(--off-color);
+}
+.guide.--bottom {
+  flex-flow: column;
+}
+.guide.--right svg {
+  transform: scale(0.8) rotate(-90deg);
+}
+.guide.--left {
+  flex-flow: row-reverse;
+}
+.guide.--left svg {
+  transform: scale(0.8) rotate(90deg);
+}
+.guide.--description {
+  transform: translate(8px, -68px);
+}
+.guide.--skill {
+  transform: translate(32px, -24px);
+}
+.guide.--crypto {
+  transform: translate(100%, -40px);
+}
+.guide.--responsive {
+  transform: unset;
+  right: 1.5rem;
+  bottom: 1.5rem;
+}
+.guide.--threejs {
+  transform: translate(0, -8vh);
+}
+.guide.--foldthree {
+  transform: translateX(-100%);
+  margin-left: -1rem;
+  margin-top: 1rem;
+}
+.guide.--infocard {
+  transform: translateX(160px);
+  margin-top: 0.5rem;
+}
+.guide.--infocard .guide__text {
+  color: var(--primary-color);
+}
+.guide.--infocard svg path {
+  fill: var(--primary-color);
+}
+
 html.is-touch .cursor,
 html.is-touch .cursor-follower {
   opacity: 0 !important;
@@ -1551,6 +1623,14 @@ html.is-touch .cursor-follower {
     transform: scaleY(0.4);
   }
 }
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0;
+  }
+  25%, 75% {
+    opacity: 1;
+  }
+}
 @media screen and (max-height: 840px) {
   .fold-second .cryptocontainer {
     display: block;
@@ -1575,6 +1655,9 @@ html.is-touch .cursor-follower {
   }
   .infocard__icons {
     margin-top: 28px;
+  }
+  .fold-second .cryptocontainer__header > div:last-child {
+    margin-top: 1rem;
   }
 }
 @media screen and (max-height: 580px) {
@@ -1683,6 +1766,11 @@ html.is-touch .cursor-follower {
   }
   .fold-second .cryptocontainer {
     padding: 1rem;
+  }
+  .guide.--crypto {
+    transform: translate(60%, -100%);
+    flex-flow: row;
+    margin-top: -0.5rem;
   }
 }
 @media screen and (max-width: 599px) {
@@ -1957,6 +2045,7 @@ html.is-touch .cursor-follower {
   .fold-second .cryptocontainer__headersubtitle {
     font-size: 12px;
     margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
     text-align: center;
   }
   .fold-second .cryptocontainer__mainbutton {
@@ -2036,5 +2125,33 @@ html.is-touch .cursor-follower {
   .loading-icon {
     width: 16px;
     height: 40px;
+  }
+  .guide {
+    gap: 0.25rem;
+  }
+  .guide__text {
+    font-size: 9px;
+  }
+  .guide svg {
+    transform: scale(0.6);
+  }
+  .guide.--left.--infocard {
+    transform: translateX(128px);
+    margin-top: 0.75rem;
+  }
+  .guide.--threejs {
+    transform: translate(0, -10vh);
+  }
+  .guide.--crypto {
+    transform: translate(-50%, 0);
+    flex-flow: column;
+    margin-top: 0;
+    left: 50%;
+  }
+}
+@media screen and (max-width: 369px) {
+  .guide.--foldthree {
+    margin-left: -0.5rem;
+    flex-flow: column-reverse;
   }
 }/*# sourceMappingURL=style.css.map */

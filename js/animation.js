@@ -183,6 +183,8 @@ function initCursor() {
   }
 
   animate();
+
+
 }
 
 function animateFocusMouse(){
@@ -288,6 +290,8 @@ window.addEventListener('resize', () => {
 
 // POINTER DOWN (mouse + touch + pen)
 responsiveDesignHandle.addEventListener('pointerdown', (e) => {
+
+
     isDragging = true;
     startX = e.clientX;
     startWidth = responsiveDesignBox.offsetWidth;
@@ -296,6 +300,7 @@ responsiveDesignHandle.addEventListener('pointerdown', (e) => {
 
     // prevent touch scroll
     e.preventDefault();
+    
 });
 
 // POINTER MOVE

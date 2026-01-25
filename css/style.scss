@@ -358,6 +358,7 @@ html, body{
             max-width: 640px ;
             margin: 0 auto;
             // padding-left: 1.5rem;
+            position: relative;
         }
         &__item{
             color: var(--primary-color);
@@ -396,7 +397,7 @@ html, body{
 
             &.--active{
                 &::before{
-                    height: 100%;
+                    height: 96%;
                 }
             }
         }
@@ -1520,6 +1521,80 @@ html, body{
         opacity: 0;
     }
 }
+.guide-container{
+    position: relative;
+    background-color: red;
+    margin-top: 5vh;
+}
+.guide{
+    position: absolute;
+    transform: translateX(-50%);
+    animation: pulse 1.5s infinite steps(1, start);
+    will-change: opacity;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    &__text{
+        font-size: 12px;
+        color: var(--off-color);
+    }
+    svg {
+        transform: scale(.8);
+        path{        
+            fill: var(--off-color);
+        }
+    }
+    &.--bottom{
+        flex-flow: column;
+    }
+    &.--right{
+        svg {
+            transform: scale(0.8) rotate(-90deg);
+        }
+    }
+    &.--left{
+        flex-flow: row-reverse;
+        svg {
+            transform: scale(0.8) rotate(90deg);
+        }
+    }
+        
+    &.--description{
+        transform: translate(8px, -68px);
+    }
+    &.--skill{
+        transform: translate(32px, -24px);
+    }
+    &.--crypto{
+        transform: translate(100%, -40px);
+    }
+    &.--responsive{
+        transform: unset;
+        right: 1.5rem;
+        bottom: 1.5rem;
+    }
+    &.--threejs{
+      transform: translate(0, -8vh);
+    }    
+    &.--foldthree{
+        transform: translateX(-100%);
+        margin-left: -1rem;
+        margin-top: 1rem;
+    }    
+    &.--infocard{
+        transform: translateX(160px);
+        margin-top: .5rem;
+        .guide__text{
+            color: var(--primary-color);
+        }
+        svg path{        
+            fill: var(--primary-color);
+        }    
+    }
+    
+}
+
 
 
 html.is-touch .cursor,
@@ -1561,6 +1636,10 @@ html.is-touch .cursor-follower{
     75%  { transform: scaleY(1.2); }
     100% { transform: scaleY(0.4); }
 }
+@keyframes pulse {
+  0%,100% { opacity: 0; }
+  25%,75% { opacity: 1; }
+}
 
 
 
@@ -1590,6 +1669,9 @@ html.is-touch .cursor-follower{
     }
     .infocard__icons{
         margin-top: 28px;
+    }
+    .fold-second .cryptocontainer__header > div:last-child{
+        margin-top: 1rem;
     }
 }
 
@@ -1703,6 +1785,11 @@ html.is-touch .cursor-follower{
     }
     .fold-second .cryptocontainer{
         padding: 1rem;
+    }
+    .guide.--crypto{
+        transform: translate(60%, -100%);
+        flex-flow: row;
+        margin-top: -.5rem;
     }
 }
 
@@ -1983,6 +2070,7 @@ html.is-touch .cursor-follower{
     .fold-second .cryptocontainer__headersubtitle{
         font-size: 12px;
         margin-top: .25rem;
+        margin-bottom: .5rem;
         text-align: center;
     }
     .fold-second .cryptocontainer__mainbutton{
@@ -2062,5 +2150,35 @@ html.is-touch .cursor-follower{
     .loading-icon{
         width: 16px;
         height: 40px;
+    }
+    .guide{
+        gap: .25rem;
+        &__text{
+            font-size: 9px;
+        }
+        svg{
+            transform: scale(.6);
+        }
+    }
+    .guide.--left.--infocard{
+        transform: translateX(128px);
+        margin-top: 0.75rem;
+    }
+    .guide.--threejs{
+        transform: translate(0, -10vh);
+
+    }
+    .guide.--crypto {
+        transform: translate(-50%, 0);
+        flex-flow: column;
+        margin-top: 0;
+        left: 50%;
+    }
+}
+@media screen and (max-width: 369px) {
+    .guide.--foldthree{
+        
+            margin-left: -0.5rem;
+            flex-flow: column-reverse;
     }
 }
