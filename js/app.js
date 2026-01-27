@@ -48,32 +48,32 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     $scope.desc = [
         {
             desc: 'he.',
-            popupContent: "Being a man has taught me patience, responsibility, and resilience—qualities I bring into front-end development. They help me tackle challenges head-on, adapt to new situations, and ensure every line of code and design element gets the attention it deserves, creating websites that are both functional and user-friendly.",
+            popupContent: "Being a man has taught me patience, responsibility, and resilience. These qualities help me face challenges, adapt easily, and pay attention to every detail.",
             // isVoiceActive: false
         },
         {
             desc: 'Filipino.',
-            popupContent: "The way we approach work and design reflects who we are and what we value. I carry my Filipino culture as an asset and make sure it helps build collaboration, not barriers. I strongly believe in the Filipino saying, “Bawat detalye, mahalaga.",
+            popupContent: "The way we work reflects who we are. I carry my Filipino culture as a strength not a barrier — and believe that “Bawat detalye, mahalaga.",
             // isVoiceActive: false
         },
         {
             desc: 'proficient in English.',
-            popupContent: "Two are better than one—and even better with a whole team. But a team without communication is like a group chat where no one responds. I make sure I communicate clearly and connect with every team member. Using English at work comes naturally to me.",
+            popupContent: "Two are better than one—and even more with a team. Without communication, though, it’s like a chat where no one replies. I make sure to connect clearly with everyone, and using English at work comes naturally.",
             // isVoiceActive: false
         },
         {
             desc: 'two decade into existence.',
-            popupContent: "I’ve been in the industry for almost a decade, building strong expertise in what I do. Learning and adapting to new technologies is a natural part of my work.",
+            popupContent: " I’ve been in the industry for almost a decade, building strong expertise along the way. Learning and adapting to new technologies comes easily to me.",
             // isVoiceActive: false
         },
         {
             desc: 'obsessed with art and codes.',
-            popupContent: "I’m not perfect, but I am a perfectionist. I pay attention to every detail in design. I know how hard the process of creating a design can be, and I know how to handle every inch of it well.",
+            popupContent: "I’m not perfect, but I’m a perfectionist. I notice every detail in design and understand how much effort goes into creating it—I handle every inch of it well.",
             // isVoiceActive: false
         },
         {
             desc: 'highly interested in turning outstanding design into website.',
-            popupContent: "I worked as a Layout artist as my first job. Being an engineer to someone's work is hard. and I know what to consider. don't worry communication is the key!",
+            popupContent: "I started as a Layout Artist, so I understand how challenging it is to execute someone else’s vision. I know what to consider, and clear communication is always the key.",
             // isVoiceActive: false
         },
        
@@ -93,7 +93,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
 
         
         $scope.activePopups = index;        
-        SoundService.playPopup(index);
+        // SoundService.playPopup(index);
 
         if ($scope.openPopups.includes(index)) return;
         $scope.openPopups.push(index);
@@ -117,7 +117,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         }
         if( $scope.activePopups == popupIndex){            
             $scope.activePopups = null;
-            SoundService.stopPopup();
+            // SoundService.stopPopup();
         }
     };
     $scope.$on('popupSoundEnded', function () {

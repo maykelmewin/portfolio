@@ -2112,6 +2112,7 @@ html.is-touch .cursor-follower{
         font-size: 8;
     }
     .popup-container{
+        flex-flow: column-reverse;
         padding: 1rem .5rem 0 .5rem;
         gap: .5rem
     }
