@@ -570,6 +570,9 @@ html, body{
                     border-left: 4px solid var(--off-color);
                     cursor: ew-resize;
                     touch-action: none;
+                    -webkit-touch-callout: none;                    
+                    user-select: none;
+                    -webkit-user-select: none;
                 }
                 .resolution-text{
                     font-size: 1rem;
