@@ -53,22 +53,22 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         },
         {
             desc: 'Filipino.',
-            popupContent: "The way we work reflects who we are. I carry my Filipino culture as a strength not a barrier — and believe that “Bawat detalye, mahalaga.",
+            popupContent: 'The way we work reflects who we are. I carry my Filipino culture as a strength not a barrier — and believe that “Bawat detalye, mahalaga."',
             // isVoiceActive: false
         },
         {
             desc: 'proficient in English.',
-            popupContent: "Two are better than one—and even more with a team. Without communication, though, it’s like a chat where no one replies. I make sure to connect clearly with everyone, and using English at work comes naturally.",
+            popupContent: "Two are better than one—and even more with a team. Without communication, it’s like a chat where no one replies. I make sure to connect clearly with everyone, and using English at work comes naturally.",
             // isVoiceActive: false
         },
         {
             desc: 'two decade into existence.',
-            popupContent: " I’ve been in the industry for almost a decade, building strong expertise along the way. Learning and adapting to new technologies comes easily to me.",
+            popupContent: "I’ve been in the industry for almost a decade, building strong expertise along the way. Learning and adapting to new technologies comes easily to me.",
             // isVoiceActive: false
         },
         {
             desc: 'obsessed with art and codes.',
-            popupContent: "I’m not perfect, but I’m a perfectionist. I notice every detail in design and understand how much effort goes into creating it—I handle every inch of it well.",
+            popupContent: "I’m not perfect, but I’m a perfectionist. I notice every detail in design and understand how much effort goes into creating it. And I handle every inch of it well.",
             // isVoiceActive: false
         },
         {
@@ -93,7 +93,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
 
         
         $scope.activePopups = index;        
-        // SoundService.playPopup(index);
+        SoundService.playPopup(index);
 
         if ($scope.openPopups.includes(index)) return;
         $scope.openPopups.push(index);
@@ -117,7 +117,7 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         }
         if( $scope.activePopups == popupIndex){            
             $scope.activePopups = null;
-            // SoundService.stopPopup();
+            SoundService.stopPopup();
         }
     };
     $scope.$on('popupSoundEnded', function () {
