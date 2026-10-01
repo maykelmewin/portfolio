@@ -8,76 +8,10 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
         $scope.playClickSound();
         SoundService.toggleFx();
     }
-    $scope.link = {
-        li : 'https://www.linkedin.com/in/michael-merin/',
-        ig : 'https://www.instagram.com/mklmerin/',
-        messenger : 'https://m.me/maykelmewin',
-        figma : 'https://www.figma.com/design/Rki4DLFlw70sHLa1lexVdV/Porfolio---Merin?m=auto&t=qSUdqfA6sbQezQ6F-6',
-    }
+    $scope.link = PORTFOLIO_DATA.link;
     $scope.isDetailHovered = false; 
-    $scope.xp = [
-        {
-            year: {no: 4, unit : 'years'},
-            title: 'front-end web dev',
-            company: 'investa financial incorporation',
-            description: 'Main Front-End Developer responsible for supporting Investa’s web applications, creating landing pages, and defining overall page structure and design.',
-            datespan: 'JUN 2021 - AUG 2025',
-            link: 'https://www.investagrams.com/',
-            isActive: false
-        },
-        {
-            year: {no: 1, unit : 'year'},
-            title: 'web developer',
-            company: 'bitcapp blockchain technology',
-            description: 'Developed, enhanced, and managed responsive web applications for diverse needs.',
-            datespan: 'FEB 2021 - JUN 2021',
-            link: null,
-            isActive: false
-        },
-        {
-            year: {no: 3, unit : 'years'},
-            title: 'layout designer',
-            company: 'amana waterpark corporation',
-            description: 'from a working student to a full-time employee, creating visually appealing designs and layouts.',
-            datespan: 'MAR 2017 - AUG 2020',
-            link: 'https://www.facebook.com/amanawaterparkph/',
-            isActive: false
-        },
-    ]
-    
-    $scope.desc = [
-        {
-            desc: 'he.',
-            popupContent: "Being a man has taught me patience, responsibility, and resilience. These qualities help me face challenges, adapt easily, and pay attention to every detail.",
-            // isVoiceActive: false
-        },
-        {
-            desc: 'Filipino.',
-            popupContent: 'The way we work reflects who we are. I carry my Filipino culture as a strength not a barrier — and believe that “Bawat detalye, mahalaga."',
-            // isVoiceActive: false
-        },
-        {
-            desc: 'proficient in English.',
-            popupContent: "Two are better than one—and even more with a team. Without communication, it’s like a chat where no one replies. I make sure to connect clearly with everyone, and using English at work comes naturally.",
-            // isVoiceActive: false
-        },
-        {
-            desc: 'two decade into existence.',
-            popupContent: "I’ve been in the industry for almost a decade, building strong expertise along the way. Learning and adapting to new technologies comes easily to me.",
-            // isVoiceActive: false
-        },
-        {
-            desc: 'obsessed with art and codes.',
-            popupContent: "I’m not perfect, but I’m a perfectionist. I notice every detail in design and understand how much effort goes into creating it. And I handle every inch of it well.",
-            // isVoiceActive: false
-        },
-        {
-            desc: 'highly interested in turning outstanding design into website.',
-            popupContent: "I started as a Layout Artist, so I understand how challenging it is to execute someone else’s vision. I know what to consider, and clear communication is always the key.",
-            // isVoiceActive: false
-        },
-       
-    ]
+    $scope.xp = PORTFOLIO_DATA.xp;
+    $scope.desc = PORTFOLIO_DATA.desc;
 
     $scope.openPopups = [];
     $scope.activePopups = null;
@@ -181,60 +115,8 @@ app.controller('MainController', function MainController($scope, $timeout, $wind
     $scope.guide = GuideService.guide;
     
 
-    $scope.expertise = [
-        {
-            skills: 'Technologies & Tools',
-            info: 'Proficient in essential technologies and highly adaptable to new skill demands.'
-        },     
-        {
-            skills: 'Responsive Design',
-            info: 'Build a fully responsive cross-device/cross-browser and pixel-perfect HTML prototype based on the visual mock-up.'
-        },   
-        {
-            skills: 'API & Frameworks',
-            info: 'Effectively manage, integrate, and modify APIs and Implement the desired front-end frameworks and libraries.'
-        },
-    ]
-
-    $scope.techSkill = [
-        {
-            text: 'Advance CSS SASS/SCSS',
-            percent: 100,
-        },
-        {
-            text: 'Tailwind',
-            percent: 90,
-        },
-        {
-            text: 'Vanila JS',
-            percent: 100,
-        },
-        {
-            text: 'Vue, React, Angular',
-            percent: 80,
-        },
-        {
-            text: 'GSAP',
-            percent: 75,
-        },
-        {
-            text: 'Three JS',
-            percent: 45,
-        },
-        {
-            text: 'Figma',
-            percent: 90,
-        },
-        {
-            text: 'Adobe XD & Photoshop',
-            percent: 90,
-        },
-        {
-            text: 'Sketchup',
-            percent: 30,
-        },
-    ]
-
+    $scope.expertise = PORTFOLIO_DATA.expertise;
+    $scope.techSkill = PORTFOLIO_DATA.techSkill;
     $scope.AnimateSkillProgressHoverIn = function(i){
 
         $scope.guide?.[2] && ($scope.guide[2].visible = false); // permanent hide  guide
@@ -709,48 +591,13 @@ app.controller('AutoTypingCtrl', function($timeout, SoundService, GuideService) 
 app.factory('GuideService', function(){
     
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-    let guide = [
-        {
-            classLocation: '.fold-first .hero-content',
-            text: 'Scroll',
-            visible: true
-        },
-        {
-            classLocation: '.fold-first-content',
-            text: 'Select',
-            visible: true
-        },
-        {
-            classLocation: '.second-first .box.techskill',            
-            text: isTouchDevice ? 'Tap' : 'Hover',
-            visible: true
-        },
-        {
-            classLocation: '.second-first .box .cryptocontainer',
-            text: 'Press',
-            visible: true
-        },
-        {
-            classLocation: '.second-first .box .responsive-design-box',            
-            text: isTouchDevice ? 'Hold' : 'Drag',
-            visible: true
-        },
-        {
-            classLocation: '.fold-threeJS-floor',
-            text: 'Edit',
-            visible: true
-        },
-        {
-            classLocation: '.fold-third',
-            text: 'Toggle',
-            visible: true
-        },
-        {
-            classLocation: '.infocard',
-            text: 'Connect',
-            visible: true
-        },
-    ]
+    let guide = PORTFOLIO_DATA.guide.map(function(item) {
+        return {
+            classLocation: item.classLocation,
+            text: isTouchDevice && item.textTouch ? item.textTouch : item.text,
+            visible: item.visible
+        };
+    });
 
     return{
         guide

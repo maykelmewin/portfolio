@@ -348,7 +348,7 @@ html, body{
     padding-bottom: calc(var(--vh) * 10);
     .description{
         margin-top: calc(var(--vh) * 5);
-        background-color: var(--off-color);
+        background-color: var(--primary-color);
         width: 100%;
         // box-shadow:
         // 0 0 0 4px var(--primary-color) ,
@@ -359,6 +359,8 @@ html, body{
             margin: 0 auto;
             // padding-left: 1.5rem;
             position: relative;
+            background-color: var(--off-color);
+            padding: 1rem;
         }
         &__item{
             color: var(--primary-color);
@@ -1219,7 +1221,7 @@ html, body{
             gap: 12px;
         }
         .infocard__options{
-            gap: 24px;
+            gap: 40px;
             position: absolute;
             top: 40px;
             right: #{$main-sidespace}px;            
